@@ -1,8 +1,8 @@
-# Tech Stack Plan - JadiMahir MCQ Platform
+# Tech Stack Plan - JadiMikir MCQ Platform
 
 ## Executive Summary
 
-This document outlines a complete tech stack for the **JadiMahir** adaptive MCQ platform, optimized for **performance**, **privacy**, and **learning effectiveness**. The platform follows a local-first architecture with no server, no auth, and no account required—as specified in the PRD and Product Strategy.
+This document outlines a complete tech stack for the **JadiMikir** adaptive MCQ platform, optimized for **performance**, **privacy**, and **learning effectiveness**. The platform follows a local-first architecture with no server, no auth, and no account required—as specified in the PRD and Product Strategy.
 
 ---
 
@@ -85,8 +85,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt'],
       manifest: {
-        name: 'JadiMahir',
-        short_name: 'JadiMahir',
+        name: 'JadiMikir',
+        short_name: 'JadiMikir',
         description: 'Privacy-first adaptive learning platform',
         theme_color: '#2563EB',
         icons: [

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "eg-001",
+    "topicId": "english-grammar",
+    "stem": "Which sentence uses the present simple tense correctly?",
+    "choices": [
+      { "id": "a", "text": "She goes to school every day.", "isCorrect": true },
+      { "id": "b", "text": "She go to school every day.", "isCorrect": false },
+      { "id": "c", "text": "She going to school every day.", "isCorrect": false },
+      { "id": "d", "text": "She gone to school every day.", "isCorrect": false }
+    ],
+    "explanation": "The present simple tense for third-person singular subjects adds 's' to the verb. 'She goes' is correct.",
+    "difficulty": "easy",
+    "tags": ["present-simple", "verbs"]
+  },
+  {
+    "id": "eg-002",
+    "topicId": "english-grammar",
+    "stem": "Choose the correct plural form of 'child':",
+    "choices": [
+      { "id": "a", "text": "childs", "isCorrect": false },
+      { "id": "b", "text": "children", "isCorrect": true },
+      { "id": "c", "text": "childrens", "isCorrect": false },
+      { "id": "d", "text": "childes", "isCorrect": false }
+    ],
+    "explanation": "'Child' is an irregular noun that becomes 'children' in plural, not by adding 's'.",
+    "difficulty": "easy",
+    "tags": ["nouns", "plural", "irregular"]
+  },
+  {
+    "id": "eg-003",
+    "topicId": "english-grammar",
+    "stem": "Identify the adjective in this sentence: 'The beautiful sunset amazed everyone.'",
+    "choices": [
+      { "id": "a", "text": "sunset", "isCorrect": false },
+      { "id": "b", "text": "beautiful", "isCorrect": true },
+      { "id": "c", "text": "amazed", "isCorrect": false },
+      { "id": "d", "text": "everyone", "isCorrect": false }
+    ],
+    "explanation": "An adjective describes a noun. 'Beautiful' describes the noun 'sunset'.",
+    "difficulty": "easy",
+    "tags": ["adjectives", "parts-of-speech"]
+  },
+  {
+    "id": "eg-004",
+    "topicId": "english-grammar",
+    "stem": "Which sentence uses the past continuous tense?",
+    "choices": [
+      { "id": "a", "text": "I was eating dinner when she called.", "isCorrect": true },
+      { "id": "b", "text": "I ate dinner when she called.", "isCorrect": false },
+      { "id": "c", "text": "I eat dinner when she called.", "isCorrect": false },
+      { "id": "d", "text": "I will eat dinner when she called.", "isCorrect": false }
+    ],
+    "explanation": "Past continuous uses 'was/were + verb-ing' to describe an action in progress in the past.",
+    "difficulty": "medium",
+    "tags": ["past-continuous", "tenses"]
+  },
+  {
+    "id": "eg-005",
+    "topicId": "english-grammar",
+    "stem": "What is the correct possessive form of 'the team won its first game'?",
+    "choices": [
+      { "id": "a", "text": "team's", "isCorrect": false },
+      { "id": "b", "text": "teams'", "isCorrect": false },
+      { "id": "c", "text": "its", "isCorrect": true },
+      { "id": "d", "text": "it's", "isCorrect": false }
+    ],
+    "explanation": "'Its' (without apostrophe) is the possessive pronoun. 'It's' means 'it is'.",
+    "difficulty": "medium",
+    "tags": ["possessives", "pronouns"]
+  }
+]

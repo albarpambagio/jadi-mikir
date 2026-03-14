@@ -1,4 +1,4 @@
-# JadiMahir Project Plan
+# JadiMikir Project Plan
 
 Master execution plan covering all phases from MVP through Scale & Polish.
 
@@ -24,13 +24,13 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 
 | # | Feature | SKILL | Dependencies | Status |
 |---|---------|-------|--------------|--------|
-| 1 | TanStack stack setup (Query/Router/Store) | - | None | |
-| 2 | Topic and Question data models | - | None | |
-| 3 | Content validation system | SKILL 11 | Data models | |
-| 4 | Mastery Gate system | SKILL 1 | Store setup | |
-| 5 | FSRS Spaced Repetition algorithm | SKILL 2 | Mastery Gate | |
-| 6 | Basic Question UI with answer feedback | - | Content model | |
-| 7 | Sample content (1 topic, 20 questions) | - | Data models | Seed for testing |
+| 1 | TanStack stack setup (Query/Router/Store) | - | None | ✅ Complete |
+| 2 | Topic and Question data models | - | None | ✅ Complete |
+| 3 | Content validation system | SKILL 11 | Data models | ✅ Complete |
+| 4 | Mastery Gate system | SKILL 1 | Store setup | ✅ Complete |
+| 5 | FSRS Spaced Repetition algorithm | SKILL 2 | Mastery Gate | ✅ Complete |
+| 6 | Basic Question UI with answer feedback | - | Content model | ✅ Complete |
+| 7 | Sample content (1 topic, 5 questions) | - | Data models | Seed for testing |
 
 ### P1 - Should Have (1-2 weeks)
 
@@ -42,6 +42,11 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 | 11 | Development logging | - | TanStack stack | pino/pino-pretty |
 
 **Phase 1 Success Criteria**: User can complete a session with sample content, mastery advances based on performance, due reviews appear on return.
+
+### Implementation Notes
+
+- **Feedback Flow**: Simplified - no rating buttons. Correct = "good", Wrong = "hard". Auto-advance after 1.5s.
+- **Content**: 5 questions for rapid prototyping (expandable)
 
 ---
 
@@ -157,7 +162,7 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 
 | Risk | Phase | Mitigation |
 |------|-------|-------------|
-| Content creation bottleneck | All | Seed 20 questions in MVP; build admin UI in Phase 3 |
+| Content creation bottleneck | All | Seed 5 questions in MVP; expand to 20+ in Phase 2; build admin UI in Phase 3 |
 | localStorage limits (5-10MB) | 1-2 | Plan IndexedDB migration early |
 | Browser clearing state | All | Emphasize export feature from day 1 |
 | Mastery gates feel too hard | 1 | Ensure remediation is helpful, not punitive |

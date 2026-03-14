@@ -1,0 +1,11 @@
+[
+  {
+    "id": "english-grammar",
+    "title": "English Grammar Fundamentals",
+    "description": "Master the basics of English grammar including parts of speech, tenses, and subject-verb agreement",
+    "subject": "English",
+    "difficulty": "beginner",
+    "prerequisites": [],
+    "questionCount": 5
+  }
+]

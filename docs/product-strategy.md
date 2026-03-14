@@ -1,8 +1,8 @@
-# JadiMahir Product Strategy
+# JadiMikir Product Strategy
 
 ## Executive Summary
 
-**JadiMahir** is a privacy-first, local-only MCQ learning platform that brings tutor-level personalization to self-study through adaptive spaced repetition, targeted remediation, and interleaved practice—all without requiring user accounts or data transmission.
+**JadiMikir** is a privacy-first, local-only MCQ learning platform that brings tutor-level personalization to self-study through adaptive spaced repetition, targeted remediation, and interleaved practice—all without requiring user accounts or data transmission.
 
 The platform targets self-directed learners who want efficient, scientifically-grounded study tools without compromising privacy. Its core value: **2 standard deviation improvement potential** (matching one-on-one tutoring) through an intelligent question engine that adapts to individual performance.
 
@@ -49,7 +49,7 @@ The platform targets self-directed learners who want efficient, scientifically-g
 
 ### Differentiation Matrix
 
-| Competitor | JadiMahir Advantage |
+| Competitor | JadiMikir Advantage |
 |---|---|
 | Quizlet/Anki | Privacy-first (no account), intelligent scheduling (FSRS), targeted remediation |
 | Khan Academy | Fully local, mastery gates, interleaving |
@@ -57,7 +57,7 @@ The platform targets self-directed learners who want efficient, scientifically-g
 | Traditional LMS | Lightweight, personal, no institutional overhead |
 
 ### Positioning Statement
-> "Untuk learner yang menghargai privasi dan ingin hasil setara tutor privat, JadiMahir adalah platform belajar MCQ yang mengadaptasi metode belajar berdasarkan performa individual—tanpa perlu membuat akun atau menyimpan data di server."
+> "Untuk learner yang menghargai privasi dan ingin hasil setara tutor privat, JadiMikir adalah platform belajar MCQ yang mengadaptasi metode belajar berdasarkan performa individual—tanpa perlu membuat akun atau menyimpan data di server."
 
 ---
 
@@ -86,6 +86,16 @@ The question engine is the product. Every answer updates the learner's model:
 - Deliberately plausible distractors
 - Distractor-specific explanations
 
+### 5. Knowledge Graph / Skill Tree
+A visual representation of topic dependencies that guides learning paths:
+- **Node-based visualization**: Topics displayed as interconnected nodes showing prerequisites
+- **Progress states**: Clear visual distinction between locked, available, in-progress, and mastered topics
+- **Pathway visualization**: Shows optimal learning routes and blocked paths due to unmet prerequisites
+- **Remediation signaling**: Highlights prerequisite gaps requiring attention before advancing
+- **Motivational design**: Game-inspired progression that makes abstract dependencies tangible
+
+This feature integrates with FIRe (SKILL 10) and Targeted Remediation (SKILL 5) to create a coherent learning journey where users understand not just what to learn, but why certain topics must come first.
+
 ---
 
 ## Success Metrics
@@ -111,6 +121,7 @@ The question engine is the product. Every answer updates the learner's model:
 | Metric | Target | Rationale | Baseline Plan |
 |---|---|---|---|
 | Export Usage | ≥10% of users export at least once | Data ownership awareness | Track in Phase 2 when feature launches |
+| Knowledge Graph Engagement | ≥40% of users view skill tree weekly | Feature utility & visibility | Track from Phase 2 when feature launches |
 | Remediation Completion | ≥50% of triggered remediations completed | Remediation working as intended | Track from Phase 2 onwards |
 | Diagnostic Completion | ≥80% of new users complete diagnostic | Onboarding effectiveness | Measure from Phase 2 when diagnostic launches |
 
@@ -125,6 +136,7 @@ The question engine is the product. Every answer updates the learner's model:
 |---|---|---|
 | TanStack stack setup (Query/Router/Store) | P0 | None |
 | Topic/Question data model + content validation | P0 | None |
+| Topic Dependency Graph (data model) | P0 | Content model |
 | Mastery Gate (SKILL 1) | P0 | Store setup |
 | FSRS Spaced Repetition (SKILL 2) | P0 | Mastery Gate |
 | Basic Question UI + answer feedback | P0 | Content model |
@@ -141,12 +153,13 @@ The question engine is the product. Every answer updates the learner's model:
 |---|---|---|
 | Interleaving + Non-Interference (SKILL 3) | P0 | Session scheduler |
 | Targeted Remediation (SKILL 5) | P0 | Mastery tracking |
+| Knowledge Graph / Skill Tree UI | P0 | Topic dependency graph |
 | FIRe (SKILL 10) | P1 | Topic dependency graph |
 | Diagnostic Placement (SKILL 7) | P1 | Topic content |
 | Data Export/Import (SKILL 13) | P1 | Store |
 | Progress Dashboard | P1 | Store |
 
-**Success Criteria**: Sessions mix topics intelligently, failures trigger prerequisite drills, new users bypass known content
+**Success Criteria**: Users can visualize their learning progress, sessions mix topics intelligently, failures trigger prerequisite drills, new users bypass known content
 
 ### Phase 3: Scale & Polish
 **Objective**: Improve UX, add content management, expand platform
@@ -172,6 +185,7 @@ The question engine is the product. Every answer updates the learner's model:
 | localStorage limits (5-10MB) | Medium | Plan for IndexedDB migration; compress state |
 | Browser clearing state | Medium | Emphasize export feature; consider optional sync (future) |
 | Mastery gates feel too hard | Medium | Ensure remediation is helpful, not punitive; communicate "why" |
+| Knowledge graph becomes cluttered with many topics | Medium | Implement collapsible branches, zoom controls, and focused "current path" view |
 
 ---
 

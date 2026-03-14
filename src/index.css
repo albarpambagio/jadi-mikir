@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+:root {
+  --primary: oklch(0.55 0.20 245);
+  --primary-foreground: oklch(0.98 0 0);
+  
+  --success: oklch(0.65 0.15 155);
+  --danger: oklch(0.60 0.22 25);
+  --warning: oklch(0.75 0.15 80);
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+}
+
+* {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
