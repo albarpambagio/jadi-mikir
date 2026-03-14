@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { createRootRoute, createRoute, Outlet, Link } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import { Button, Progress, Card, CardBody, Spinner } from '@heroui/react'
+import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
+import { Card, CardContent } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
 import { Flame, Zap, ChevronRight } from 'lucide-react'
 import { QuestionCard, FeedbackPanel } from '@/components/questions'
 import { useTopicsQuery, useQuestionsQuery } from '@/lib/content'
@@ -13,15 +16,15 @@ import type { Rating } from '@/types'
 function Layout() {
   return (
     <div className="min-h-screen bg-background">
-      <nav className="border-b border-divider px-4 py-3 flex items-center justify-between">
+      <nav className="border-b border-border px-4 py-3 flex items-center justify-between">
         <Link to="/" className="text-xl font-bold text-primary hover:opacity-80">
           JadiMikir
         </Link>
         <div className="flex gap-2">
-          <Button size="sm" variant="light" as={Link} href="/">
+          <Button variant="ghost" size="sm" onClick={() => window.location.href = '/'} >
             Dashboard
           </Button>
-          <Button size="sm" variant="light" as={Link} href="/session">
+          <Button variant="ghost" size="sm" onClick={() => window.location.href = '/session'} >
             Practice
           </Button>
         </div>
@@ -61,63 +64,60 @@ function Dashboard() {
       
       <div className="grid grid-cols-2 gap-4 mb-6">
         <Card className="bg-card">
-          <CardBody className="p-4">
+          <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-1">
-              <Flame className="w-4 h-4 text-warning" />
-              <p className="text-sm text-foreground-500">Current Streak</p>
+              <Flame className="w-4 h-4 text-orange-500" />
+              <p className="text-sm text-muted-foreground">Current Streak</p>
             </div>
-            <p className="text-3xl font-bold text-warning">{learnerState.streak}</p>
-            <p className="text-xs text-foreground-400">days</p>
-          </CardBody>
+            <p className="text-3xl font-bold text-orange-500">{learnerState.streak}</p>
+            <p className="text-xs text-muted-foreground/60">days</p>
+          </CardContent>
         </Card>
         
         <Card className="bg-card">
-          <CardBody className="p-4">
+          <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-1">
               <Zap className="w-4 h-4 text-primary" />
-              <p className="text-sm text-foreground-500">Total XP</p>
+              <p className="text-sm text-muted-foreground">Total XP</p>
             </div>
             <p className="text-3xl font-bold text-primary">{learnerState.xp}</p>
-            <p className="text-xs text-foreground-400">points</p>
-          </CardBody>
+            <p className="text-xs text-muted-foreground/60">points</p>
+          </CardContent>
         </Card>
       </div>
 
       {currentTopic && (
         <Card className="bg-card mb-6">
-          <CardBody className="p-4">
+          <CardContent className="p-4">
             <h3 className="font-semibold mb-3">{currentTopic.title}</h3>
             {masteryProgress ? (
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-foreground-500">Mastery Progress</span>
+                  <span className="text-muted-foreground">Mastery Progress</span>
                   <span className="font-medium">{masteryProgress.levelName}</span>
                 </div>
                 <Progress
                   value={masteryProgress.percentage}
-                  color="primary"
                   className="h-2"
                 />
-                <p className="text-xs text-foreground-400">
+                <p className="text-xs text-muted-foreground/60">
                   {masteryProgress.current}% - {masteryProgress.target}% to next level
                 </p>
               </div>
             ) : (
-              <p className="text-sm text-foreground-500">Start practicing to track your progress</p>
+              <p className="text-sm text-muted-foreground">Start practicing to track your progress</p>
             )}
-          </CardBody>
+          </CardContent>
         </Card>
       )}
       
       <Button 
-        color="primary" 
         size="lg" 
-        className="w-full"
-        as={Link}
-        href="/session"
-        endContent={<ChevronRight className="w-4 h-4" />}
+        className="w-full gap-2"
+        onClick={() => window.location.href = '/session'}
       >
         Start Practice Session
+        <ChevronRight className="w-4 h-4" />
       </Button>
     </div>
   )
@@ -205,7 +205,7 @@ function Session() {
   if (questionsLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Spinner size="lg" color="primary" />
+        <Spinner className="h-8 w-8" />
       </div>
     )
   }
@@ -213,7 +213,7 @@ function Session() {
   if (!questions || questions.length === 0) {
     return (
       <div className="max-w-xl mx-auto text-center py-12">
-        <p className="text-foreground-500">No questions available</p>
+        <p className="text-muted-foreground">No questions available</p>
       </div>
     )
   }
@@ -222,12 +222,11 @@ function Session() {
     <div className="max-w-xl mx-auto">
       <div className="mb-6">
         <div className="flex justify-between text-sm mb-2">
-          <span className="text-foreground-500">Question {currentIndex + 1} of {questions.length}</span>
-          <span className="text-foreground-500">{answeredCount} answered</span>
+          <span className="text-muted-foreground">Question {currentIndex + 1} of {questions.length}</span>
+          <span className="text-muted-foreground">{answeredCount} answered</span>
         </div>
         <Progress
           value={((currentIndex + 1) / questions.length) * 100}
-          color="primary"
           className="h-2"
         />
       </div>
@@ -244,11 +243,10 @@ function Session() {
           {!showFeedback && (
             <div className="mt-6">
               <Button
-                color="primary"
                 size="lg"
                 className="w-full"
-                onPress={handleSubmitAnswer}
-                isDisabled={!selectedChoice}
+                onClick={handleSubmitAnswer}
+                disabled={!selectedChoice}
               >
                 Check Answer
               </Button>
@@ -265,10 +263,8 @@ function Session() {
           {showFeedback && isLastQuestion && (
             <div className="mt-6 text-center">
               <Button
-                color="primary"
-                as={Link}
-                href="/"
                 className="w-full"
+                onClick={() => window.location.href = '/'}
               >
                 Back to Dashboard
               </Button>

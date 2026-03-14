@@ -1,4 +1,5 @@
-import { Button, Card, CardBody } from '@heroui/react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { motion } from 'framer-motion'
 import type { Question as QuestionType, Rating } from '@/types'
 
@@ -26,7 +27,7 @@ export function QuestionCard({
       transition={{ duration: 0.3 }}
     >
       <Card className="w-full max-w-xl mx-auto">
-        <CardBody className="p-6">
+        <CardContent className="p-6">
           <div className="mb-6">
             <span className="text-xs font-medium text-primary uppercase tracking-wider">
               Question
@@ -41,15 +42,13 @@ export function QuestionCard({
               const isSelected = selectedChoiceId === choice.id
               const isCorrect = choice.id === correctChoiceId
 
-              let buttonVariant: 'flat' | 'bordered' | 'light' = 'flat'
-              let buttonColor: 'default' | 'primary' | 'success' | 'danger' | 'warning' = 'default'
-
+              let variant: 'default' | 'outline' | 'secondary' | 'ghost' | 'destructive' | 'link' = 'outline'
               if (showFeedback && isCorrect) {
-                buttonColor = 'success'
+                variant = 'default'
               } else if (showFeedback && isSelected && !isCorrect) {
-                buttonColor = 'danger'
+                variant = 'destructive'
               } else if (isSelected) {
-                buttonColor = 'primary'
+                variant = 'default'
               }
 
               return (
@@ -60,11 +59,10 @@ export function QuestionCard({
                   transition={{ delay: index * 0.05 }}
                 >
                   <Button
-                    variant={buttonVariant}
-                    color={buttonColor}
+                    variant={variant}
                     className="w-full justify-start text-left h-auto py-4 px-4"
-                    onPress={() => !disabled && onSelectChoice(choice.id)}
-                    isDisabled={disabled}
+                    onClick={() => !disabled && onSelectChoice(choice.id)}
+                    disabled={disabled}
                   >
                     <span className="font-medium mr-3">
                       {String.fromCharCode(65 + index)}.
@@ -75,7 +73,7 @@ export function QuestionCard({
               )
             })}
           </div>
-        </CardBody>
+        </CardContent>
       </Card>
     </motion.div>
   )
