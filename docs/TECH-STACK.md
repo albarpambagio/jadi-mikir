@@ -29,7 +29,7 @@ This document outlines a complete tech stack for the **JadiMahir** adaptive MCQ 
 |-------|--------|-----------|
 | **Framework** | React 19 + Vite 6 | Fast HMR, small bundle, modern React features |
 | **Language** | TypeScript 5.7 | Type safety, better DX |
-| **State** | TanStack Store v5 | As specified in PRD—reactive store with auto-persistence |
+| **State** | TanStack Store v0.9 | Reactive store with auto-persistence |
 | **Content Loading** | TanStack Query v5 | As specified—caches static JSON forever |
 | **Routing** | TanStack Router v1 | As specified—type-safe SPA routing |
 | **Spaced Repetition** | ts-fsrs | As specified—FSRS algorithm implementation |
@@ -50,7 +50,7 @@ This document outlines a complete tech stack for the **JadiMahir** adaptive MCQ 
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "@heroui/react": "^3.0.0",
-    "@tanstack/react-store": "^5.0.0",
+    "@tanstack/react-store": "^0.9.0",
     "@tanstack/react-query": "^5.0.0",
     "@tanstack/react-router": "^1.0.0",
     "ts-fsrs": "^5.0.0",
@@ -140,7 +140,7 @@ export default defineConfig({
 | **Content Cache** | `staleTime: Infinity`, `gcTime: Infinity` |
 | **Re-renders** | React 19's automatic batching + TanStack Store selectors |
 | **Memory** | Session scratch state not persisted—ephemeral only |
-| **FSRS Calculations** | Web Worker for heavy calculations (optional, if needed) |
+| **FSRS Calculations** | Run on main thread initially; migrate to Web Worker if session latency exceeds 16ms with >500 due cards |
 
 ### Analytics & Metrics Tracking (Privacy-Preserving)
 
@@ -221,42 +221,42 @@ Based on the learning science principles:
 | Layer | Choice | Rationale |
 |-------|--------|-----------|
 | **Base** | Tailwind CSS 4 | Performance (JIT), consistency, small CSS output |
-| **Components** | HeroUI v3 | Beautiful, accessible components with built-in theming |
+| **Components** | HeroUI v3 (Beta) | Beautiful, accessible components with built-in theming |
 | **Animations** | Framer Motion | Smooth 60fps animations, declarative |
 | **Icons** | Lucide React | Clean, consistent, tree-shakeable |
 | **Theme** | HeroUI built-in + Dark mode support |
 
+> **Note**: HeroUI v3 is currently in Beta. Monitor for stability updates before production use.
+
 ### Color Palette
 
-HeroUI provides built-in theming with semantic tokens. Override for custom brand colors:
+HeroUI v3 uses CSS-based theming with CSS variables. Override in your global styles:
 
-```ts
-// heroui.config.ts
-import { heroui } from '@heroui/react'
-import { addComponents } from '@heroui/react'
+```css
+/* src/index.css */
+@import "tailwindcss";
+@import "@heroui/styles";
 
-const customTheme = heroui({
-  colors: {
-    primary: {
-      50: '#eff6ff',
-      100: '#dbeafe',
-      500: '#2563EB', // Trustworthy blue
-      600: '#1d4ed8',
-      900: '#1e3a8a',
-    },
-    success: {
-      500: '#10B981', // Green for correct
-    },
-    danger: {
-      500: '#EF4444', // Red for incorrect
-    },
-    warning: {
-      500: '#F59E0B', // Amber for review needed
-    },
-  },
-})
+:root {
+  /* Custom brand colors - primary */
+  --primary: oklch(0.55 0.20 245);
+  --primary-foreground: oklch(0.98 0 0);
+  
+  /* Custom brand colors - override defaults */
+  --success: oklch(0.65 0.15 155);
+  --danger: oklch(0.60 0.22 25);
+  --warning: oklch(0.75 0.15 80);
+}
 
-addComponents(customTheme)
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+}
+```
+
+Usage in components:
+```tsx
+<Button color="primary">Start Learning</Button>
 ```
 
 ### Typography
@@ -343,10 +343,12 @@ HeroUI uses Inter by default. Customize via theme:
 |---|---|
 | TanStack stack | React 19 + Vite + TanStack Query/Router/Store |
 | Content loading | Static JSON in `/public/content/` |
+| Sample content | 1 topic, 20 questions for MVP testing |
 | Mastery gates | `lib/engines/mastery.ts` |
-| FSRS scheduling | `lib/engines/fsrs.ts` + `ts-fsrs` |
+| FSRS scheduling | `lib/engines/fsrs.ts` + `ts-fsrs` (main thread) |
 | Basic UI | QuestionCard, ChoiceButton, FeedbackPanel |
 | localStorage | TanStack Store with `onUpdate` persistence |
+| Logging | pino/pino-pretty for dev, production-friendly format |
 
 ### Phase 2: Learning Optimization
 | Feature | Implementation |
@@ -358,6 +360,7 @@ HeroUI uses Inter by default. Customize via theme:
 | Export/Import | `/routes/settings.tsx` |
 | Progress dashboard | `/routes/progress.tsx` |
 | IndexedDB migration | `lib/storage/indexedDB.ts` |
+| Analytics (opt-in) | `lib/analytics.ts` — local-only telemetry |
 
 ### Phase 3: Scale & Polish
 | Feature | Implementation |

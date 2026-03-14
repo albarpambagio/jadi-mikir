@@ -27,6 +27,7 @@ The platform targets self-directed learners who want efficient, scientifically-g
 - **Pain Points**: 
   - Can't recommend tools that harvest student data
   - Lack of control over content quality in consumer apps
+- **Roadmap Status**: **Deferred** — This persona represents a distribution channel, not core usage. Feature development (sharing mechanisms, content packaging) will be considered in Phase 3 if primary persona adoption warrants.
 
 ---
 
@@ -89,27 +90,29 @@ The question engine is the product. Every answer updates the learner's model:
 
 ## Success Metrics
 
+> **Note on baselines**: These targets are ambitious industry standards. Actual baselines will be established during MVP testing. Targets are intended as directional goals, not hard requirements — measurement methodology will be refined post-launch.
+
 ### Engagement Metrics
-| Metric | Target | Rationale |
-|---|---|---|
-| Daily Active Users (DAU) | TBD (early stage) | Baseline engagement |
-| Session Length | ≥10 minutes/session | Indicates productive practice |
-| Questions per Session | ≥20 questions | Active retrieval volume |
-| Return Rate | ≥60% within 7 days | Habit formation |
+| Metric | Target | Rationale | Baseline Plan |
+|---|---|---|---|
+| Daily Active Users (DAU) | TBD (early stage) | Baseline engagement | Measure from day 1 of launch |
+| Session Length | ≥10 minutes/session | Indicates productive practice | Track distribution, aim for median ≥10min |
+| Questions per Session | ≥20 questions | Active retrieval volume | Target median ≥20, track distribution |
+| Return Rate | ≥60% within 7 days | Habit formation | Industry benchmark for engagement apps |
 
 ### Learning Outcome Metrics
-| Metric | Target | Rationale |
-|---|---|---|
-| Mastery Rate | ≥70% of started topics mastered | Core value delivery |
-| Retention after 30 days | ≥80% of mastered topics still due/not lapsed | Spaced repetition working |
-| Time to Mastery | ≤3x content size (e.g., 300 questions for 100-topic course) | Efficiency benchmark |
+| Metric | Target | Rationale | Baseline Plan |
+|---|---|---|---|
+| Mastery Rate | ≥70% of started topics mastered | Core value delivery | Track from Phase 2 onwards |
+| Retention after 30 days | ≥80% of mastered topics still due/not lapsed | Spaced repetition working | Measure at 30-day cohort |
+| Time to Mastery | ≤3x content size (e.g., 300 questions for 100-topic course) | Efficiency benchmark | Track median time per topic |
 
 ### Product Health Metrics
-| Metric | Target | Rationale |
-|---|---|---|
-| Export Usage | ≥10% of users export at least once | Data ownership awareness |
-| Remediation Completion | ≥50% of triggered remediations completed | Remediation working as intended |
-| Diagnostic Completion | ≥80% of new users complete diagnostic | Onboarding effectiveness |
+| Metric | Target | Rationale | Baseline Plan |
+|---|---|---|---|
+| Export Usage | ≥10% of users export at least once | Data ownership awareness | Track in Phase 2 when feature launches |
+| Remediation Completion | ≥50% of triggered remediations completed | Remediation working as intended | Track from Phase 2 onwards |
+| Diagnostic Completion | ≥80% of new users complete diagnostic | Onboarding effectiveness | Measure from Phase 2 when diagnostic launches |
 
 ---
 
@@ -185,9 +188,9 @@ The question engine is the product. Every answer updates the learner's model:
 
 1. **Validate target users** — Interview 5-10 potential users about privacy concerns and study habits
 2. **Define MVP scope** — Finalize Phase 1 features with technical feasibility review
-3. **Create content pipeline** — Identify subject matter and authoring workflow
-4. **Set up analytics** — Even local-first can have opt-in anonymous telemetry for product decisions
-5. **Plan measurement** — Define baselines for success metrics before launch
+3. **Create content pipeline** — Identify subject matter and authoring workflow; seed 1 topic with 20 questions for MVP
+4. **Plan measurement** — Define baselines for success metrics before launch (see table above)
+5. **Build MVP** — Execute Phase 1 per MVP Scope document; analytics (opt-in) will be added in Phase 2
 
 ---
 
