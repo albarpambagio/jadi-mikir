@@ -7,7 +7,10 @@ Always read the Context Protocol files in docs/ folder before suggesting any cod
 - docs/ARCHITECTURE.md — Project map and data flow
 - docs/TODO.md — Roadmap and progress
 
-When suggesting UI changes: if a Figma link is provided (in the request or in docs/CONTEXT.md), use Figma design context for layout and structure; apply tokens and rules from TECH_STACK.md and VISUAL-SPEC.md.
+When suggesting UI changes:
+- **Figma is the source of truth for visual design.** If a Figma link is provided (in the request or in docs/CONTEXT.md), always fetch the Figma design context first. Use it for layout, hierarchy, spacing, and any custom visual treatment. Never invent visuals that contradict the Figma design.
+- **Use shadcn/ui before building from scratch.** When a standard UI primitive is needed (button, input, card, dialog, table, select, etc.), install it from shadcn/ui. Only build a custom component if shadcn/ui has no equivalent, or the Figma design requires behavior shadcn cannot provide.
+- Apply tokens and rules from TECH_STACK.md and VISUAL-SPEC.md on top of the shadcn base.
 
 ## Agent Behavior
 - Be concise — answer directly, avoid preamble/postamble

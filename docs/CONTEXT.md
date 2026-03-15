@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Clean slate — project reset to base scaffold. Ready to start UI development from scratch.
+Full clean slate — all UI layers removed. Ready to build from zero.
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -10,10 +10,13 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - None currently
 
 ## Next Steps
-1. [ ] Define UI approach before writing any component code
-2. [ ] Build components screen-by-screen, starting with the Home Dashboard wireframe
-3. [ ] Follow TECH_STACK.md UI constraints strictly
+1. [ ] Define design tokens in src/index.css
+2. [ ] Rebuild UI primitives in src/components/ui/
+3. [ ] Rebuild layout in src/components/layout/
+4. [ ] Rebuild learner state in src/store/learnerStore.ts
+5. [ ] Build screens screen-by-screen following TECH_STACK.md
 
 ## Recent Updates
-- Full UI reset performed: all dashboard components deleted, Storybook removed
-- router.tsx reset to minimal scaffold (blank Dashboard placeholder)
+- Full reset: src/components/ui/, src/components/layout/, src/store/learnerStore.ts, src/components/questions/ all deleted
+- src/index.css stripped to bare Tailwind directives
+- main.tsx cleaned up (TooltipProvider removed)

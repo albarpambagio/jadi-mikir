@@ -6,18 +6,19 @@ Built **bottom-up** — isolated atomic components first (Storybook-driven), wit
 
 ---
 
-## What Already Exists — Do Not Rebuild
+## What Exists — Business Logic Only
 
 | Layer | Location | What it provides |
 |---|---|---|
-| Design tokens | `src/index.css` | Colors, spacing, typography, radius, shadows |
-| UI primitives | `src/components/ui/` | `button`, `card`, `badge`, `progress`, `input`, `dialog`, `tooltip`, `tabs`... |
-| Layout | `src/components/layout/` | `header`, `sidebar`, `main-layout` |
 | Business logic | `src/lib/engines/` | mastery, XP, FSRS, session, fire, recommendations |
-| State | `src/store/learnerStore.ts` | Learner state (XP, streak, cards, topics) |
-| Data hook | `src/lib/hooks/use-dashboard-stats.ts` | Returns streak, XP, completedCount, totalDue, sortedTopics |
+| Data hook | `src/lib/hooks/use-dashboard-stats.ts` | Returns streak, XP, completedCount, totalDue, sortedTopics (needs store) |
 
-The data layer already returns everything the wireframe needs. The UI primitives already exist. **Nothing needs to be created from scratch except the dashboard page itself.**
+Everything else has been deleted. Build in this order:
+1. Design tokens → `src/index.css`
+2. UI primitives → `src/components/ui/`
+3. Layout → `src/components/layout/`
+4. State → `src/store/learnerStore.ts`
+5. Screens → starting with the Dashboard
 
 ---
 

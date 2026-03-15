@@ -9,6 +9,12 @@
 - **Forms**: React Hook Form + Zod
 - **Testing**: Vitest + Playwright
 
+## Component Sourcing (follow this order)
+
+1. **shadcn/ui first** — for any standard primitive (button, input, card, dialog, select, table, tabs, badge, etc.), add it from shadcn/ui (`npx shadcn@latest add <component>`). Do not hand-roll what shadcn already provides.
+2. **Figma first for visuals** — Figma is the source of truth for layout, spacing, and custom styling. When a Figma design is available, fetch its context before writing any markup. Never invent visual decisions that contradict the Figma design.
+3. **Custom only when necessary** — build a component from scratch only if shadcn/ui has no equivalent, or the Figma design requires interaction/layout behavior shadcn cannot support.
+
 ## Code Conventions
 - Functional components only (no classes)
 - File naming: kebab-case for files, PascalCase for components
