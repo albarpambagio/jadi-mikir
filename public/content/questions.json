@@ -68,5 +68,145 @@
     "explanation": "'Its' (without apostrophe) is the possessive pronoun. 'It's' means 'it is'.",
     "difficulty": "medium",
     "tags": ["possessives", "pronouns"]
+  },
+  {
+    "id": "ev-001",
+    "topicId": "english-vocabulary",
+    "stem": "What does the idiom 'break the ice' mean?",
+    "choices": [
+      { "id": "a", "text": "To physically break ice", "isCorrect": false },
+      { "id": "b", "text": "To make people feel comfortable in a social situation", "isCorrect": true },
+      { "id": "c", "text": "To end a relationship", "isCorrect": false },
+      { "id": "d", "text": "To solve a difficult problem", "isCorrect": false }
+    ],
+    "explanation": "'Break the ice' means to initiate conversation or make people feel more comfortable in a group.",
+    "difficulty": "easy",
+    "tags": ["idioms", "expressions"]
+  },
+  {
+    "id": "ev-002",
+    "topicId": "english-vocabulary",
+    "stem": "Which word is a synonym of 'happy'?",
+    "choices": [
+      { "id": "a", "text": "Sad", "isCorrect": false },
+      { "id": "b", "text": "Ecstatic", "isCorrect": true },
+      { "id": "c", "text": "Angry", "isCorrect": false },
+      { "id": "d", "text": "Tired", "isCorrect": false }
+    ],
+    "explanation": "Synonyms are words with similar meanings. 'Ecstatic' is a synonym for 'happy'.",
+    "difficulty": "easy",
+    "tags": ["synonyms", "vocabulary"]
+  },
+  {
+    "id": "ev-003",
+    "topicId": "english-vocabulary",
+    "stem": "What does the phrase 'once in a blue moon' mean?",
+    "choices": [
+      { "id": "a", "text": "Every month", "isCorrect": false },
+      { "id": "b", "text": "Very rarely or never", "isCorrect": true },
+      { "id": "c", "text": "During a full moon", "isCorrect": false },
+      { "id": "d", "text": "At midnight", "isCorrect": false }
+    ],
+    "explanation": "'Once in a blue moon' means something happens very rarely.",
+    "difficulty": "medium",
+    "tags": ["idioms", "expressions"]
+  },
+  {
+    "id": "ev-004",
+    "topicId": "english-vocabulary",
+    "stem": "Choose the antonym of 'ancient':",
+    "choices": [
+      { "id": "a", "text": "Old", "isCorrect": false },
+      { "id": "b", "text": "Historic", "isCorrect": false },
+      { "id": "c", "text": "Modern", "isCorrect": true },
+      { "id": "d", "text": "Classic", "isCorrect": false }
+    ],
+    "explanation": "Antonyms are words with opposite meanings. 'Modern' is the antonym of 'ancient'.",
+    "difficulty": "easy",
+    "tags": ["antonyms", "vocabulary"]
+  },
+  {
+    "id": "ev-005",
+    "topicId": "english-vocabulary",
+    "stem": "What is the meaning of the word 'ubiquitous'?",
+    "choices": [
+      { "id": "a", "text": "Rare or unique", "isCorrect": false },
+      { "id": "b", "text": "Present everywhere", "isCorrect": true },
+      { "id": "c", "text": "Impossible to find", "isCorrect": false },
+      { "id": "d", "text": "Extremely valuable", "isCorrect": false }
+    ],
+    "explanation": "'Ubiquitous' means existing or being everywhere at the same time.",
+    "difficulty": "medium",
+    "tags": ["vocabulary", "advanced"]
+  },
+  {
+    "id": "ma-001",
+    "topicId": "math-algebra",
+    "stem": "Solve for x: 2x + 5 = 15",
+    "choices": [
+      { "id": "a", "text": "x = 5", "isCorrect": true },
+      { "id": "b", "text": "x = 10", "isCorrect": false },
+      { "id": "c", "text": "x = 7.5", "isCorrect": false },
+      { "id": "d", "text": "x = 4", "isCorrect": false }
+    ],
+    "explanation": "2x + 5 = 15 → 2x = 10 → x = 5",
+    "difficulty": "easy",
+    "tags": ["equations", "linear"]
+  },
+  {
+    "id": "ma-002",
+    "topicId": "math-algebra",
+    "stem": "Simplify: 3(x + 4) - 2x",
+    "choices": [
+      { "id": "a", "text": "x + 12", "isCorrect": true },
+      { "id": "b", "text": "5x + 12", "isCorrect": false },
+      { "id": "c", "text": "x + 4", "isCorrect": false },
+      { "id": "d", "text": "5x + 4", "isCorrect": false }
+    ],
+    "explanation": "3(x + 4) - 2x = 3x + 12 - 2x = x + 12",
+    "difficulty": "easy",
+    "tags": ["expressions", "simplify"]
+  },
+  {
+    "id": "ma-003",
+    "topicId": "math-algebra",
+    "stem": "Solve: x/3 - 4 = 2",
+    "choices": [
+      { "id": "a", "text": "x = 18", "isCorrect": true },
+      { "id": "b", "text": "x = 6", "isCorrect": false },
+      { "id": "c", "text": "x = -6", "isCorrect": false },
+      { "id": "d", "text": "x = 2", "isCorrect": false }
+    ],
+    "explanation": "x/3 - 4 = 2 → x/3 = 6 → x = 18",
+    "difficulty": "medium",
+    "tags": ["equations", "fractions"]
+  },
+  {
+    "id": "ma-004",
+    "topicId": "math-algebra",
+    "stem": "What is the value of x in 5x - 3 = 2x + 9?",
+    "choices": [
+      { "id": "a", "text": "x = 4", "isCorrect": true },
+      { "id": "b", "text": "x = 3", "isCorrect": false },
+      { "id": "c", "text": "x = 6", "isCorrect": false },
+      { "id": "d", "text": "x = 5", "isCorrect": false }
+    ],
+    "explanation": "5x - 3 = 2x + 9 → 5x - 2x = 9 + 3 → 3x = 12 → x = 4",
+    "difficulty": "medium",
+    "tags": ["equations", "variables"]
+  },
+  {
+    "id": "ma-005",
+    "topicId": "math-algebra",
+    "stem": "If 2(x + 3) = 4x - 6, what is x?",
+    "choices": [
+      { "id": "a", "text": "x = 6", "isCorrect": true },
+      { "id": "b", "text": "x = 3", "isCorrect": false },
+      { "id": "c", "text": "x = 4", "isCorrect": false },
+      { "id": "d", "text": "x = 2", "isCorrect": false }
+    ],
+    "explanation": "2(x + 3) = 4x - 6 → 2x + 6 = 4x - 6 → 6 + 6 = 4x - 2x → 12 = 2x → x = 6",
+    "difficulty": "medium",
+    "tags": ["equations", "distributive"]
   }
 ]

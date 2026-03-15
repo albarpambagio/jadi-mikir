@@ -30,16 +30,16 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 | 4 | Mastery Gate system | SKILL 1 | Store setup | ✅ Complete |
 | 5 | FSRS Spaced Repetition algorithm | SKILL 2 | Mastery Gate | ✅ Complete |
 | 6 | Basic Question UI with answer feedback | - | Content model | ✅ Complete |
-| 7 | Sample content (1 topic, 5 questions) | - | Data models | Seed for testing |
+| 7 | Sample content (5 topics, 14 questions) | - | Data models | ✅ Complete |
 
 ### P1 - Should Have (1-2 weeks)
 
 | # | Feature | SKILL | Dependencies | Status |
 |---|---------|-------|--------------|--------|
-| 8 | Session scheduler | SKILL 3 | FSRS | |
-| 9 | Choice randomization | SKILL 6 | Question UI | |
-| 10 | XP + Streak system | SKILL 8 | Session scheduler | |
-| 11 | Development logging | - | TanStack stack | pino/pino-pretty |
+| 8 | Session scheduler | SKILL 3 | FSRS | ✅ Complete |
+| 9 | Choice randomization | SKILL 6 | Question UI | ✅ Complete |
+| 10 | XP + Streak system | SKILL 8 | Session scheduler | ✅ Complete |
+| 11 | Development logging | - | TanStack stack | ✅ Complete |
 
 **Phase 1 Success Criteria**: User can complete a session with sample content, mastery advances based on performance, due reviews appear on return.
 
@@ -58,19 +58,19 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 
 | # | Feature | SKILL | Dependencies | Status |
 |---|---------|-------|--------------|--------|
-| 12 | Interleaving + Non-Interference | SKILL 3 | Session scheduler | |
-| 13 | Targeted Remediation | SKILL 5 | Mastery tracking | |
-| 14 | Diagnostic Placement | SKILL 7 | Topic content | |
-| 15 | Data Export/Import | SKILL 13 | Store | |
-| 16 | Progress Dashboard | - | Store | |
+| 12 | Interleaving + Non-Interference | SKILL 3 | Session scheduler | ✅ Complete |
+| 13 | Targeted Remediation | SKILL 5 | Mastery tracking | ✅ Complete |
+| 14 | Diagnostic Placement | SKILL 7 | Topic content | ✅ Complete |
+| 15 | Data Export/Import | SKILL 13 | Store | ✅ Complete |
+| 16 | Knowledge Graph/Skill Tree UI | - | Topic dependency graph | ✅ Complete |
 
 ### P1 - Should Have
 
 | # | Feature | SKILL | Dependencies | Status |
 |---|---------|-------|--------------|--------|
-| 17 | FIRe (Forward Interleaved Retrieval) | SKILL 10 | Topic dependency graph | |
-| 18 | IndexedDB migration | - | localStorage | For >5MB state |
-| 19 | Analytics (opt-in telemetry) | - | - | Local-only metrics |
+| 17 | FIRe (Forward Interleaved Retrieval) | SKILL 10 | Topic dependency graph | ✅ Complete |
+| 18 | IndexedDB migration | - | localStorage | ✅ Complete |
+| 19 | Analytics (opt-in telemetry) | - | - | ✅ Complete |
 
 **Phase 2 Success Criteria**: Sessions mix topics intelligently, failures trigger prerequisite drills, new users bypass known content.
 
@@ -84,17 +84,21 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 
 | # | Feature | SKILL | Dependencies | Status |
 |---|---------|-------|--------------|--------|
-| 20 | Mobile responsive polish | - | Phase 1-2 | |
-| 21 | Content creator tooling (admin UI) | SKILL 11 | Content validation | JSON editor + live validation |
-| 22 | Multiple subject tracks | - | Topic routing | |
+| 20 | Mobile responsive polish | - | Phase 1-2 | ⏳ Pending |
+| 21 | Content creator tooling (admin UI) | SKILL 11 | Content validation | ⏳ Pending |
+| 22 | Multiple subject tracks | - | Topic routing | ⏳ Pending |
+| 23 | Topic selection UI | - | Topic routing | ⏳ Pending |
+| 24 | Homepage with recommendations | - | Recommendations engine | ⏳ Pending |
+| 25 | Stats page with analytics | - | Dashboard backend | ⏳ Pending |
+| 26 | Results page after session | - | Session flow | ⏳ Pending |
 
 ### P1 - Should Have
 
 | # | Feature | SKILL | Dependencies | Status |
 |---|---------|-------|--------------|--------|
-| 23 | PWA offline support | - | Service worker | |
-| 24 | Streak notifications | - | PWA | Browser notifications |
-| 25 | Content sharing for educators | - | Export/Import | Shareable content packs |
+| 27 | PWA offline support | - | Service worker | |
+| 28 | Streak notifications | - | PWA | Browser notifications |
+| 29 | Content sharing for educators | - | Export/Import | Shareable content packs |
 
 **Phase 3 Success Criteria**: Product feels polished, content can be added without code, users return habitually.
 
@@ -204,13 +208,71 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 
 ---
 
+## Current Architecture
+
+### Backend Engines (Complete ✅)
+
+```
+src/lib/engines/
+├── mastery.ts         # Mastery Gate system
+├── fsrs.ts           # FSRS spaced repetition
+├── session.ts        # Session scheduling
+├── interleaving.ts   # Interleaving algorithm
+├── remediation.ts    # Targeted remediation
+├── diagnostic.ts     # Diagnostic placement
+├── fire.ts           # FIRe algorithm
+├── xp.ts            # XP + Streak system
+├── dashboard.ts      # Dashboard data calculations
+├── recommendations.ts # Recommendation engine
+└── exportImport.ts  # Data export/import
+```
+
+### UI Components (To Build ⏳)
+
+```
+src/components/
+└── questions/
+    ├── QuestionCard.tsx    ✅ Existing
+    ├── FeedbackPanel.tsx   ✅ Existing
+    └── index.ts
+
+# To create:
+├── dashboard/
+│   ├── DashboardPage.tsx  # Homepage
+│   ├── StatsPage.tsx      # Analytics
+│   └── useDashboardData.ts
+├── results/
+│   └── ResultsPage.tsx   # Session results
+└── recommendations/
+    └── RecommendationCard.tsx
+```
+
+---
+
 ## Next Steps
 
-1. Initialize project with TanStack stack (React 19 + Vite + TS)
-2. Implement data models and content validation (SKILL 11)
-3. Build core learning loop: Mastery Gate → FSRS → Question UI
-4. Add sample content and test session flow
-5. Iterate based on user testing
+1. ✅ Initialize project with TanStack stack (React 19 + Vite + TS)
+2. ✅ Implement data models and content validation (SKILL 11)
+3. ✅ Build core learning loop: Mastery Gate → FSRS → Question UI
+4. ✅ Add sample content and test session flow
+5. ⏳ **Build UI Components** (Dashboard, Stats, Results, Recommendations)
+6. ⏳ **Build Topic selection UI**
+7. ⏳ **Build Homepage with recommendations**
+8. ⏳ **Build Stats page with analytics**
+9. ⏳ **Build Results page after session**
+10. ⏳ Mobile responsive polish or Content creator tooling (admin UI)
+
+---
+
+## UI Implementation Priority
+
+Here's the recommended build order for Phase 3 UI:
+
+1. **DashboardPage** - Homepage with stats overview + recommendations
+2. **StatsPage** - Analytics and progress tracking
+3. **ResultsPage** - Post-session results display
+4. **Topic Selection** - Grid of available topics
+5. **RecommendationCard** - Personalized suggestions
 
 ---
 

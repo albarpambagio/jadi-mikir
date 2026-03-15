@@ -44,3 +44,54 @@
 - **B** Primary CTA always visible above fold
 - **C** Topic cards show progress bar + mastery state + due count
 - **D** No account / login UI — fully local
+
+## ✅ UI/UX Requirements for Home Dashboard
+1. **Stat Card Design System**
+   - Consistent spacing: 4px between counts/labels
+   - Mastery badges with tooltips (e.g., "Complete 14/42 topics")
+   - Gradient due count backgrounds
+
+2. **Primary CTA Visibility**
+   - Persistent "Start Review Session" button
+   - High-contrast emergency buttons (3:1 ratio)
+   - Accessible keyboard focus states
+
+3. **Progress Indicators**
+   - Color-coded bars (4 stages)
+   - Mastery state badges with hover animations
+   - Skill completion requirements (e.g., "Complete 3 topics")
+
+4. **Topic Navigation**
+   - Collapsible topic tree with smooth transitions
+   - Visual hierarchy for parent topics (larger fonts)
+   - Contextual help icon (❓) for complex topics
+
+5. **Data Portability**
+   - Export buttons with confirmation dialogs
+   - Supported formats: CSV (topics), JSON (skill tree), PDF (results)
+   - Remeasure size before download (max 512MB)
+
+6. **Mode Compatibility**
+   - 4.5:1 contrast ratio for text
+   - 12px+ spacing between elements
+   - 200ms transitions for light/dark mode
+
+7. **Skill Tree Visuals**
+   - Radial XP progress indicators
+   - Animated achievement badges
+   - Last-reviewed timestamps
+
+8. **Empty States**
+   - Skill tree template: "Add first topic" prompt
+   - Error boundary: "Failed to load topics" state
+   - Skeleton loading states for dynamic content
+
+9. **State Synchronization**
+   - Shared topic selection context
+   - Progress reflection in multiple locations
+   - Animation debouncing
+
+10. **Performance Optimization**
+    - Lazy-load topic images below fold
+    - Virtualize long topic lists (500+ items)
+    - Reduce progress bar render passes

@@ -7,5 +7,23 @@
     "difficulty": "beginner",
     "prerequisites": [],
     "questionCount": 5
+  },
+  {
+    "id": "english-vocabulary",
+    "title": "English Vocabulary Building",
+    "description": "Expand your vocabulary with common words, idioms, and phrases for everyday use",
+    "subject": "English",
+    "difficulty": "beginner",
+    "prerequisites": [],
+    "questionCount": 5
+  },
+  {
+    "id": "math-algebra",
+    "title": "Algebra Basics",
+    "description": "Learn fundamental algebraic concepts including equations, expressions, and inequalities",
+    "subject": "Mathematics",
+    "difficulty": "intermediate",
+    "prerequisites": [],
+    "questionCount": 5
   }
 ]

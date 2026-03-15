@@ -1,0 +1,34 @@
+import * as React from "react"
+
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = React.useState(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia(query).matches
+    }
+    return false
+  })
+
+  React.useEffect(() => {
+    const mediaQuery = window.matchMedia(query)
+    
+    const handler = (event: MediaQueryListEvent) => {
+      setMatches(event.matches)
+    }
+
+    mediaQuery.addEventListener("change", handler)
+    
+    return () => {
+      mediaQuery.removeEventListener("change", handler)
+    }
+  }, [query])
+
+  return matches
+}
+
+export function useIsMobile(breakpoint: number = 768): boolean {
+  return useMediaQuery(`(max-width: ${breakpoint - 1}px)`)
+}
+
+export function useIsDark(): boolean {
+  return useMediaQuery("(prefers-color-scheme: dark)")
+}
