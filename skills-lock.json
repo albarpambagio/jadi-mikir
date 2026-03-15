@@ -16,6 +16,11 @@
       "sourceType": "github",
       "computedHash": "3d181f9030fed4355ff97626b3a75d3e324091563595b8950592347e49e3e238"
     },
+    "self-improving-agent": {
+      "source": "charon-fan/agent-playbook",
+      "sourceType": "github",
+      "computedHash": "f52b5577f09152ab9c2577f6fd6bd4d23ba87acc884dfc3e90a551949f0d90f1"
+    },
     "slack": {
       "source": "vercel-labs/agent-browser",
       "sourceType": "github",
