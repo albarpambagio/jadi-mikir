@@ -8,7 +8,6 @@
 - **Styling**: Tailwind CSS v4 + CVA
 - **Forms**: React Hook Form + Zod
 - **Testing**: Vitest + Playwright
-- **Documentation**: Storybook 10
 
 ## Code Conventions
 - Functional components only (no classes)
@@ -75,4 +74,3 @@
 - **Lint CSS**: npm run lint:css
 - **Test**: npm test
 - **Test UI**: npm run test:ui
-- **Storybook**: npm run storybook

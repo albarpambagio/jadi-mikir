@@ -1,7 +1,6 @@
 # TODO.md — Roadmap
 
 ## In Progress
-- [x] Context Protocol setup for universal agent tool switching
 - [ ] UI development and component creation
 
 ## Backlog
@@ -11,6 +10,8 @@
 - [ ] Add API integration layer
 - [ ] Set up authentication (future)
 - [ ] Add testing coverage
+- [ ] Remediation engine (postponed)
+- [ ] Onboarding engine (postponed)
 
 ## Completed
 - Project initialization with Vite + React 19 + TypeScript

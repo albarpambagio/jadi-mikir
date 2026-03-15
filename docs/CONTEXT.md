@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-UI development — building and refining the user interface components and screens.
+Clean slate — project reset to base scaffold. Ready to start UI development from scratch.
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -10,9 +10,10 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - None currently
 
 ## Next Steps
-1. [ ] Continue UI component development
-2. [ ] Ensure all components follow TECH_STACK.md UI constraints
-3. [ ] Run lint checks before committing any changes
+1. [ ] Define UI approach before writing any component code
+2. [ ] Build components screen-by-screen, starting with the Home Dashboard wireframe
+3. [ ] Follow TECH_STACK.md UI constraints strictly
 
 ## Recent Updates
-- Context Protocol files created for universal agent tool switching
+- Full UI reset performed: all dashboard components deleted, Storybook removed
+- router.tsx reset to minimal scaffold (blank Dashboard placeholder)
