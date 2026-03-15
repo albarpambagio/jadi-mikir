@@ -49,15 +49,14 @@ This document outlines a complete tech stack for the **JadiMikir** adaptive MCQ 
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "@heroui/react": "^3.0.0",
+    "@base-ui/react": "^1.3.0",
     "@tanstack/react-store": "^0.9.0",
-    "@tanstack/react-query": "^5.0.0",
+    "@tanstack/react-query": "^5.60.0",
     "@tanstack/react-router": "^1.0.0",
-    "ts-fsrs": "^5.0.0",
-    "idb": "^8.0.0",
-    "uuid": "^10.0.0",
-    "framer-motion": "^11.0.0",
-    "lucide-react": "^0.400.0"
+    "ts-fsrs": "^5.2.0",
+    "uuid": "^11.0.0",
+    "framer-motion": "^11.15.0",
+    "lucide-react": "^0.468.0"
   }
 }
 ```
@@ -221,21 +220,18 @@ Based on the learning science principles:
 | Layer | Choice | Rationale |
 |-------|--------|-----------|
 | **Base** | Tailwind CSS 4 | Performance (JIT), consistency, small CSS output |
-| **Components** | HeroUI v3 (Beta) | Beautiful, accessible components with built-in theming |
+| **Components** | shadcn/ui + @base-ui/react | Beautiful, accessible, customizable components |
 | **Animations** | Framer Motion | Smooth 60fps animations, declarative |
 | **Icons** | Lucide React | Clean, consistent, tree-shakeable |
-| **Theme** | HeroUI built-in + Dark mode support |
-
-> **Note**: HeroUI v3 is currently in Beta. Monitor for stability updates before production use.
+| **Theme** | Tailwind + CSS Variables | Custom theming with full control
 
 ### Color Palette
 
-HeroUI v3 uses CSS-based theming with CSS variables. Override in your global styles:
+The project uses CSS-based theming with CSS variables. Override in your global styles:
 
 ```css
 /* src/index.css */
 @import "tailwindcss";
-@import "@heroui/styles";
 
 :root {
   /* Custom brand colors - primary */
@@ -256,19 +252,19 @@ HeroUI v3 uses CSS-based theming with CSS variables. Override in your global sty
 
 Usage in components:
 ```tsx
-<Button color="primary">Start Learning</Button>
+<Button variant="default">Start Learning</Button>
 ```
 
 ### Typography
 
-HeroUI uses Inter by default. Customize via theme:
+The project uses Montserrat (sans), Merriweather (serif), and Source Code Pro (monospace) as defined in Tailwind config.
 
 | Element | Font | Size | Weight |
 |---------|------|------|--------|
-| Question Stem | Inter | 20px | 500 |
-| Choices | Inter | 16px | 400 |
-| Explanation | Inter | 14px | 400 |
-| XP/Stats | JetBrains Mono | 14px | 600 |
+| Question Stem | Montserrat | 20px | 500 |
+| Choices | Montserrat | 16px | 400 |
+| Explanation | Merriweather | 14px | 400 |
+| XP/Stats | Source Code Pro | 14px | 600 |
 
 ### Component Design Rules
 
@@ -346,7 +342,7 @@ HeroUI uses Inter by default. Customize via theme:
 | Sample content | 1 topic, 20 questions for MVP testing |
 | Mastery gates | `lib/engines/mastery.ts` |
 | FSRS scheduling | `lib/engines/fsrs.ts` + `ts-fsrs` (main thread) |
-| Basic UI | QuestionCard, ChoiceButton, FeedbackPanel |
+| Basic UI | QuestionCard, ChoiceButton, FeedbackPanel (shadcn/ui) |
 | localStorage | TanStack Store with `onUpdate` persistence |
 | Logging | pino/pino-pretty for dev, production-friendly format |
 
@@ -365,7 +361,7 @@ HeroUI uses Inter by default. Customize via theme:
 ### Phase 3: Scale & Polish
 | Feature | Implementation |
 |---|---|
-| Mobile polish | HeroUI responsive components |
+| Mobile polish | shadcn/ui responsive components |
 | Content authoring UI | Separate admin route with JSON editor |
 | Multiple subjects | Topic routing with subject prefix |
 
@@ -637,8 +633,8 @@ Features:
 | **State** | TanStack Store + Query + Router |
 | **SRS Engine** | ts-fsrs |
 | **Storage** | localStorage (Phase 1) → IndexedDB (Phase 2) |
-| **UI Components** | HeroUI v3 |
-| **Styling** | Tailwind CSS 4 + HeroUI theming |
+| **UI Components** | shadcn/ui + @base-ui/react |
+| **Styling** | Tailwind CSS 4 + CSS Variables |
 | **Animations** | Framer Motion |
 | **Icons** | Lucide React |
 | **Deployment** | Cloudflare Pages (free) |
@@ -656,7 +652,7 @@ Features:
 
 This stack delivers:
 - **Performance**: <100KB JS bundle, instant page loads, efficient state management
-- **UI**: HeroUI for beautiful, accessible components with built-in theming
+- **UI**: shadcn/ui + @base-ui/react for beautiful, accessible components with custom theming
 - **Privacy**: Zero account, localStorage/IndexedDB, opt-in analytics only
 - **Learning effectiveness**: FSRS + mastery gates + interleaving + remediation
 - **Free deployment**: Unlimited bandwidth, edge caching, zero cost

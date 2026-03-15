@@ -24,11 +24,14 @@ This document explains the complete UI development workflow for the JadiMahir pr
 | **React 19** | UI Framework | `src/` |
 | **Vite 6** | Build System | `vite.config.ts` |
 | **TypeScript 5.7** | Type Safety | `tsconfig.json` |
-| **Tailwind CSS 4** | Styling | `tailwind.config.js` |
+| **Tailwind CSS 4** | Styling | `src/index.css` (tokens) |
 | **Storybook 10.2.19** | Component Documentation | `.storybook/` |
 | **Agent Browser 0.20.5** | AI Agent Testing | Global + `.agents/skills/` |
 | **Playwright 1.58.2** | Unit/Integration Tests | `vitest.config.ts` |
 | **Vitest 4.1.0** | Testing Framework | `vitest.config.ts` |
+| **ESLint 9** | Code Quality | `eslint.config.js` |
+| **Stylelint 17** | CSS Quality | `.stylelintrc.js` |
+| **Chromatic** | Visual Regression | `.storybook/` |
 
 > **Note**: Storybook 10.2.19 and Vitest 4.1.0 are current versions as of March 2026. These versions include recent releases with ESM-only distribution (Storybook 10) and V8 code coverage improvements (Vitest 4).
 
@@ -589,6 +592,34 @@ export default {
 }
 ```
 
+### 4.5 Aesthetic Quality Enforcement
+
+The project includes automated design token enforcement to prevent AI-generated UI slop:
+
+#### Design Tokens
+- **Location**: `src/index.css` - Locked token set using Tailwind 4 @theme
+- **Tokens**: Neutral scale, brand colors, accent colors, spacing, typography, shadows, radius
+
+#### ESLint Rules (`eslint.config.js`)
+- `tailwindcss/no-arbitrary-value` - Bans arbitrary values like `bg-[#ff0000]`
+- `no-restricted-syntax` - Bans hardcoded hex/rgb colors
+
+#### Stylelint Rules (`.stylelintrc.js`)
+- Bans gradients in CSS files
+- Requires `var()` for colors
+- Disallows arbitrary units
+
+#### Running Quality Checks
+```bash
+npm run lint     # ESLint + Tailwind rules
+npm run lint:css # Stylelint CSS check
+```
+
+#### Visual Reference
+- `src/stories/DesignSystem.stories.tsx` - Visual token reference
+- `src/stories/AntiPatterns.stories.tsx` - Examples of what to avoid
+- `VISUAL-SPEC.md` - Complete visual specification
+
 ### 4.4 Verification Script
 
 Location: `scripts/verify-storybook-fix.sh`
@@ -794,7 +825,8 @@ npm run storybook        # Start Storybook on port 6006
 
 # Testing
 npm run test             # Run Vitest
-npm run lint             # Run ESLint
+npm run lint             # Run ESLint + Tailwind rules
+npm run lint:css         # Run Stylelint CSS check
 npm run typecheck        # TypeScript check
 
 # Build
@@ -818,6 +850,14 @@ agent-browser screenshot test.png
 | `scripts/verify-storybook-fix.sh` | Verification script |
 | `AGENT-BROWSER-INTEGRATION.md` | Integration guide |
 | `TEST-RESULTS.md` | Test results |
+| `VISUAL-SPEC.md` | Visual specification |
+| `AGENTS.md` | Agent guidelines |
+| `src/stories/DesignSystem.stories.tsx` | Design token reference |
+| `src/stories/AntiPatterns.stories.tsx` | Anti-pattern examples |
+| `eslint.config.js` | ESLint configuration |
+| `.stylelintrc.js` | Stylelint configuration |
+| `.github/workflows/test.yml` | CI lint workflows |
+| `.github/workflows/chromatic.yml` | Visual regression |
 
 ---
 
