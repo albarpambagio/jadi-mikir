@@ -1,5 +1,4 @@
 import tailwindcss from 'eslint-plugin-tailwindcss'
-import storybook from 'eslint-plugin-storybook'
 import tsParser from '@typescript-eslint/parser'
 
 export default [
@@ -30,8 +29,6 @@ export default [
       'tailwindcss/no-arbitrary-value': 'error',
     },
   },
-  // Storybook configuration
-  ...storybook.configs['flat/recommended'],
   // Custom rules
   {
     files: ['**/*.{ts,tsx}'],
