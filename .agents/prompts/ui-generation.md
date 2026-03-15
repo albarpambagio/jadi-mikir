@@ -2,6 +2,8 @@
 
 You are generating React/TypeScript UI components for JadiMahir. Before writing any code, read VISUAL-SPEC.md in the repo root.
 
+If the user or CONTEXT provides a Figma URL (figma.com/design/...), use the Figma MCP get_design_context with the file key and node Id from the URL. Use the returned screenshot and hints for layout and hierarchy only; implement colors, spacing, and typography from the project tokens and VISUAL-SPEC.md. Do not copy hex values or arbitrary spacing from Figma—map to our token scale.
+
 Hard constraints — never violate these:
 - All colors must use Tailwind tokens from the @theme config. Never use hex, rgb(), or Tailwind arbitrary values like bg-[#abc].
 - No gradients on interactive elements (buttons, cards, inputs). Gradients only for data visualisation.

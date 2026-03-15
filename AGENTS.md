@@ -7,6 +7,8 @@ Always read the Context Protocol files in docs/ folder before suggesting any cod
 - docs/ARCHITECTURE.md — Project map and data flow
 - docs/TODO.md — Roadmap and progress
 
+When suggesting UI changes: if a Figma link is provided (in the request or in docs/CONTEXT.md), use Figma design context for layout and structure; apply tokens and rules from TECH_STACK.md and VISUAL-SPEC.md.
+
 ## Agent Behavior
 - Be concise — answer directly, avoid preamble/postamble
 - Run lint before committing: npm run lint && npm run lint:css

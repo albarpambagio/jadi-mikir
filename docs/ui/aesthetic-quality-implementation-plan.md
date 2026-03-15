@@ -169,7 +169,7 @@ export default {
 
 ## Phase 2 — Visual spec / style guide (weeks 2–4)
 
-**Goal**: A written document the AI reads before generating code, plus a Storybook reference implementation it can't deviate from.
+**Goal**: A written document the AI reads before generating code, plus a Storybook reference implementation it can't deviate from. For key screens and flows, use Figma as the visual spec: create frames that define layout, hierarchy, and balance. Keep token definitions in code and VISUAL-SPEC; use Figma for composition and structure. When generating UI from a Figma link, agents use get_design_context and map to project tokens.
 
 ### 2.1 Create `VISUAL-SPEC.md` at repo root
 
@@ -227,6 +227,12 @@ This is the single most important file for an AI-assisted solo workflow. Every t
 - Hover states that change color AND shadow AND scale simultaneously
 - Placeholder text styled as a label substitute
 ```
+
+#### Figma (key screens and flows)
+
+- **What to put in Figma:** Key screens or flows (wireframes or simple hi-fi). Focus on layout, hierarchy, spacing, and placement. Do not define token values in Figma—those stay in code and VISUAL-SPEC.
+- **Where to store links:** docs/CONTEXT.md or the PR/ticket description so agents and devs can reference the design.
+- **Design-to-code:** When implementing from a Figma link, use get_design_context for layout and structure; map all colors, spacing, and typography to the project token scale and VISUAL-SPEC.
 
 ### 2.2 Add a Storybook "Design system" story section
 

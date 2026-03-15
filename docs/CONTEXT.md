@@ -3,6 +3,9 @@
 ## Current Focus
 UI development — building and refining the user interface components and screens.
 
+## Design / Figma
+Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
+
 ## Active Constraints
 - None currently
 

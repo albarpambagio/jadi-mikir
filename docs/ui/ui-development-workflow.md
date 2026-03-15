@@ -9,18 +9,19 @@ This document explains the complete UI development workflow for the JadiMahir pr
 ### Development Workflow Pipeline
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     Development Workflow                     │
-├─────────────────────────────────────────────────────────────┤
-│ 1. Component Development → 2. Storybook → 3. AI Testing     │
-│ 4. Quality Gates → 5. Integration → 6. Deployment           │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        Development Workflow                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 0. Design (Figma) → 1. Component Development → 2. Storybook → 3. AI Testing │
+│ 4. Quality Gates → 5. Integration → 6. Deployment                            │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Tool Stack
 
 | Tool | Purpose | Location |
 |------|---------|----------|
+| **Figma** | Key screens / layout spec | External; link in docs/CONTEXT.md or PR |
 | **React 19** | UI Framework | `src/` |
 | **Vite 6** | Build System | `vite.config.ts` |
 | **TypeScript 5.7** | Type Safety | `tsconfig.json` |
@@ -34,6 +35,37 @@ This document explains the complete UI development workflow for the JadiMahir pr
 | **Chromatic** | Visual Regression | `.storybook/` |
 
 > **Note**: Storybook 10.2.19 and Vitest 4.1.0 are current versions as of March 2026. These versions include recent releases with ESM-only distribution (Storybook 10) and V8 code coverage improvements (Vitest 4).
+
+---
+
+## 0. Design (Figma)
+
+Before implementing new screens or flows, define layout and hierarchy in Figma so implementation has a clear visual target.
+
+### When to use
+
+- New screen or user flow
+- Major layout or composition change
+- Not required for small component tweaks or existing screens with no design change
+
+### What to put in Figma
+
+- **Key screens or flows** — wireframes or simple hi-fi frames. Focus on layout, hierarchy, spacing, and placement of major blocks.
+- **Do not** duplicate the full component library in Figma.
+- **Do not** define token values (colors, spacing scale, type scale) in Figma; those live in `src/index.css` and VISUAL-SPEC.md.
+
+### Output
+
+- A Figma link (and optionally node Id) for the frame or screen.
+- Store the link in [docs/CONTEXT.md](docs/CONTEXT.md) or in the ticket/PR description so agents and developers can reference it.
+
+### Design-to-code
+
+When generating or reviewing UI, if the user or CONTEXT provides a Figma URL:
+
+1. Use the Figma MCP `get_design_context` with the file key and node Id from the URL to get a screenshot and hints.
+2. Implement in code using **project tokens and VISUAL-SPEC.md** — adapt to existing components and conventions.
+3. Use the Figma output for layout and hierarchy only; map colors, spacing, and typography to the locked token set.
 
 ---
 
@@ -140,6 +172,7 @@ export { Button, buttonVariants }
 
 ### 1.3 Component Development Steps
 
+0. **Design intent**: If this is a new screen or flow, ensure a Figma frame or link exists; reference it when implementing.
 1. **Create Component File**: `src/components/ui/my-component.tsx`
 2. **Implement Logic**: Use CVA for variants, cn for classes
 3. **Export Types**: Export component and variant types
@@ -844,6 +877,7 @@ agent-browser screenshot test.png
 
 | File/Directory | Purpose |
 |----------------|---------|
+| `docs/CONTEXT.md` or PR description | Figma links / key screens for current work |
 | `src/components/ui/` | UI component library |
 | `.storybook/` | Storybook configuration |
 | `.agents/skills/agent-browser/` | AI agent skill |
