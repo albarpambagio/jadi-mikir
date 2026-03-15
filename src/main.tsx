@@ -8,7 +8,12 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 // Optimize font loading with font-display: swap
 // Only load essential fonts initially, others can load async
 import '@fontsource/montserrat/400.css'
+import '@fontsource/montserrat/500.css'
 import '@fontsource/montserrat/600.css'
+import '@fontsource/merriweather/400.css'
+import '@fontsource/merriweather/700.css'
+import '@fontsource/source-code-pro/400.css'
+import '@fontsource/source-code-pro/600.css'
 import './index.css'
 
 const queryClient = new QueryClient({
