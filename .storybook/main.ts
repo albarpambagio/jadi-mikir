@@ -9,6 +9,7 @@ const config: StorybookConfig = {
     "@chromatic-com/storybook",
     // "@storybook/addon-vitest", // Temporarily disabled for testing
     "@storybook/addon-a11y",
+    "@storybook/addon-backgrounds",
     "@storybook/addon-docs",
     "@storybook/addon-onboarding"
     // "@storybook/addon-viewport" // REMOVED: Deprecated in Storybook 9.0+
