@@ -40,7 +40,7 @@ export interface PerformanceMetrics {
 }
 
 export function getDashboardStats(): DashboardStats {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   
   const totalQuestionsAnswered = state.reviewLogs.length
   const correctAnswers = state.reviewLogs.filter(r => r.rating !== 'again').length
@@ -72,7 +72,7 @@ export function getDashboardStats(): DashboardStats {
 }
 
 export function getTopicProgress(topics: Topic[]): TopicProgress[] {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   
   return topics.map(topic => {
     const mastery = state.topics[topic.id]
@@ -107,7 +107,7 @@ export function getTopicProgress(topics: Topic[]): TopicProgress[] {
 }
 
 export function getSessionStats(): SessionStats {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const today = new Date().toDateString()
   const weekAgo = new Date()
   weekAgo.setDate(weekAgo.getDate() - 7)
@@ -142,7 +142,7 @@ export function getSessionStats(): SessionStats {
 }
 
 export function getPerformanceMetrics(topics: Topic[]): PerformanceMetrics {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   
   const accuracyByDifficulty: Record<string, { total: number; correct: number }> = {
     easy: { total: 0, correct: 0 },

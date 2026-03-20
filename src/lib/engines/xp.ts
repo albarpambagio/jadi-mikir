@@ -1,4 +1,4 @@
-import { learnerStore, learnerActions } from '@/store/learnerStore'
+import { learnerStore, learnerActions, getState } from '@/store/learnerStore'
 
 export interface XpReward {
   base: number
@@ -29,7 +29,7 @@ const XP_CONFIG = {
 }
 
 export function calculateXpReward(isCorrect: boolean): XpReward {
-  const state = learnerStore.getState()
+  const state = getState()
   const base = isCorrect ? XP_CONFIG.correct : XP_CONFIG.incorrect
   
   const streakMultiplier = getStreakMultiplier(state.streak)
@@ -71,7 +71,7 @@ export function addXp(amount: number): void {
 }
 
 export function awardSessionCompletionXp(questionsCorrect: number, totalQuestions: number): number {
-  const state = learnerStore.getState()
+  const state = getState()
   const isPerfect = questionsCorrect === totalQuestions
   const completionBonus = isPerfect ? XP_CONFIG.perfectSession : XP_CONFIG.sessionCompletion
   
@@ -83,7 +83,7 @@ export function awardSessionCompletionXp(questionsCorrect: number, totalQuestion
 }
 
 export function awardDailyPracticeXp(): boolean {
-  const state = learnerStore.getState()
+  const state = getState()
   const today = new Date().toDateString()
   
   if (state.lastPracticeDate === today) {

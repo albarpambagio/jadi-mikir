@@ -41,7 +41,7 @@ export function selectQuestionsForSession(
   questions: Question[],
   config: SessionConfig = DEFAULT_CONFIG
 ): Question[] {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const now = new Date()
 
   const newQuestions: Question[] = []
@@ -115,7 +115,7 @@ export function submitAnswer(choiceId: string): void {
   currentSession.answers.set(question.id, choiceId)
 
   const cardId = `${question.id}_card`
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const existingCard = state.cards[cardId]
 
   if (!existingCard) {

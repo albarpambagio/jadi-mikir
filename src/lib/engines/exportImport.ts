@@ -11,7 +11,7 @@ export interface ExportData {
 const EXPORT_VERSION = '1.0.0'
 
 export function exportState(): ExportData {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   
   return {
     version: EXPORT_VERSION,
@@ -98,7 +98,7 @@ export function validateImport(data: unknown): { valid: boolean; version?: strin
 }
 
 export function mergeState(importedState: Partial<LearnerState>): void {
-  const currentState = learnerStore.getState()
+  const currentState = learnerStore.get()
   
   const merged: LearnerState = {
     ...currentState,

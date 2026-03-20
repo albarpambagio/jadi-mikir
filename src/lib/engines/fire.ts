@@ -31,7 +31,7 @@ export function getRetrievalCandidates(
   allQuestions: Question[],
   limit: number = 10
 ): RetrievalCandidate[] {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const candidates: RetrievalCandidate[] = []
 
   const topicQuestions = allQuestions.filter(q => q.topicId === topic.id)
@@ -191,7 +191,7 @@ export function getFireStats(): {
   studyCount: number
   averagePriority: number
 } {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   
   const retrievalLogs = state.reviewLogs.filter(log => 
     log.rating !== 'again'

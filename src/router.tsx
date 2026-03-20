@@ -1,22 +1,21 @@
-import { createRootRoute, createRoute, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { Route, Switch, Router } from 'wouter'
+import { Layout } from '@/components/layout/layout'
+import { ComponentShowcase } from '@/components/showcase/component-showcase'
 
-function Layout() {
+export function AppRouter() {
   return (
-    <div className="min-h-screen bg-background">
-      <main className="mx-auto max-w-6xl px-4 py-8">
-        <Outlet />
-      </main>
-      {import.meta.env.DEV && <TanStackRouterDevtools />}
-    </div>
+    <Router>
+      <Layout>
+        <Switch>
+          <Route path="/" component={ComponentShowcase} />
+          <Route>
+            <div className="text-center py-20">
+              <h1 className="text-2xl font-semibold">404 - Not Found</h1>
+              <p className="text-muted-foreground mt-2">The page you're looking for doesn't exist.</p>
+            </div>
+          </Route>
+        </Switch>
+      </Layout>
+    </Router>
   )
 }
-
-function Dashboard() {
-  return <div className="text-foreground">Dashboard placeholder</div>
-}
-
-const rootRoute = createRootRoute({ component: Layout })
-const indexRoute = createRoute({ getParentRoute: () => rootRoute, path: '/', component: Dashboard })
-const routeTree = rootRoute.addChildren([indexRoute])
-export { routeTree }

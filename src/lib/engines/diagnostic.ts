@@ -52,7 +52,7 @@ export function calculatePlacement(
   topicId: string,
   answers: Map<string, boolean>
 ): DiagnosticResult {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const entries = Array.from(answers.entries())
   const correctCount = entries.filter(([, correct]) => correct).length
   const total = entries.length
@@ -108,7 +108,7 @@ export function applyDiagnosticPlacement(
 }
 
 export function shouldRunDiagnostic(topicId: string): boolean {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const mastery = state.topics[topicId]
   
   if (!mastery) return true

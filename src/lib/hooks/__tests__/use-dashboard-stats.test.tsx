@@ -6,7 +6,7 @@ import { learnerStore, learnerActions } from '@/store/learnerStore'
 describe('useDashboardStats', () => {
   beforeEach(() => {
     // Reset store to initial state before each test
-    const initialState = learnerStore.getState()
+    const initialState = learnerStore.get()
     learnerStore.setState(() => ({
       ...initialState,
       xp: 0,

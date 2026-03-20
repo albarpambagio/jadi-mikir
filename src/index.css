@@ -1,8 +1,187 @@
-@tailwind base;
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource/montserrat/400.css";
+@import "@fontsource/montserrat/500.css";
+@import "@fontsource/montserrat/600.css";
+@import "@fontsource/merriweather/400.css";
+@import "@fontsource/merriweather/700.css";
+@import "@fontsource/source-code-pro/400.css";
 
-@plugin "tailwindcss-animate";
+@custom-variant dark (&:where(.dark, .dark *));
 
-@custom-variant dark (&:is(.dark *));
+/* ===== NATURE THEME - LIGHT ===== */
+:root {
+  --background: hsl(32 30% 97%);
+  --foreground: hsl(24 25% 17%);
+  /* Card is pure white to lift above the warm parchment background */
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(24 25% 17%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(24 25% 17%);
+  --primary: hsl(142 76% 36%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(142 40% 88%);
+  --secondary-foreground: hsl(142 60% 30%);
+  --muted: hsl(142 15% 88%);
+  --muted-foreground: hsl(24 20% 45%);
+  --accent: hsl(142 50% 72%);
+  --accent-foreground: hsl(142 60% 30%);
+  --destructive: hsl(0 63% 54%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(142 15% 80%);
+  --input: hsl(142 15% 80%);
+  --ring: hsl(142 76% 36%);
+  --radius: 0.5rem;
+  --success: hsl(142 60% 45%);
+  --success-foreground: hsl(0 0% 100%);
+  --warning: hsl(38 92% 50%);
+  --warning-foreground: hsl(48 96% 11%);
+  --streak-fire: hsl(25 95% 53%);
+  --streak-fire-foreground: hsl(0 0% 100%);
+  --mastery-gold: hsl(43 74% 40%);
+  --mastery-gold-foreground: hsl(0 0% 100%);
+  /* Chart palette — hue-varied for meaningful differentiation */
+  --chart-1: hsl(142 70% 40%);
+  --chart-2: hsl(185 65% 42%);
+  --chart-3: hsl(38 92% 50%);
+  --chart-4: hsl(0 72% 55%);
+  --chart-5: hsl(220 70% 55%);
+  --sidebar: hsl(142 15% 93%);
+  --sidebar-foreground: hsl(24 25% 17%);
+  --sidebar-primary: hsl(142 76% 36%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(142 50% 72%);
+  --sidebar-accent-foreground: hsl(142 60% 30%);
+  --sidebar-border: hsl(142 15% 80%);
+  --sidebar-ring: hsl(142 76% 36%);
+}
 
-@tailwind components;
-@tailwind utilities;
+/* ===== NATURE THEME - DARK ===== */
+.dark {
+  --background: hsl(150 25% 18%);
+  --foreground: hsl(140 10% 90%);
+  --card: hsl(150 25% 22%);
+  --card-foreground: hsl(140 10% 90%);
+  --popover: hsl(150 25% 22%);
+  --popover-foreground: hsl(140 10% 90%);
+  --primary: hsl(142 70% 50%);
+  --primary-foreground: hsl(145 50% 15%);
+  --secondary: hsl(142 25% 35%);
+  --secondary-foreground: hsl(140 10% 90%);
+  --muted: hsl(150 20% 25%);
+  --muted-foreground: hsl(140 10% 60%);
+  --accent: hsl(142 60% 40%);
+  --accent-foreground: hsl(140 10% 90%);
+  --destructive: hsl(0 63% 54%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(142 25% 35%);
+  --input: hsl(142 25% 35%);
+  --ring: hsl(142 70% 50%);
+  --success: hsl(142 60% 50%);
+  --success-foreground: hsl(145 50% 15%);
+  --warning: hsl(38 80% 50%);
+  --warning-foreground: hsl(48 96% 11%);
+  --streak-fire: hsl(25 95% 53%);
+  --streak-fire-foreground: hsl(0 0% 100%);
+  --mastery-gold: hsl(43 74% 50%);
+  --mastery-gold-foreground: hsl(48 96% 11%);
+  /* Chart palette — hue-varied */
+  --chart-1: hsl(142 60% 55%);
+  --chart-2: hsl(185 60% 52%);
+  --chart-3: hsl(38 80% 55%);
+  --chart-4: hsl(0 65% 60%);
+  --chart-5: hsl(220 65% 60%);
+  --sidebar: hsl(150 25% 18%);
+  --sidebar-foreground: hsl(140 10% 90%);
+  --sidebar-primary: hsl(142 70% 50%);
+  --sidebar-primary-foreground: hsl(145 50% 15%);
+  --sidebar-accent: hsl(142 60% 40%);
+  --sidebar-accent-foreground: hsl(140 10% 90%);
+  --sidebar-border: hsl(142 25% 35%);
+  --sidebar-ring: hsl(142 70% 50%);
+}
+
+/* ===== TAILWIND THEME ===== */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-streak-fire: var(--streak-fire);
+  --color-streak-fire-foreground: var(--streak-fire-foreground);
+  --color-mastery-gold: var(--mastery-gold);
+  --color-mastery-gold-foreground: var(--mastery-gold-foreground);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  /* Surface aliases matching TECH_STACK.md token names */
+  --color-surface: var(--background);
+  --color-surface-raised: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Merriweather", ui-serif, Georgia, serif;
+  --font-mono: "Source Code Pro", ui-monospace, monospace;
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}

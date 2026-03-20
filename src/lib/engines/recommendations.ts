@@ -28,7 +28,7 @@ const WEIGHTS = {
 }
 
 export function getRecommendations(topics: Topic[]): OverallRecommendation {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const now = new Date()
   
   const topicScores: TopicRecommendation[] = []

@@ -25,7 +25,7 @@ export function analyzeFailedQuestion(
   topicId: string,
   topics: Topic[]
 ): FailedTopicAnalysis | null {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const topic = topics.find(t => t.id === topicId)
   
   if (!topic) return null
@@ -47,7 +47,7 @@ export function getPrerequisiteWeaknesses(
   topicId: string,
   topics: Topic[]
 ): RemediationRecommendation[] {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const topic = topics.find(t => t.id === topicId)
   
   if (!topic || !topic.prerequisites) return []
@@ -109,7 +109,7 @@ export function getAllWeakTopics(
   topics: Topic[],
   threshold: number = WEAKNESS_THRESHOLD
 ): RemediationRecommendation[] {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const recommendations: RemediationRecommendation[] = []
   
   for (const topic of topics) {

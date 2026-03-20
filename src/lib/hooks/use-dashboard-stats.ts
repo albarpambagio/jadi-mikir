@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from 'react'
 import { useTopicsQuery } from '@/lib/content'
 import { learnerStore, learnerActions } from '@/store/learnerStore'
 import { getMasteryProgress } from '@/lib/engines/mastery'
+import { isDue } from '@/lib/engines/fsrs'
 import type { Topic } from '@/types'
 
 export interface MasteryProgress {
@@ -29,6 +30,19 @@ export interface DashboardStats {
   topicsWithDue: number
 }
 
+function getDueCards(topicId: string): string[] {
+  const state = learnerStore.get()
+  const dueCards: string[] = []
+  
+  for (const [cardId, card] of Object.entries(state.cards)) {
+    if (cardId.startsWith(`${topicId}_`) && isDue(card)) {
+      dueCards.push(cardId)
+    }
+  }
+  
+  return dueCards
+}
+
 export function useDashboardStats(): DashboardStats & {
   getTopicProgress: (topicId: string) => MasteryProgress | null
   getTopicDueCount: (topicId: string) => number
@@ -36,16 +50,13 @@ export function useDashboardStats(): DashboardStats & {
 } {
   const { data: topics, isLoading, error } = useTopicsQuery()
   
-  // Subscribe to learnerStore changes
-  const [learnerState, setLearnerState] = useState(() => learnerStore.getState())
+  const [learnerState, setLearnerState] = useState(() => learnerStore.get())
   
   useEffect(() => {
-    const unsubscribe = learnerStore.subscribe(() => {
-      setLearnerState(learnerStore.getState())
+    const subscription = learnerStore.subscribe((state) => {
+      setLearnerState(state)
     })
-    return () => {
-      unsubscribe()
-    }
+    return () => subscription.unsubscribe()
   }, [])
 
   const streak = useMemo(() => learnerState.streak, [learnerState.streak])
@@ -64,14 +75,14 @@ export function useDashboardStats(): DashboardStats & {
   const totalDue = useMemo(() => {
     if (!topics) return 0
     return topics.reduce((sum, topic) => {
-      const dueCards = learnerActions.getDueCards(topic.id)
+      const dueCards = getDueCards(topic.id)
       return sum + dueCards.length
     }, 0)
   }, [topics])
 
   const topicsWithDue = useMemo(() => {
     if (!topics) return 0
-    return topics.filter(topic => learnerActions.getDueCards(topic.id).length > 0).length
+    return topics.filter(topic => getDueCards(topic.id).length > 0).length
   }, [topics])
 
   const getTopicProgress = useMemo(() => {
@@ -86,7 +97,7 @@ export function useDashboardStats(): DashboardStats & {
 
   const getTopicDueCount = useMemo(() => {
     return (topicId: string): number => {
-      return learnerActions.getDueCards(topicId).length
+      return getDueCards(topicId).length
     }
   }, [])
 
@@ -96,7 +107,7 @@ export function useDashboardStats(): DashboardStats & {
       .map(topic => {
         const mastery = learnerState.topics[topic.id]
         const masteryProgress = mastery ? getMasteryProgress(mastery) : null
-        const dueCount = learnerActions.getDueCards(topic.id).length
+        const dueCount = getDueCards(topic.id).length
         return { ...topic, masteryProgress, dueCount } as TopicWithProgress
       })
       .sort((a, b) => {

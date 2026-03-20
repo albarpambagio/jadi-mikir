@@ -65,7 +65,7 @@ export function selectQuestionsForMultiTopicSession(
   allQuestions: Question[],
   config: InterleavingConfig = DEFAULT_CONFIG
 ): Question[] {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const now = new Date()
   
   const availableTopics = allTopics.filter(topic => {
@@ -160,7 +160,7 @@ export function getNonInterferingTopics(
   failedTopicId: string,
   allTopics: Topic[]
 ): Topic[] {
-  const state = learnerStore.getState()
+  const state = learnerStore.get()
   const failedTopic = allTopics.find(t => t.id === failedTopicId)
   
   if (!failedTopic) return []
