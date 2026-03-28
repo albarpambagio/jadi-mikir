@@ -23,9 +23,13 @@ src/
 ├── store/
 │   └── learnerStore.ts  # Client state (TanStack Store)
 ├── lib/
-│   ├── engines/         # Business logic (FSRS, XP, mastery, etc.)
-│   ├── hooks/           # Custom React hooks
-│   ├── storage/         # IndexedDB + hybrid storage
+│   ├── engines/         # Business logic (FSRS, mastery, XP, session, interleaving,
+│   │                    #   remediation, diagnostic, FIRe, recommendations, exportImport)
+│   ├── hooks/           # Custom React hooks (use-dashboard-stats, useLocalStorage, etc.)
+│   ├── storage/         # IndexedDB + hybrid storage adapter
+│   ├── content.ts       # TanStack Query hooks for /content/*.json
+│   ├── validation.ts    # Zod content validation
+│   ├── logger.ts        # Dev logging
 │   └── utils.ts         # Utilities (cn(), etc.)
 └── types/
     └── index.ts         # Shared TypeScript types

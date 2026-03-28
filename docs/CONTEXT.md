@@ -7,7 +7,7 @@ Building screens. All backend engines, state, primitives, and design tokens are 
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
 
 ## What's Complete
-- **Business logic engines** (`src/lib/engines/`): FSRS, mastery, XP, session, interleaving, remediation, diagnostic, FIRe, dashboard, recommendations, exportImport — all 11 engines done
+- **Business logic engines** (`src/lib/engines/`): FSRS, mastery, XP, session, interleaving, remediation, diagnostic, FIRe, recommendations, exportImport — 10 engines (dashboard.ts removed; stats computed in hook)
 - **Storage**: IndexedDB (`src/lib/storage/indexedDB.ts`) + hybrid adapter (`src/lib/storage/hybrid.ts`)
 - **State**: `src/store/learnerStore.ts` — learner progress, session state, streaks
 - **Design tokens**: `src/index.css` — Nature theme, light + dark mode, full token set
@@ -33,4 +33,4 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - Enabled `strict: true` in tsconfig.json (was `strict: false`)
 - Removed dead dependencies: `@base-ui/react`, `framer-motion`
 - Router committed to wouter 3.x; TanStack Router removed from spec
-- CONTEXT.md rewritten to reflect actual state (was incorrectly showing "full clean slate")
+- Analytics simplified: deleted `src/lib/analytics.ts` and `src/lib/engines/dashboard.ts` (unused, partially broken); `getMotivationalMessage` preserved in `use-dashboard-stats.ts`; emoji strings removed from `recommendations.ts`

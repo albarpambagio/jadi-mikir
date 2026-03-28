@@ -18,6 +18,20 @@ When suggesting UI changes:
 - Never violate UI constraints in TECH_STACK.md
 - When uncertain, ask before proceeding
 
+## Documentation — Keep In Sync
+After any change that affects project structure, completed work, or active constraints, update the relevant docs **in the same session** before committing:
+
+| What changed | Update these docs |
+|---|---|
+| A file was added, moved, renamed, or deleted | `docs/ARCHITECTURE.md` (directory structure) |
+| A feature, engine, or screen was completed | `docs/TODO.md` (move to Completed), `docs/CONTEXT.md` (What's Complete) |
+| Current work-in-progress changed | `docs/CONTEXT.md` (Current Focus + Next Steps) |
+| A dependency was added or removed | `docs/TECH_STACK.md`, `docs/ARCHITECTURE.md` |
+| A constraint or convention was established | `docs/TECH_STACK.md` or `AGENTS.md` |
+| Strategy or roadmap shifted | `docs/strategy/product-strategy.md` or `docs/strategy/master-project-plan.md` |
+
+Never leave `docs/CONTEXT.md` stale — it is the primary context file read by all AI tools at the start of every session. A stale CONTEXT.md causes incorrect assumptions and wasted work.
+
 ## What NOT to do
 - Never use hex colors — only Tailwind tokens
 - Never use arbitrary px values — only 4px grid

@@ -52,3 +52,4 @@
 - Enabled strict TypeScript (`strict: true` in tsconfig.json)
 - Removed dead dependencies: `@base-ui/react`, `framer-motion`
 - CONTEXT.md rewritten to reflect actual project state
+- Analytics simplified: deleted `analytics.ts` and `engines/dashboard.ts`; consolidated stats into `use-dashboard-stats.ts`
