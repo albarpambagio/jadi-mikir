@@ -1,0 +1,8 @@
+---
+description: Use jezweb ux-audit skill for UX audit, walkthrough, QA sweep, test the app, check all pages
+alwaysApply: false
+---
+
+# UX audit
+
+When the task involves a **UX audit**, **UX walkthrough**, **QA sweep**, **targeted UX check**, **test the app**, **check all pages**, or holistic quality / friction review of the web app, read .agents/skills/ux-audit/SKILL.md at the start of the task and follow its workflow, depth levels, and report format. Prefer http://localhost:5173 for local JadiMahir unless the user specifies otherwise. For **agent-browser** reproduction evidence, use .agents/skills/dogfood/SKILL.md. **Combined pipeline** (audit then repro): see AGENTS.md and docs/WORKFLOW.md (QA: UX audit + dogfood).

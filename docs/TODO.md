@@ -1,8 +1,7 @@
 # TODO.md — Roadmap
 
 ## In Progress
-- [ ] Session complete screen — results summary, XP earned, streak update
-  - Wireframe: `docs/wireframes/screen-11-session-complete.md`
+_(none)_
 
 ## Backlog
 
@@ -33,7 +32,9 @@
 - [ ] Content creator tooling — admin UI for authoring questions (move up if content bottleneck persists)
 
 ## Completed
-- Session screen — `src/pages/session.tsx` — answering + feedback phases, choice randomization, XP award, session complete inline summary; routes `/session` and `/session/:topicId`
+- Session complete **audit + dogfood follow-ups** (2026-03): multi-topic headline/copy, `<main>` + heading focus + `document.title`, summary skeleton, Confirm scroll + instant scroll on feedback — see [docs/audits/session-complete-screen-ux-audit-2026-03-28.md](audits/session-complete-screen-ux-audit-2026-03-28.md)
+- Session complete screen (wireframe 11) — `src/components/session/session-complete-view.tsx`, `src/lib/session-complete-aggregates.ts`, wired from `src/pages/session.tsx` (streak update, metrics, next due, weak areas)
+- Session screen — `src/pages/session.tsx` — answering + feedback phases, choice randomization, XP award; routes `/session` and `/session/:topicId`
 - Project initialization with Vite + React 19 + TypeScript
 - Routing: wouter 3.x (committed; replaced TanStack Router from original spec)
 - Tailwind CSS v4 setup

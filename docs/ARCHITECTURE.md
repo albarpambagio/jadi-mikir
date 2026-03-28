@@ -19,9 +19,10 @@ src/
 ├── pages/
 │   └── session.tsx      # Session screen — answering + feedback phases
 ├── components/
-│   ├── ui/              # shadcn/ui primitives + factory.ai pattern components
+│   ├── ui/              # shadcn/ui primitives + factory.ai pattern components (incl. skeleton)
 │   │                    #   (step-counter, stat-display, section-label,
 │   │                    #    NumberedTabsList/Trigger in tabs.tsx)
+│   ├── session/         # Session complete summary (wireframe 11)
 │   ├── layout/          # Layout shell
 │   └── showcase/        # Component dev sandbox (temporary)
 ├── store/
@@ -31,6 +32,7 @@ src/
 │   │                    #   remediation, diagnostic, FIRe, recommendations, exportImport)
 │   ├── hooks/           # Custom React hooks (use-dashboard-stats, useLocalStorage, etc.)
 │   ├── storage/         # IndexedDB + hybrid storage adapter
+│   ├── session-complete-aggregates.ts  # Pure helpers for session end (duration, due dates, weak tags)
 │   ├── content.ts       # TanStack Query hooks for /content/*.json
 │   ├── validation.ts    # Zod content validation
 │   ├── logger.ts        # Dev logging
@@ -41,13 +43,14 @@ src/
 
 **Documentation (`docs/`):**
 - `wireframes/` — screen specs
-- `audits/` — UX / interface audit reports (e.g. session screen)
+- `audits/` — UX / interface audit reports (e.g. session screen); optional copies or summaries of ux-audit runs
+- Root-level `docs/ux-audit-*.md`, `docs/qa-sweep-*.md`, etc. — structured reports from the **ux-audit** skill (see `.agents/skills/ux-audit/SKILL.md`)
 - `archives/stale-storybook-ui-docs-2026-03/` — archived Storybook-era UI docs (not shipped; see `README.md` there). Active workflow: `WORKFLOW.md` + `npm run dev`.
 
 **Agent tooling (repo root, not under `src/`):**
-- `.agents/skills/` — AI skills installed via `npx skills add …`: `ux-copy`, `grill-me`, `self-improvement`, `agent-browser`, `dogfood`, `electron`. [OpenCode](https://opencode.ai/docs/skills) loads `skills/*/SKILL.md` from here via the skill tool; `opencode.json` also injects `AGENTS.md` plus `docs/*` context files. Locked versions: `skills-lock.json`.
+- `.agents/skills/` — AI skills installed via `npx skills add …`: `ux-copy`, `ux-audit`, `grill-me`, `self-improvement`, `agent-browser`, `dogfood`, `electron`. [OpenCode](https://opencode.ai/docs/skills) loads `skills/*/SKILL.md` from here via the skill tool; `opencode.json` also injects `AGENTS.md` plus `docs/*` context files. Locked versions: `skills-lock.json`.
 - `.learnings/` — Agent/human learning logs (`LEARNINGS.md`, `ERRORS.md`, `FEATURE_REQUESTS.md`); see `AGENTS.md` (Self-improvement)
-- `.cursor/rules/` — Cursor project rules (e.g. `ux-copy.mdc`, `grill-me-strategy.mdc`)
+- `.cursor/rules/` — Cursor project rules (e.g. `ux-copy.mdc`, `ux-audit.mdc`, `dogfood.mdc`, `grill-me-strategy.mdc`)
 
 ## Data Flow
 

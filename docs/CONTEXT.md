@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Building screens. Session screen is complete. Next: Session complete screen (screen-11), then Dashboard.
+Building screens. Session + session complete (screen-11) are done. Next: Dashboard / home.
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -12,7 +12,8 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **State**: `src/store/learnerStore.ts` — learner progress, session state, streaks
 - **Design tokens**: `src/index.css` — Nature theme, light + dark mode, full token set
 - **UI primitives** (`src/components/ui/`): button, card, badge, input, dialog, tabs, progress, tooltip, avatar, scroll-area, separator — all themed to VISUAL-SPEC
-- **Session screen** (`src/pages/session.tsx`): answering + feedback phases, choice randomization, XP award (+50 per correct), inline session-complete summary; routes `/session` and `/session/:topicId`
+- **Session screen** (`src/pages/session.tsx`): answering + feedback phases, choice randomization, XP award (+50 per correct), `updateStreak()` on finish; routes `/session` and `/session/:topicId`
+- **Session complete UI** (`src/components/session/session-complete-view.tsx` + `src/lib/session-complete-aggregates.ts`): wireframe 11 summary — metrics, streak goal bar, per-topic session stats + optional overall mastery, next review / due line, weak-tag CTA; multi-topic sessions use **Your results** + multi-topic band copy; `<main>` + focus on primary heading, `document.title` on complete; summary loading uses skeleton (`SessionCompleteSummarySkeleton` in `session.tsx`)
 - **Layout shell**: `src/components/layout/layout.tsx`
 - **Routing**: wouter 3.x — committed router
 - **Fonts**: Montserrat (sans), Merriweather (serif), Source Code Pro (mono)
@@ -21,6 +22,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 ## Active Constraints
 - **Self-improvement logs**: Non-obvious corrections, errors, and feature wishes go to `.learnings/` per `.agents/skills/self-improvement/SKILL.md` and `AGENTS.md`; promote stable learnings to `docs/` or `AGENTS.md`
 - **UX copy**: For user-facing strings, follow `.agents/skills/ux-copy/SKILL.md` (see AGENTS.md, `.cursor/rules/ux-copy.mdc`)
+- **UX audit + dogfood**: Integrated workflow — ranked findings / walkthroughs → **ux-audit** (`docs/`); repro evidence / agent-browser → **dogfood** (`./dogfood-output/`); combined pipeline in `AGENTS.md` and `docs/WORKFLOW.md` (see `.cursor/rules/ux-audit.mdc`, `.cursor/rules/dogfood.mdc`)
 - **Product strategy sessions**: Use `.agents/skills/grill-me/SKILL.md` for strategy design and review work in `docs/strategy/` and related roadmap/positioning discussions (see AGENTS.md, `.cursor/rules/grill-me-strategy.mdc`)
 - Figma is the source of truth for visual decisions — fetch design context before writing any markup
 - shadcn/ui before custom components
@@ -29,13 +31,16 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Learning lab**: **Opt-in research studies** may eventually send minimal de-identified events/aggregates for A/B and impact evaluation; **not shipped yet**—no default telemetry. See [docs/strategy/product-strategy.md](strategy/product-strategy.md) (Evaluation & experimentation)
 
 ## Next Steps (in order)
-1. [ ] Session complete screen — results summary, XP earned, streak update (wireframe 11)
-2. [ ] Dashboard / home (wireframes 01, 06)
-3. [ ] Topic browser — all topics, topics within subject (wireframes 17, 18)
-4. [ ] Topic detail (wireframe 12)
-5. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
+1. [ ] Dashboard / home (wireframes 01, 06)
+2. [ ] Topic browser — all topics, topics within subject (wireframes 17, 18)
+3. [ ] Topic detail (wireframe 12)
+4. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
 
 ## Recent Updates
+- **Session complete audit + dogfood follow-ups** (2026-03): multi-topic headline and performance-band messages; accessibility (landmark, heading focus, document title); skeleton while streak/meta resolves; **Confirm answer** scroll-into-view after choice + instant scroll when opening feedback (mitigates dogfood ISSUE-001). See [docs/audits/session-complete-screen-ux-audit-2026-03-28.md](audits/session-complete-screen-ux-audit-2026-03-28.md).
+- **UX audit + dogfood** documented together: `AGENTS.md` table + combined pipeline, `docs/WORKFLOW.md` QA section, `.cursor/rules/dogfood.mdc`, updated `ux-audit.mdc`
+- Integrated [ux-audit](https://skills.sh/jezweb/claude-skills/ux-audit) skill (`jezweb/claude-skills`): `.agents/skills/ux-audit/`, `skills-lock.json`, AGENTS.md + `.cursor/rules/ux-audit.mdc`; `.jez/` gitignored for optional screenshots
+- Session complete screen (wireframe 11): `SessionCompleteView`, aggregates helper, streak on session end, topic/tag rollups, next-due from FSRS cards, weak-area banner
 - Project cleanup: archived Storybook-era docs to `docs/archives/stale-storybook-ui-docs-2026-03/`; removed unused skills (`superpowers`, `senior-fullstack`, charon-fan `self-improving-agent`); reconciled `skills-lock.json` with installed skills; removed Chromatic CI workflow (no Storybook build)
 - OpenCode: `opencode.json` includes `AGENTS.md` so self-improvement rules apply; skills in `.agents/skills/` (including `self-improvement`) are loaded via OpenCode’s skill tool per [OpenCode docs](https://opencode.ai/docs/skills)
 - Agent workflow: integrated [pskoett self-improvement](https://skills.sh/pskoett/self-improving-agent/self-improvement) — `.learnings/` logs + `AGENTS.md` section; skill at `.agents/skills/self-improvement/`

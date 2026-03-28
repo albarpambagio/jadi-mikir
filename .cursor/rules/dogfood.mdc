@@ -1,0 +1,8 @@
+---
+description: Use dogfood skill for dogfood, QA, exploratory test, bug hunt, repro evidence with agent-browser
+alwaysApply: false
+---
+
+# Dogfood (agent-browser QA)
+
+When the task involves **dogfooding**, **exploratory testing**, **finding issues**, **bug hunt**, **QA** with **reproduction evidence**, or **agent-browser** runs, read .agents/skills/dogfood/SKILL.md at the start and follow its workflow. Use http://localhost:5173 for local JadiMahir unless specified. For ranked UX audit reports and walkthrough modes, pair with or use .agents/skills/ux-audit/SKILL.md per AGENTS.md (UX audit + dogfood).

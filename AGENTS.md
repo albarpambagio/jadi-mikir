@@ -17,6 +17,19 @@ When suggesting UI changes:
 
 **Product strategy design sessions** (roadmap, positioning, `docs/strategy/` docs, critiques, master project plan, pre-implementation vetting): Use `.agents/skills/grill-me/SKILL.md` for the session — stress-test the plan through systematic questioning (one question at a time, recommended answer each time); explore the codebase when it resolves a question. Do not skip this workflow when the user is explicitly in a strategy design or review session.
 
+**UX audit + dogfood (integrated):** Both skills are installed; they work **together**, not as either-or.
+
+| Skill | Role | Tooling | Typical output |
+|-------|------|---------|----------------|
+| **ux-audit** | Personas, emotional friction, click efficiency, resilience, ranked severity | Chrome MCP, Playwright, or CLI per [`.agents/skills/ux-audit/SKILL.md`](.agents/skills/ux-audit/SKILL.md) | Markdown under `docs/` (e.g. `docs/ux-audit-YYYY-MM-DD.md`, `docs/qa-sweep-YYYY-MM-DD.md`, variants per skill) |
+| **dogfood** | Systematic exploration, **agent-browser**, hard repro evidence | [`.agents/skills/dogfood/SKILL.md`](.agents/skills/dogfood/SKILL.md) (direct `agent-browser` binary, not `npx`) | Report + artifacts under `./dogfood-output/` |
+
+**When to use which:** Use **ux-audit** when the ask is **walkthrough**, **friction**, **“is it good UX?”**, **QA sweep**, or **ranked audit report**. Use **dogfood** when the ask is **dogfood**, **exploratory test**, **bug hunt**, or **repro steps / screenshots for handoff**.
+
+**Combined pipeline (recommended for release or major UI):** (1) Run **ux-audit** (walkthrough or targeted check) to list issues by severity. (2) For **Critical/High** items, run **dogfood** on the same flows to attach step-by-step repro and screenshots. (3) For a **fast bug pass** only, **dogfood** alone is enough. (4) For **holistic quality without deep repro**, **ux-audit** alone is enough.
+
+**Default URL for local runs:** `http://localhost:5173` (Vite). Prefer a deployed URL when testing production-only behavior or when the user specifies it. Details: [`docs/WORKFLOW.md`](docs/WORKFLOW.md) (QA section).
+
 ## Self-improvement (learning logs)
 
 Use the [pskoett self-improvement](https://skills.sh/pskoett/self-improving-agent/self-improvement) skill: read `.agents/skills/self-improvement/SKILL.md` for the full quick reference, entry formats, and resolution workflow.

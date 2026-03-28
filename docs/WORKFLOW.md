@@ -89,6 +89,21 @@ Give all feedback in one message — the agent applies everything at once.
 
 ---
 
+## QA: UX audit + dogfood
+
+Two agent skills cover browser-based quality work; use **both** for release-style checks, or **one** for a lighter pass.
+
+| Skill | Best for | Output |
+|-------|----------|--------|
+| **ux-audit** (`.agents/skills/ux-audit/`) | Walkthrough, friction, QA sweep, ranked findings | Reports under `docs/` per skill template |
+| **dogfood** (`.agents/skills/dogfood/`) | Exploratory testing, bug hunts, repro evidence | `./dogfood-output/` + structured report |
+
+**Suggested flow:** (1) **ux-audit** to surface and rank issues. (2) **dogfood** on Critical/High flows for screenshots and step-by-step repro. (3) Quick bug hunt → **dogfood** only. (4) UX narrative only → **ux-audit** only.
+
+**Local app URL:** `http://localhost:5173` with `npm run dev`. Full rules: [`AGENTS.md`](../AGENTS.md) (UX audit + dogfood).
+
+---
+
 ## Available Factory.ai Components
 
 Built in `src/components/ui/`. Reference `TECH_STACK.md` for full usage rules.

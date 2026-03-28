@@ -16,13 +16,25 @@ import {
 } from '@/components/ui/dialog'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
-import { useQuestionsQuery, useTopicQuery } from '@/lib/content'
+import { useQuestionsQuery, useTopicQuery, useTopicsQuery } from '@/lib/content'
+import { getMasteryProgress } from '@/lib/engines/mastery'
+import {
+  buildDueTopicsLine,
+  findWeakTag,
+  formatNextReviewDate,
+  formatSessionDuration,
+  getEarliestDueDate,
+  type TopicRollup,
+  type TagRollup,
+} from '@/lib/session-complete-aggregates'
+import { SessionCompleteView } from '@/components/session/session-complete-view'
+import { Skeleton } from '@/components/ui/skeleton'
+import { learnerStore, learnerActions } from '@/store/learnerStore'
 import {
   useChoiceRandomization,
   getDisplayLetter,
   type RandomizedQuestion,
 } from '@/lib/hooks/useChoiceRandomization'
-import { learnerActions } from '@/store/learnerStore'
 import type { Question } from '@/types'
 
 // ---------------------------------------------------------------------------
@@ -278,115 +290,10 @@ function FeedbackPanel({
 }
 
 // ---------------------------------------------------------------------------
-// SessionComplete — performance band + stat receipt card + two CTAs
-// ---------------------------------------------------------------------------
-
-interface SessionCompleteProps {
-  topicTitle: string
-  stats: SessionStats
-  totalQuestions: number
-  onDone: () => void
-  onPracticeAgain: () => void
-}
-
-const PERFORMANCE_BANDS = [
-  {
-    min: 90,
-    label: 'Perfect score!',
-    color: 'text-success' as const,
-    message: 'Flawless. This topic is firmly in your memory.',
-  },
-  {
-    min: 70,
-    label: 'Well done!',
-    color: 'text-primary' as const,
-    message: 'Strong session. A few more like this and it sticks for good.',
-  },
-  {
-    min: 40,
-    label: 'Good effort',
-    color: 'text-foreground' as const,
-    message: "You're making progress. Consistency will get you there.",
-  },
-  {
-    min: 0,
-    label: 'Keep at it',
-    color: 'text-foreground' as const,
-    message: 'Tough one. Each attempt builds the pattern — come back tomorrow.',
-  },
-] as const
-
-function SessionComplete({
-  topicTitle,
-  stats,
-  totalQuestions,
-  onDone,
-  onPracticeAgain,
-}: SessionCompleteProps) {
-  const accuracy = totalQuestions > 0
-    ? Math.round((stats.correct / totalQuestions) * 100)
-    : 0
-
-  const band = PERFORMANCE_BANDS.find((b) => accuracy >= b.min) ?? PERFORMANCE_BANDS[3]
-
-  return (
-    <div className="mx-auto flex max-w-sm flex-col items-center gap-8 py-16 text-center">
-      {/* Header: label + band + topic */}
-      <div className="flex flex-col gap-1">
-        <p className="text-muted-foreground text-xs font-medium">Session complete</p>
-        <p className={cn('text-2xl font-semibold', band.color)}>{band.label}</p>
-        <p className="text-muted-foreground text-sm">{topicTitle}</p>
-      </div>
-
-      {/* Stat receipt card */}
-      <div className="border-border bg-card w-full rounded-lg border">
-        <div className="divide-border grid grid-cols-3 divide-x">
-          <div className="flex flex-col items-center gap-1 px-4 py-6">
-            <p className="text-muted-foreground text-xs font-medium">Correct</p>
-            <p className="text-foreground font-mono text-2xl font-semibold tabular-nums">
-              {stats.correct}
-              <span className="text-muted-foreground text-base font-normal">
-                /{totalQuestions}
-              </span>
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-1 px-4 py-6">
-            <p className="text-muted-foreground text-xs font-medium">Accuracy</p>
-            <p className="text-foreground font-mono text-2xl font-semibold tabular-nums">
-              {accuracy}
-              <span className="text-muted-foreground text-base font-normal">%</span>
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-1 px-4 py-6">
-            <p className="text-muted-foreground text-xs font-medium">Earned</p>
-            <p className="text-primary font-mono text-2xl font-semibold tabular-nums">
-              +{stats.xpEarned}
-              <span className="text-muted-foreground text-base font-normal"> XP</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Contextual motivational message */}
-      <p className="text-muted-foreground text-sm leading-relaxed">{band.message}</p>
-
-      {/* CTAs */}
-      <div className="flex w-full flex-col gap-3">
-        <Button onClick={onPracticeAgain}>
-          Practice again
-          <ArrowRight />
-        </Button>
-        <Button variant="outline" onClick={onDone}>
-          Back to home
-        </Button>
-      </div>
-    </div>
-  )
-}
-
-// ---------------------------------------------------------------------------
 // QuitSessionDialog — confirm before leaving with progress at risk
 // ---------------------------------------------------------------------------
+
+const STREAK_GOAL_DAYS = 30
 
 interface QuitSessionDialogProps {
   open: boolean
@@ -441,6 +348,46 @@ function QuitSessionDialog({ open, onOpenChange, onConfirmExit }: QuitSessionDia
 
 
 // ---------------------------------------------------------------------------
+// Session complete — loading skeleton (matches summary layout)
+// ---------------------------------------------------------------------------
+
+function SessionCompleteSummarySkeleton() {
+  return (
+    <div
+      className="mx-auto flex max-w-2xl flex-col gap-8 py-8"
+      aria-busy="true"
+      aria-label="Loading session summary"
+    >
+      <div className="border-border flex flex-col gap-2 border-b pb-6">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-8 w-64 max-w-full" />
+        <Skeleton className="h-6 w-48 max-w-full" />
+        <Skeleton className="h-4 w-full max-w-lg" />
+      </div>
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        {Array.from({ length: 4 }, (_, i) => (
+          <div key={i} className="border-border bg-surface-raised rounded-lg border p-4">
+            <Skeleton className="mb-2 h-8 w-12" />
+            <Skeleton className="h-3 w-20" />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-col gap-3">
+        <Skeleton className="h-5 w-56" />
+        <Skeleton className="h-2 w-full" />
+      </div>
+      <div className="flex flex-col gap-4">
+        <Skeleton className="h-4 w-48" />
+        <Skeleton className="h-2 w-full" />
+        <Skeleton className="h-2 w-full" />
+      </div>
+      <Skeleton className="h-4 w-24" />
+      <Skeleton className="h-4 w-full max-w-md" />
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // SessionPage (main export)
 // ---------------------------------------------------------------------------
 
@@ -452,6 +399,13 @@ export function SessionPage() {
   // One hook call per data source at page level (WORKFLOW rule 8)
   const { data: questions = [], isLoading, isError } = useQuestionsQuery(topicId)
   const { data: topic } = useTopicQuery(topicId ?? '')
+  const { data: allTopics = [] } = useTopicsQuery()
+
+  const [learnerState, setLearnerState] = useState(() => learnerStore.get())
+  useEffect(() => {
+    const sub = learnerStore.subscribe((s) => setLearnerState(s))
+    return () => sub.unsubscribe()
+  }, [])
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null)
@@ -459,11 +413,28 @@ export function SessionPage() {
   const [elapsedTime, setElapsedTime] = useState(0)
   const [stats, setStats] = useState<SessionStats>({ correct: 0, xpEarned: 0 })
   const [quitDialogOpen, setQuitDialogOpen] = useState(false)
+  const [topicRollup, setTopicRollup] = useState<Record<string, TopicRollup>>({})
+  const [tagRollup, setTagRollup] = useState<Record<string, TagRollup>>({})
+  const [sessionRunId, setSessionRunId] = useState(0)
+  const [sessionEndMeta, setSessionEndMeta] = useState<{
+    streakAfter: number
+    durationMs: number
+  } | null>(null)
+  const [weakAreaDismissed, setWeakAreaDismissed] = useState(false)
 
   const startTimeRef = useRef<number>(Date.now())
+  const sessionWallStartRef = useRef<number | null>(null)
+  const sessionStreakStartRef = useRef(0)
+  const confirmActionsRef = useRef<HTMLDivElement>(null)
 
   const currentQuestion = questions[currentIndex] ?? null
   const randomized = useChoiceRandomization(currentQuestion)
+
+  useEffect(() => {
+    if (questions.length === 0) return
+    sessionWallStartRef.current = Date.now()
+    sessionStreakStartRef.current = learnerStore.get().streak
+  }, [questions, sessionRunId])
 
   // Reset timer when entering a new question
   useEffect(() => {
@@ -471,6 +442,17 @@ export function SessionPage() {
       startTimeRef.current = Date.now()
     }
   }, [currentIndex, phase])
+
+  // Keep Confirm answer in view after a choice is selected (short viewports + agent-browser)
+  useEffect(() => {
+    if (phase !== 'answering' || !selectedChoiceId) return
+    confirmActionsRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+  }, [phase, selectedChoiceId])
+
+  const topicTitle = useCallback(
+    (id: string) => allTopics.find((t) => t.id === id)?.title ?? id,
+    [allTopics],
+  )
 
   const handleConfirm = useCallback(() => {
     if (!selectedChoiceId || !currentQuestion || phase !== 'answering') return
@@ -481,19 +463,48 @@ export function SessionPage() {
     const isCorrect =
       currentQuestion.choices.find((c) => c.id === selectedChoiceId)?.isCorrect ?? false
 
+    const tid = currentQuestion.topicId
+    setTopicRollup((prev) => {
+      const cur = prev[tid] ?? { correct: 0, attempted: 0 }
+      return {
+        ...prev,
+        [tid]: {
+          correct: cur.correct + (isCorrect ? 1 : 0),
+          attempted: cur.attempted + 1,
+        },
+      }
+    })
+
+    const tagKey = currentQuestion.tags[0] ?? 'General'
+    setTagRollup((prev) => {
+      const cur = prev[tagKey] ?? { correct: 0, total: 0, topicId: tid }
+      return {
+        ...prev,
+        [tagKey]: {
+          correct: cur.correct + (isCorrect ? 1 : 0),
+          total: cur.total + 1,
+          topicId: cur.topicId || tid,
+        },
+      }
+    })
+
     if (isCorrect) {
       learnerActions.addXP(50)
       setStats((prev) => ({ correct: prev.correct + 1, xpEarned: prev.xpEarned + 50 }))
     }
 
     setPhase('feedback')
-    // Scroll to top so all colored choices are visible above the feedback panel
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [selectedChoiceId, currentQuestion, phase])
 
   const handleNext = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     if (currentIndex + 1 >= questions.length) {
+      learnerActions.updateStreak()
+      setSessionEndMeta({
+        streakAfter: learnerStore.get().streak,
+        durationMs: Date.now() - (sessionWallStartRef.current ?? Date.now()),
+      })
       setPhase('complete')
     } else {
       setCurrentIndex((prev) => prev + 1)
@@ -531,8 +542,20 @@ export function SessionPage() {
     setSelectedChoiceId(null)
     setPhase('answering')
     setStats({ correct: 0, xpEarned: 0 })
+    setTopicRollup({})
+    setTagRollup({})
+    setSessionEndMeta(null)
+    setWeakAreaDismissed(false)
+    setSessionRunId((n) => n + 1)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
+
+  const handlePracticeWeakArea = useCallback(
+    (practiceTopicId: string) => {
+      navigate(`/session/${practiceTopicId}`)
+    },
+    [navigate],
+  )
 
   const progressPercent =
     questions.length > 0
@@ -576,14 +599,71 @@ export function SessionPage() {
   }
 
   // ── Session complete ─────────────────────────────────────────────────────
-  if (phase === 'complete') {
+  if (phase === 'complete' && !sessionEndMeta) {
+    return <SessionCompleteSummarySkeleton />
+  }
+
+  if (phase === 'complete' && sessionEndMeta) {
+    const accuracyPercent =
+      questions.length > 0 ? Math.round((stats.correct / questions.length) * 100) : 0
+    const timeLabel = formatSessionDuration(sessionEndMeta.durationMs)
+    const topicOrder = [...new Set(questions.map((q) => q.topicId))]
+    const topicRows = topicOrder.map((tid) => {
+      const r = topicRollup[tid] ?? { correct: 0, attempted: 0 }
+      const m = learnerState.topics[tid]
+      let overallMasteryPercent: number | null = null
+      if (m && m.totalQuestions > 0) {
+        overallMasteryPercent = getMasteryProgress(m).current
+      }
+      return {
+        topicId: tid,
+        title: topicTitle(tid),
+        correct: r.correct,
+        attempted: r.attempted,
+        overallMasteryPercent,
+      }
+    })
+    const earliest = getEarliestDueDate(
+      questions.map((q) => q.id),
+      learnerState.cards,
+    )
+    const nextReviewSummary = earliest ? formatNextReviewDate(earliest) : null
+    const dueLines = buildDueTopicsLine(questions, learnerState.cards, topicTitle)
+    const dueTopicsLine =
+      dueLines.length > 0
+        ? dueLines.map((d) => `${d.title} (${d.dueCount} due)`).join(' · ')
+        : null
+    const weak = findWeakTag(tagRollup)
+    const primaryTopicTitle =
+      topic?.title ??
+      (questions[0] ? topicTitle(questions[0].topicId) : null) ??
+      'Review session'
+
     return (
-      <SessionComplete
-        topicTitle={topic?.title ?? 'Session'}
-        stats={stats}
+      <SessionCompleteView
+        primaryTopicTitle={primaryTopicTitle}
+        isMultiTopicSession={topicRows.length > 1}
         totalQuestions={questions.length}
+        correct={stats.correct}
+        accuracyPercent={accuracyPercent}
+        xpEarned={stats.xpEarned}
+        timeLabel={timeLabel}
+        streakBefore={sessionStreakStartRef.current}
+        streakAfter={sessionEndMeta.streakAfter}
+        streakGoalDays={STREAK_GOAL_DAYS}
+        topicRows={topicRows}
+        nextReviewSummary={nextReviewSummary}
+        dueTopicsLine={dueTopicsLine}
+        weakArea={
+          weak
+            ? { tagLabel: weak.tag, missed: weak.missed, total: weak.total }
+            : null
+        }
+        weakAreaDismissed={weakAreaDismissed}
+        onDismissWeakArea={() => setWeakAreaDismissed(true)}
+        onPracticeWeakArea={() => weak && handlePracticeWeakArea(weak.topicId)}
         onDone={handleQuit}
-        onPracticeAgain={handlePracticeAgain}
+        onAnotherSession={handlePracticeAgain}
       />
     )
   }
@@ -648,7 +728,7 @@ export function SessionPage() {
         />
 
         {phase === 'answering' && (
-          <div className="flex justify-end">
+          <div ref={confirmActionsRef} className="flex justify-end">
             <Button onClick={handleConfirm} disabled={!selectedChoiceId}>
               Confirm answer
               <ArrowRight />

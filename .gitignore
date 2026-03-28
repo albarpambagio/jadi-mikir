@@ -13,6 +13,9 @@ factory-*.png
 *storybook.log
 storybook-static
 
+# UX audit skill (optional screenshot cache; see .agents/skills/ux-audit/SKILL.md)
+.jez/
+
 # Build outputs
 dist/
 coverage/
