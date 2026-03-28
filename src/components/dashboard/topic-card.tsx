@@ -2,7 +2,15 @@ import { Link } from 'wouter'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import { cn } from '@/lib/utils'
 import type { TopicWithProgress } from '@/lib/hooks/use-dashboard-stats'
+
+function MasteryBar({ value, className }: { value: number; className?: string }) {
+  if (value === 0) {
+    return <div className={cn('h-1.5 w-full rounded-full bg-border', className)} />
+  }
+  return <Progress value={value} className={className} />
+}
 
 interface TopicCardProps {
   topic: TopicWithProgress
@@ -45,7 +53,7 @@ export function TopicCard({ topic }: TopicCardProps) {
         <div className="text-muted-foreground flex justify-between text-xs tabular-nums">
           <span>{overallPct}%</span>
         </div>
-        <Progress value={overallPct} className="h-1.5" />
+        <MasteryBar value={overallPct} className="h-1.5" />
       </div>
       <Button variant="outline" size="sm" asChild className="mt-auto self-start">
         <Link href={`/session/${topic.id}`}>

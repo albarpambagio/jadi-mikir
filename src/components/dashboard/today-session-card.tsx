@@ -34,12 +34,12 @@ export function TodaySessionCard({ totalDue, topicsWithDue }: TodaySessionCardPr
       <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-0.5">
           <span className="text-foreground text-sm font-medium">Start new topic</span>
-          <span className="text-muted-foreground text-xs">Browse all topics in skill tree</span>
+          <span className="text-muted-foreground text-xs">Browse topics and pick what to learn next</span>
         </div>
         <Button variant="outline" asChild className="shrink-0">
-          <Link href="/session">
+          <Link href="/topics">
             <Plus className="size-4" aria-hidden />
-            New topic
+            Browse topics
           </Link>
         </Button>
       </div>

@@ -43,8 +43,8 @@ function getDueCards(topicId: string): string[] {
   return dueCards
 }
 
-function getMotivationalMessage(streak: number): string {
-  if (streak === 0) return "Ready to start your learning journey?"
+function getMotivationalMessage(streak: number, hasHistory: boolean): string {
+  if (streak === 0) return hasHistory ? "Get back on track — keep the habit alive!" : "Ready to start your learning journey?"
   if (streak < 3) return "Great start! Keep the momentum going!"
   if (streak < 7) return `${streak} day streak! You're building a habit!`
   if (streak < 14) return "Impressive dedication! Keep it up!"
@@ -128,6 +128,8 @@ export function useDashboardStats(): DashboardStats & {
       })
   }, [topics, learnerState.topics])
 
+  const hasHistory = learnerState.reviewLogs.length > 0 || completedCount > 0
+
   return {
     topics,
     isLoading,
@@ -141,6 +143,6 @@ export function useDashboardStats(): DashboardStats & {
     getTopicProgress,
     getTopicDueCount,
     getSortedTopics,
-    motivationalMessage: getMotivationalMessage(streak),
+    motivationalMessage: getMotivationalMessage(streak, hasHistory),
   }
 }

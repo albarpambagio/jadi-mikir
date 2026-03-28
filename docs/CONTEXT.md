@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Topic browser done (screens 17, 18) — subject grid at `/topics`, topic list at `/topics/:subject`, UX audit + fixes applied. Next: Topic detail (screen 12).
+Home + progress dashboard audit complete — 1 Critical (state persistence) + 3 High + 2 Medium fixes applied. Next: Topic detail (screen 12).
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -39,6 +39,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 4. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
 
 ## Recent Updates
+- **Home + progress dashboard audit** (2026-03-28): CRITICAL — `learnerStore` was not persisted (no `loadState`/`saveState` wiring); fixed by loading from localStorage on init and subscribing to save changes. HIGH — "Start new topic" linked to `/session` (now `/topics`); duplicate EmptyState CTA removed, replaced with Indonesian "Jelajahi topik dulu → /topics"; XP `unit="xp"` redundancy in StatsBar removed. MEDIUM — motivational message handles `streak=0` for returning users; `TopicCard` 0% progress bar now uses neutral track. See [docs/ux-audit-dashboard-2026-03-28.md](ux-audit-dashboard-2026-03-28.md).
 - **Topic browser** (2026-03): subject grid (`/topics`) and topic list (`/topics/:subject`) — active card left-border accent + "Continue" CTA, inactive card topic name preview, due count `tag-primary` badge, locked group collapse, "Review in N days" for mastered, "Available to start" group label. UX audit found and fixed: no path to /topics from empty state home, "1 topics" grammar, raw slug as 404 heading. See [docs/ux-audit-topics-2026-03-28.md](ux-audit-topics-2026-03-28.md).
 - **Home + progress dashboards** (2026-03): home dashboard (wireframe 01) with greeting, 4-stat bar, today's session card, continue-learning grid, empty state; progress dashboard (wireframe 06) with summary stats, mastery-by-topic list, retention health, export. `MasteryBar` helper fixes 0%-looks-full bug. Routes `/` and `/progress`.
 - **Session complete UI polish** (2026-03): streak pluralization fix + first-streak copy ("You started your streak today"), performance-band left-border accent (success/primary/none), XP StatDisplay redundancy removed, "Next due" fallback copy rewritten, topic progress bar now uses `overallMasteryPercent`.

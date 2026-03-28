@@ -28,6 +28,7 @@ _(none)_
 - [ ] Content creator tooling — admin UI for authoring questions (move up if content bottleneck persists)
 
 ## Completed
+- **Home + progress dashboard UX audit** (2026-03-28) — 1 Critical + 3 High + 2 Medium fixes: `learnerStore` localStorage persistence, "Start new topic" → `/topics`, EmptyState duplicate CTA removed, XP unit redundancy, motivational message for returning users, TopicCard 0% neutral track; report: [docs/ux-audit-dashboard-2026-03-28.md](ux-audit-dashboard-2026-03-28.md)
 - **Topic browser** (wireframes 17, 18) — `src/pages/topics.tsx`, `src/pages/topic-list.tsx`, `src/components/topics/` (subject-card, topic-row), `src/lib/hooks/use-topic-browser.ts`; routes `/topics` and `/topics/:subject`; UX audit + 3 fixes applied
 - **Dashboard / Home** (wireframes 01, 06) — `src/pages/home.tsx`, `src/pages/progress.tsx`, `src/components/dashboard/` (header, stats-bar, today-session-card, topic-card, skeleton); routes `/` and `/progress`
 - Session complete **UI polish** (2026-03): streak pluralization, first-streak copy, band left-border accent, XP display fix, "Next due" copy, topic bar uses overall mastery — `src/components/session/session-complete-view.tsx`

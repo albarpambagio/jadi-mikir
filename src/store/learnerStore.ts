@@ -1,4 +1,5 @@
 import { createStore } from '@tanstack/store'
+import { loadState, saveState } from '@/lib/storage'
 import type { CardState, ReviewLog, TopicMastery, LearnerState } from '@/types'
 
 export interface LearnerActions {
@@ -12,7 +13,7 @@ export interface LearnerActions {
   setState: (state: Partial<LearnerState>) => void
 }
 
-const initialState: LearnerState = {
+const defaultState: LearnerState = {
   id: '',
   xp: 0,
   streak: 0,
@@ -22,7 +23,12 @@ const initialState: LearnerState = {
   reviewLogs: [],
 }
 
-export const learnerStore = createStore(initialState)
+export const learnerStore = createStore(loadState(defaultState))
+
+// Persist every state change to localStorage so data survives page refresh
+learnerStore.subscribe((state) => {
+  saveState(state)
+})
 
 export const learnerActions: LearnerActions = {
   addXP: (amount) => {

@@ -17,7 +17,7 @@ export function StatsBar({ streak, totalXP, completedCount, totalTopics, totalDu
         <StatDisplay value={streak} unit={streak === 1 ? 'day' : 'days'} label="Streak" size="sm" />
       </div>
       <div className="border-border bg-surface-raised rounded-lg border p-4">
-        <StatDisplay value={totalXP.toLocaleString()} unit="xp" label="XP total" size="sm" />
+        <StatDisplay value={totalXP.toLocaleString()} label="XP total" size="sm" />
       </div>
       <div className="border-border bg-surface-raised rounded-lg border p-4">
         <StatDisplay

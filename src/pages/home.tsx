@@ -29,11 +29,8 @@ function EmptyState() {
             </Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link href="/session">Lewati, mulai dari awal</Link>
+            <Link href="/topics">Jelajahi topik dulu</Link>
           </Button>
-          <Link href="/topics" className="text-muted-foreground hover:text-foreground text-xs transition-colors">
-            Or browse all topics first
-          </Link>
         </div>
       </div>
     </div>
