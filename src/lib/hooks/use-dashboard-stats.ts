@@ -43,10 +43,19 @@ function getDueCards(topicId: string): string[] {
   return dueCards
 }
 
+function getMotivationalMessage(streak: number): string {
+  if (streak === 0) return "Ready to start your learning journey?"
+  if (streak < 3) return "Great start! Keep the momentum going!"
+  if (streak < 7) return `${streak} day streak! You're building a habit!`
+  if (streak < 14) return "Impressive dedication! Keep it up!"
+  return `Legendary! ${streak} days and counting!`
+}
+
 export function useDashboardStats(): DashboardStats & {
   getTopicProgress: (topicId: string) => MasteryProgress | null
   getTopicDueCount: (topicId: string) => number
   getSortedTopics: TopicWithProgress[]
+  motivationalMessage: string
 } {
   const { data: topics, isLoading, error } = useTopicsQuery()
   
@@ -132,5 +141,6 @@ export function useDashboardStats(): DashboardStats & {
     getTopicProgress,
     getTopicDueCount,
     getSortedTopics,
+    motivationalMessage: getMotivationalMessage(streak),
   }
 }

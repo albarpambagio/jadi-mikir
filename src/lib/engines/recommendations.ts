@@ -101,11 +101,11 @@ export function getRecommendations(topics: Topic[]): OverallRecommendation {
   
   let message = ''
   if (streakAtRisk) {
-    message = `⚠️ Your ${streakDays}-day streak is at risk! Practice now to keep it alive.`
+    message = `Your ${streakDays}-day streak is at risk! Practice now to keep it alive.`
   } else if (streakDays >= 7) {
-    message = `🔥 Amazing! ${streakDays}-day streak! Keep the momentum going!`
+    message = `${streakDays}-day streak! Keep the momentum going!`
   } else if (streakDays > 0) {
-    message = `💪 ${streakDays} day streak! You're building a habit.`
+    message = `${streakDays} day streak! You're building a habit.`
   } else {
     message = 'Start your learning journey today!'
   }
