@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Building screens. All backend engines, state, primitives, and design tokens are complete. The next task is building UI screens one-by-one, starting with the session loop.
+Building screens. Session screen is complete. Next: Session complete screen (screen-11), then Dashboard.
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -12,6 +12,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **State**: `src/store/learnerStore.ts` — learner progress, session state, streaks
 - **Design tokens**: `src/index.css` — Nature theme, light + dark mode, full token set
 - **UI primitives** (`src/components/ui/`): button, card, badge, input, dialog, tabs, progress, tooltip, avatar, scroll-area, separator — all themed to VISUAL-SPEC
+- **Session screen** (`src/pages/session.tsx`): answering + feedback phases, choice randomization, XP award (+50 per correct), inline session-complete summary; routes `/session` and `/session/:topicId`
 - **Layout shell**: `src/components/layout/layout.tsx`
 - **Routing**: wouter 3.x — committed router
 - **Fonts**: Montserrat (sans), Merriweather (serif), Source Code Pro (mono)
@@ -23,10 +24,10 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - Follow UI constraints in TECH_STACK.md (4px grid, max 2 accents, no decorative gradients, no resting shadows)
 
 ## Next Steps (in order)
-1. [ ] Session screen — question display → answer selection → feedback (wireframes 02, 03)
-2. [ ] Session complete screen (wireframe 11)
-3. [ ] Dashboard / home (wireframes 01, 06)
-4. [ ] Topic browser — all topics, topics within subject (wireframes 17, 18)
+1. [ ] Session complete screen — results summary, XP earned, streak update (wireframe 11)
+2. [ ] Dashboard / home (wireframes 01, 06)
+3. [ ] Topic browser — all topics, topics within subject (wireframes 17, 18)
+4. [ ] Topic detail (wireframe 12)
 5. [ ] Skill tree (wireframe 04) — defer until content volume justifies it (50+ questions minimum)
 
 ## Recent Updates

@@ -1,6 +1,7 @@
 import { Route, Switch, Router } from 'wouter'
 import { Layout } from '@/components/layout/layout'
 import { ComponentShowcase } from '@/components/showcase/component-showcase'
+import { SessionPage } from '@/pages/session'
 
 export function AppRouter() {
   return (
@@ -8,9 +9,11 @@ export function AppRouter() {
       <Layout>
         <Switch>
           <Route path="/" component={ComponentShowcase} />
+          <Route path="/session/:topicId" component={SessionPage} />
+          <Route path="/session" component={SessionPage} />
           <Route>
-            <div className="text-center py-20">
-              <h1 className="text-2xl font-semibold">404 - Not Found</h1>
+            <div className="py-20 text-center">
+              <h1 className="text-2xl font-semibold">404 - Not found</h1>
               <p className="text-muted-foreground mt-2">The page you're looking for doesn't exist.</p>
             </div>
           </Route>

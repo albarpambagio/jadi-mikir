@@ -14,8 +14,10 @@
 ```
 src/
 ├── main.tsx              # Entry point
-├── router.tsx            # Route definitions
+├── router.tsx            # Route definitions  (/  /session  /session/:topicId)
 ├── index.css             # Design tokens + Tailwind v4
+├── pages/
+│   └── session.tsx      # Session screen — answering + feedback phases
 ├── components/
 │   ├── ui/              # shadcn/ui primitives + factory.ai pattern components
 │   │                    #   (step-counter, stat-display, section-label,
