@@ -1,6 +1,7 @@
 import { Route, Switch, Router } from 'wouter'
 import { Layout } from '@/components/layout/layout'
-import { ComponentShowcase } from '@/components/showcase/component-showcase'
+import { DashboardPage } from '@/pages/home'
+import { ProgressDashboardPage } from '@/pages/progress'
 import { SessionPage } from '@/pages/session'
 
 export function AppRouter() {
@@ -8,7 +9,8 @@ export function AppRouter() {
     <Router>
       <Layout>
         <Switch>
-          <Route path="/" component={ComponentShowcase} />
+          <Route path="/" component={DashboardPage} />
+          <Route path="/progress" component={ProgressDashboardPage} />
           <Route path="/session/:topicId" component={SessionPage} />
           <Route path="/session" component={SessionPage} />
           <Route>

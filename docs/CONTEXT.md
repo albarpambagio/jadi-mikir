@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Building screens. Session + session complete (screen-11) are done. Next: Dashboard / home.
+Building screens. Session, session complete (screen-11), home dashboard (screen-01), and progress dashboard (screen-06) are done. Next: Topic browser.
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -18,6 +18,8 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Routing**: wouter 3.x — committed router
 - **Fonts**: Montserrat (sans), Merriweather (serif), Source Code Pro (mono)
 - **Content fetching**: `src/lib/content.ts` — TanStack Query hooks for `/content/*.json`
+- **Home dashboard** (`src/pages/home.tsx`, `src/components/dashboard/`): wireframe 01 — greeting, 4-stat bar (streak/XP/topics/due), today's session card, continue-learning topic grid (up to 6), empty state; routes `/`
+- **Progress dashboard** (`src/pages/progress.tsx`): wireframe 06 — summary stats, mastery-by-topic list with `MasteryBar` (neutral track at 0%), retention health, export; routes `/progress`
 
 ## Active Constraints
 - **Self-improvement logs**: Non-obvious corrections, errors, and feature wishes go to `.learnings/` per `.agents/skills/self-improvement/SKILL.md` and `AGENTS.md`; promote stable learnings to `docs/` or `AGENTS.md`
@@ -31,12 +33,13 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Learning lab**: **Opt-in research studies** may eventually send minimal de-identified events/aggregates for A/B and impact evaluation; **not shipped yet**—no default telemetry. See [docs/strategy/product-strategy.md](strategy/product-strategy.md) (Evaluation & experimentation)
 
 ## Next Steps (in order)
-1. [ ] Dashboard / home (wireframes 01, 06)
-2. [ ] Topic browser — all topics, topics within subject (wireframes 17, 18)
+1. [ ] Topic browser — all topics, topics within subject (wireframes 17, 18)
 3. [ ] Topic detail (wireframe 12)
 4. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
 
 ## Recent Updates
+- **Home + progress dashboards** (2026-03): home dashboard (wireframe 01) with greeting, 4-stat bar, today's session card, continue-learning grid, empty state; progress dashboard (wireframe 06) with summary stats, mastery-by-topic list, retention health, export. `MasteryBar` helper fixes 0%-looks-full bug. Routes `/` and `/progress`.
+- **Session complete UI polish** (2026-03): streak pluralization fix + first-streak copy ("You started your streak today"), performance-band left-border accent (success/primary/none), XP StatDisplay redundancy removed, "Next due" fallback copy rewritten, topic progress bar now uses `overallMasteryPercent`.
 - **Session complete audit + dogfood follow-ups** (2026-03): multi-topic headline and performance-band messages; accessibility (landmark, heading focus, document title); skeleton while streak/meta resolves; **Confirm answer** scroll-into-view after choice + instant scroll when opening feedback (mitigates dogfood ISSUE-001). See [docs/audits/session-complete-screen-ux-audit-2026-03-28.md](audits/session-complete-screen-ux-audit-2026-03-28.md).
 - **UX audit + dogfood** documented together: `AGENTS.md` table + combined pipeline, `docs/WORKFLOW.md` QA section, `.cursor/rules/dogfood.mdc`, updated `ux-audit.mdc`
 - Integrated [ux-audit](https://skills.sh/jezweb/claude-skills/ux-audit) skill (`jezweb/claude-skills`): `.agents/skills/ux-audit/`, `skills-lock.json`, AGENTS.md + `.cursor/rules/ux-audit.mdc`; `.jez/` gitignored for optional screenshots

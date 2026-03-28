@@ -6,9 +6,7 @@ _(none)_
 ## Backlog
 
 ### Screens (build in this order)
-1. [ ] **Dashboard / Home** — stats row, today's session, continue learning
-   - Wireframes: `docs/wireframes/screen-01-home-dashboard.md`, `screen-06-progress-dashboard.md`
-3. [ ] **Topic browser** — all topics list, topics within a subject
+1. [ ] **Topic browser** — all topics list, topics within a subject
    - Wireframes: `docs/wireframes/screen-17-all-topics-browser.md`, `screen-18-topic-list-within-subject.md`
 4. [ ] **Topic detail** — topic info, start session, mastery status
    - Wireframe: `docs/wireframes/screen-12-topic-detail.md`
@@ -32,6 +30,8 @@ _(none)_
 - [ ] Content creator tooling — admin UI for authoring questions (move up if content bottleneck persists)
 
 ## Completed
+- **Dashboard / Home** (wireframes 01, 06) — `src/pages/home.tsx`, `src/pages/progress.tsx`, `src/components/dashboard/` (header, stats-bar, today-session-card, topic-card, skeleton); routes `/` and `/progress`
+- Session complete **UI polish** (2026-03): streak pluralization, first-streak copy, band left-border accent, XP display fix, "Next due" copy, topic bar uses overall mastery — `src/components/session/session-complete-view.tsx`
 - Session complete **audit + dogfood follow-ups** (2026-03): multi-topic headline/copy, `<main>` + heading focus + `document.title`, summary skeleton, Confirm scroll + instant scroll on feedback — see [docs/audits/session-complete-screen-ux-audit-2026-03-28.md](audits/session-complete-screen-ux-audit-2026-03-28.md)
 - Session complete screen (wireframe 11) — `src/components/session/session-complete-view.tsx`, `src/lib/session-complete-aggregates.ts`, wired from `src/pages/session.tsx` (streak update, metrics, next due, weak areas)
 - Session screen — `src/pages/session.tsx` — answering + feedback phases, choice randomization, XP award; routes `/session` and `/session/:topicId`
