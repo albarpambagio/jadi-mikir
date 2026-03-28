@@ -23,6 +23,7 @@
    - Wireframe: `docs/wireframes/screen-02-active-question-session.md` *(remediation variant section)*
 
 ### Future
+- [ ] **Learning lab / opt-in study pipeline** — consent UX, minimal de-identified events, experiment assignment (per [docs/strategy/product-strategy.md](strategy/product-strategy.md); infrastructure TBD)
 - [ ] Skill tree — visual topic dependency map *(defer until 50+ questions exist; wireframe removed)*
 - [ ] API integration layer
 - [ ] Authentication

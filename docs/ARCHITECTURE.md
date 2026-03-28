@@ -93,3 +93,4 @@ Page → Layout → Components → UI Primitives (shadcn)
 ## External Dependencies
 - No backend API configured yet (placeholder for future integration)
 - Fonts: Montserrat (sans), Merriweather (serif), Source Code Pro (mono) via @fontsource
+- **Future**: optional **opt-in study** event pipeline (assignment/analysis) per [docs/strategy/product-strategy.md](strategy/product-strategy.md)—add data-flow here when implemented

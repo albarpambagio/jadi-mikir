@@ -112,3 +112,9 @@ All 11 business logic engines are complete. Zero screens exist. This is backend-
 | Name inconsistency | Branding and tooling confusion | Medium |
 | Backend-first execution order | No user feedback loop; invert the build order | High |
 | Stale `CONTEXT.md` | AI context poisoning; fix immediately | High |
+
+---
+
+## Strategy doc status (2026-03-28)
+
+Several themes above are **revisited in [product-strategy.md](product-strategy.md) v2.0**: product-led positioning (vs privacy-first headline), content/FSRS density, measurement architecture with **opt-in study** uploads, **learning lab** mandate, IndexedDB-aligned storage risks, educator scope deferred, and knowledge-graph **behavioral** intent. Items such as **content volume** and **2-sigma as internal-only** remain living risks—see the current strategy and [CONTEXT.md](../CONTEXT.md).

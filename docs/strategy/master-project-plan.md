@@ -8,11 +8,11 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 
 | Aspect | Detail |
 |--------|--------|
-| **Product** | Privacy-first adaptive MCQ learning platform |
+| **Product** | Adaptive MCQ learning platform (mastery and efficiency first; local-first as default) |
 | **Core Value** | Tutor-level retention via FSRS + mastery gates + targeted remediation |
 | **Target Users** | Self-driven learners (students, exam candidates, lifelong learners) |
-| **Storage** | Local-first (localStorage → IndexedDB → PWA) |
-| **Accounts** | Zero — fully local, no auth required |
+| **Storage** | Local-first, **IndexedDB** (hybrid adapter); optional **opt-in study** uploads (minimal de-identified events) per [product-strategy.md](product-strategy.md) |
+| **Accounts** | Zero for core loop — no auth required for normal use |
 
 ---
 
@@ -98,7 +98,7 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 |---|---------|-------|--------------|--------|
 | 27 | PWA offline support | - | Service worker | |
 | 28 | Streak notifications | - | PWA | Browser notifications |
-| 29 | Content sharing for educators | - | Export/Import | Shareable content packs |
+| 29 | Content sharing packs (generic) | - | Export/Import | **Educator-specific features deferred**; shareable packs may still target power users |
 
 **Phase 3 Success Criteria**: Product feels polished, content can be added without code, users return habitually.
 
@@ -167,7 +167,7 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 | Risk | Phase | Mitigation |
 |------|-------|-------------|
 | Content creation bottleneck | All | Seed 5 questions in MVP; expand to 20+ in Phase 2; build admin UI in Phase 3 |
-| localStorage limits (5-10MB) | 1-2 | Plan IndexedDB migration early |
+| IndexedDB / storage pressure | 1-3 | Hybrid adapter; export; monitor size (IndexedDB migration ✅) |
 | Browser clearing state | All | Emphasize export feature from day 1 |
 | Mastery gates feel too hard | 1 | Ensure remediation is helpful, not punitive |
 | FSRS tuning complexity | 1 | Budget extra time for parameter tuning |
@@ -222,7 +222,6 @@ src/lib/engines/
 ├── diagnostic.ts     # Diagnostic placement
 ├── fire.ts           # FIRe algorithm
 ├── xp.ts            # XP + Streak system
-├── dashboard.ts      # Dashboard data calculations
 ├── recommendations.ts # Recommendation engine
 └── exportImport.ts  # Data export/import
 ```
@@ -301,4 +300,4 @@ Choose one subject with a clear curriculum structure (e.g., high school mathemat
 
 ---
 
-*Last Updated: 2026-03-21*
+*Last Updated: 2026-03-28*

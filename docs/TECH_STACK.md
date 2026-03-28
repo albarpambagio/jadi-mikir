@@ -172,6 +172,11 @@ Rules:
 
 Note: factory.ai's actual numbered nav is a **vertical sidebar list** (01 through 05 on the left). For a vertical variant (e.g., a settings sidebar or step wizard), render `NumberedTabsTrigger` items in a `flex-col` container with `gap-2` and no bottom border — swapping `border-b-2` for `border-l-2` on the active item.
 
+## Privacy, storage, and research (strategy)
+
+- **Default**: learner state stays **on-device** (IndexedDB / hybrid storage). No analytics module is required for core use.
+- **Future opt-in studies**: when implemented, follow [docs/strategy/product-strategy.md](strategy/product-strategy.md) — **study enrollment**, minimal **de-identified** events/aggregates only, explicit scope. Extend this section when code exists (consent UI, endpoint, schema).
+
 ## Commands
 - **Dev**: npm run dev
 - **Build**: npm run build

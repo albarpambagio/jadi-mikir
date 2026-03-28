@@ -22,6 +22,8 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - Figma is the source of truth for visual decisions — fetch design context before writing any markup
 - shadcn/ui before custom components
 - Follow UI constraints in TECH_STACK.md (4px grid, max 2 accents, no decorative gradients, no resting shadows)
+- **Positioning (strategy)**: **Product-led** — lead with efficiency and mastery outcomes; privacy and learning science are supporting proof (see [docs/strategy/product-strategy.md](strategy/product-strategy.md))
+- **Learning lab**: **Opt-in research studies** may eventually send minimal de-identified events/aggregates for A/B and impact evaluation; **not shipped yet**—no default telemetry. See [docs/strategy/product-strategy.md](strategy/product-strategy.md) (Evaluation & experimentation)
 
 ## Next Steps (in order)
 1. [ ] Session complete screen — results summary, XP earned, streak update (wireframe 11)
@@ -34,4 +36,5 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - Enabled `strict: true` in tsconfig.json (was `strict: false`)
 - Removed dead dependencies: `@base-ui/react`, `framer-motion`
 - Router committed to wouter 3.x; TanStack Router removed from spec
-- Analytics simplified: deleted `src/lib/analytics.ts` and `src/lib/engines/dashboard.ts` (unused, partially broken); `getMotivationalMessage` preserved in `use-dashboard-stats.ts`; emoji strings removed from `recommendations.ts`
+- Analytics simplified: deleted `src/lib/analytics.ts` and `src/lib/engines/dashboard.ts` (unused, partially broken); `getMotivationalMessage` preserved in `use-dashboard-stats.ts`; emoji strings removed from `recommendations.ts` — **future opt-in study pipeline** is separate and described in product strategy (not implemented in app yet)
+- Product strategy v2.0: product-led positioning, content/FSRS density, measurement model, learning lab, IndexedDB-aligned risks; educator persona deferred

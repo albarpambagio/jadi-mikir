@@ -27,9 +27,9 @@ const badgeVariants = cva(
          * classification labels per the badge exception in TECH_STACK.md.
          */
         tag:
-          "rounded-sm border-border bg-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-muted-foreground",
+          "rounded-sm border-border bg-muted px-1.5 py-0.5 text-xs font-semibold tracking-wider text-muted-foreground",
         "tag-primary":
-          "rounded-sm border-transparent bg-primary px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary-foreground",
+          "rounded-sm border-transparent bg-primary px-1.5 py-0.5 text-xs font-semibold tracking-wider text-primary-foreground",
       },
     },
     defaultVariants: {

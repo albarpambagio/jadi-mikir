@@ -23,7 +23,7 @@
 │                                                                                  │
 │  ── Data & Privacy ────────────────────────────────────────────────────────────  │
 │                                                                                  │
-│  All data stored in           Browser localStorage / IndexedDB (this device)    │
+│  All data stored in           Browser IndexedDB (this device; hybrid storage)     │
 │  Storage used                 1.2 MB of ~10 MB available                        │
 │                                                                                  │
 │  [Export all data as JSON ↓]                                                    │
@@ -38,6 +38,6 @@
 
 **Annotations**
 - **A** Mastery gate threshold is tunable — not punitive by default
-- **B** Storage usage shown in plain terms — manages localStorage anxiety
+- **B** Storage usage shown in plain terms — manages on-device storage anxiety; **future**: optional "Research / study participation" area if opt-in studies ship
 - **C** Interleaving toggle respects learner agency even if suboptimal
 - **D** Clear all data requires confirmation — destructive action, local only
