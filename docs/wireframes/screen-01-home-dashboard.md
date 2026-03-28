@@ -107,3 +107,41 @@
     - Lazy-load topic images below fold
     - Virtualize long topic lists (500+ items)
     - Reduce progress bar render passes
+
+---
+
+## Variant — Empty State (First Launch)
+
+Shown when the user has no sessions yet. Same route and header as the normal Home Dashboard; only the body content changes.
+
+```
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│  JadiMikir                                          [Export data] [Settings ⚙] │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                  │
+│                                                                                  │
+│                          Selamat datang di JadiMikir!                           │
+│                                                                                  │
+│                    Kamu belum punya sesi belajar. Mulai dari sini:              │
+│                                                                                  │
+│             ┌─────────────────────────────────────────────────────┐             │
+│             │                                                     │             │
+│             │   Matematika SMP                                    │             │
+│             │   42 topics · 860 cards                             │             │
+│             │                                                     │             │
+│             │   [▶  Mulai Belajar — ambil tes penplacement singkat] │             │
+│             │                                                     │             │
+│             │   [  Skip tes, mulai dari awal]                     │             │
+│             │                                                     │             │
+│             └─────────────────────────────────────────────────────┘             │
+│                                                                                  │
+│                      [Ganti subjek  ↕]                                          │
+│                                                                                  │
+│                                                                                  │
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Annotations**
+- **A** Empty state is focused — one primary action, no noise
+- **B** Diagnostic is the recommended path but not forced
+- **C** Subject track change accessible if onboarding choice needs revisiting

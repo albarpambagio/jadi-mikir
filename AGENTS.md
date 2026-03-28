@@ -3,9 +3,10 @@
 ## Universal Prompt (for all AI tools)
 Always read the Context Protocol files in docs/ folder before suggesting any code changes:
 - docs/CONTEXT.md — Current project state
-- docs/TECH_STACK.md — Project standards and UI constraints
+- docs/TECH_STACK.md — Project standards, UI constraints, factory.ai pattern components
 - docs/ARCHITECTURE.md — Project map and data flow
 - docs/TODO.md — Roadmap and progress
+- docs/WORKFLOW.md — How to collaborate on UI development (screen build loop, patterns, prompts)
 
 When suggesting UI changes:
 - **Figma is the source of truth for visual design.** If a Figma link is provided (in the request or in docs/CONTEXT.md), always fetch the Figma design context first. Use it for layout, hierarchy, spacing, and any custom visual treatment. Never invent visuals that contradict the Figma design.

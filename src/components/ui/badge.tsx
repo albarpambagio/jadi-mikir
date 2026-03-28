@@ -19,6 +19,17 @@ const badgeVariants = cva(
           "bg-success text-success-foreground border-transparent",
         warning:
           "bg-warning text-warning-foreground border-transparent",
+        /**
+         * factory.ai-inspired classification tag.
+         * Compact, square-ish, high-contrast. Use for category labels
+         * (e.g. "Matematika", "New", "Remediation") on cards and news items.
+         * Intentionally uses tracking-wider — uppercase is permitted for
+         * classification labels per the badge exception in TECH_STACK.md.
+         */
+        tag:
+          "rounded-sm border-border bg-muted px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-muted-foreground",
+        "tag-primary":
+          "rounded-sm border-transparent bg-primary px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary-foreground",
       },
     },
     defaultVariants: {

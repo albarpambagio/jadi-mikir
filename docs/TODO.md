@@ -17,20 +17,15 @@
    - Wireframe: `docs/wireframes/screen-12-topic-detail.md`
 5. [ ] **Mastery gate** — gate UI shown when advancing between levels
    - Wireframe: `docs/wireframes/screen-16-mastery-gate.md`
-6. [ ] **Onboarding** — three-step onboarding flow
-   - Wireframes: `docs/wireframes/screen-07-onboarding-step-1.md`, `screen-08-onboarding-step-2.md`, `screen-09-onboarding-step-3.md`
-7. [ ] **Diagnostic results** — placement results after initial diagnostic
-   - Wireframe: `docs/wireframes/screen-10-diagnostic-results.md`
-8. [ ] **Settings + Export** — preferences, data portability
-   - Wireframes: `docs/wireframes/screen-13-settings.md`, `screen-14-export-data-portability.md`
-9. [ ] **Empty state** — shown when no content is loaded
-   - Wireframe: `docs/wireframes/screen-15-empty-state.md`
-10. [ ] **Remediation drill** — targeted practice for weak areas
-    - Wireframe: `docs/wireframes/screen-05-remediation-drill.md`
-11. [ ] **Skill tree** — visual topic dependency map *(defer until 50+ questions exist)*
-    - Wireframe: `docs/wireframes/screen-04-skill-tree.md`
+6. [ ] **Onboarding** — three-step flow + diagnostic results completion state
+   - Wireframes: `docs/wireframes/screen-07-onboarding-step-1.md`, `screen-08-onboarding-step-2.md`, `screen-09-onboarding-step-3.md` *(screen-09 includes diagnostic results)*
+7. [ ] **Settings + Export** — preferences, data portability (export/import covered in Settings)
+   - Wireframe: `docs/wireframes/screen-13-settings.md`
+8. [ ] **Remediation drill** — mid-session interrupt for prerequisite gaps
+   - Wireframe: `docs/wireframes/screen-02-active-question-session.md` *(remediation variant section)*
 
 ### Future
+- [ ] Skill tree — visual topic dependency map *(defer until 50+ questions exist; wireframe removed)*
 - [ ] API integration layer
 - [ ] Authentication
 - [ ] Testing coverage — unit tests for engines, E2E for session loop

@@ -17,7 +17,9 @@ src/
 ├── router.tsx            # Route definitions
 ├── index.css             # Design tokens + Tailwind v4
 ├── components/
-│   ├── ui/              # shadcn/ui primitives
+│   ├── ui/              # shadcn/ui primitives + factory.ai pattern components
+│   │                    #   (step-counter, stat-display, section-label,
+│   │                    #    NumberedTabsList/Trigger in tabs.tsx)
 │   ├── layout/          # Layout shell
 │   └── showcase/        # Component dev sandbox (temporary)
 ├── store/

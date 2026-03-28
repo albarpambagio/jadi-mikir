@@ -101,6 +101,59 @@
   --sidebar-ring: hsl(142 70% 50%);
 }
 
+/* ===== PRECISION DARK VARIANT (factory.ai-inspired) ===== */
+/*
+ * Apply class="dark-precision" to <html> (instead of "dark") for a near-black
+ * high-contrast dark mode. All green accent tokens are preserved; only the
+ * neutral surface and card values shift to near-black.
+ *
+ * Usage in ThemeToggle: cycle through light → dark → dark-precision.
+ */
+.dark-precision {
+  --background: hsl(0 0% 7%);
+  --foreground: hsl(0 0% 94%);
+  --card: hsl(0 0% 11%);
+  --card-foreground: hsl(0 0% 94%);
+  --popover: hsl(0 0% 11%);
+  --popover-foreground: hsl(0 0% 94%);
+  --primary: hsl(142 70% 50%);
+  --primary-foreground: hsl(145 50% 10%);
+  --secondary: hsl(0 0% 18%);
+  --secondary-foreground: hsl(0 0% 90%);
+  --muted: hsl(0 0% 15%);
+  --muted-foreground: hsl(0 0% 55%);
+  --accent: hsl(142 60% 35%);
+  --accent-foreground: hsl(0 0% 94%);
+  --destructive: hsl(0 63% 54%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(0 0% 20%);
+  --input: hsl(0 0% 20%);
+  --ring: hsl(142 70% 50%);
+  --success: hsl(142 60% 50%);
+  --success-foreground: hsl(145 50% 10%);
+  --warning: hsl(38 80% 50%);
+  --warning-foreground: hsl(48 96% 11%);
+  --streak-fire: hsl(25 95% 53%);
+  --streak-fire-foreground: hsl(0 0% 100%);
+  --mastery-gold: hsl(43 74% 50%);
+  --mastery-gold-foreground: hsl(48 96% 11%);
+  --chart-1: hsl(142 60% 55%);
+  --chart-2: hsl(185 60% 52%);
+  --chart-3: hsl(38 80% 55%);
+  --chart-4: hsl(0 65% 60%);
+  --chart-5: hsl(220 65% 60%);
+  --sidebar: hsl(0 0% 7%);
+  --sidebar-foreground: hsl(0 0% 94%);
+  --sidebar-primary: hsl(142 70% 50%);
+  --sidebar-primary-foreground: hsl(145 50% 10%);
+  --sidebar-accent: hsl(142 60% 35%);
+  --sidebar-accent-foreground: hsl(0 0% 94%);
+  --sidebar-border: hsl(0 0% 20%);
+  --sidebar-ring: hsl(142 70% 50%);
+}
+
+@custom-variant dark-precision (&:where(.dark-precision, .dark-precision *));
+
 /* ===== TAILWIND THEME ===== */
 @theme inline {
   --color-background: var(--background);

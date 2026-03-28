@@ -7,6 +7,9 @@ node_modules/
 Thumbs.db
 *.log
 
+# Design reference screenshots (temporary, not for version control)
+factory-*.png
+
 *storybook.log
 storybook-static
 
