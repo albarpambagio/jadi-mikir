@@ -26,25 +26,10 @@
       "sourceType": "github",
       "computedHash": "28fc3b527435547062f5a10ff8d22f4cdb42baa4261edbe62f47da4b03078873"
     },
-    "self-improving-agent": {
-      "source": "charon-fan/agent-playbook",
-      "sourceType": "github",
-      "computedHash": "f52b5577f09152ab9c2577f6fd6bd4d23ba87acc884dfc3e90a551949f0d90f1"
-    },
-    "slack": {
-      "source": "vercel-labs/agent-browser",
-      "sourceType": "github",
-      "computedHash": "b6d2f40ec99896e8b787f1f402dbe96108d656e97f9e6f1b239de76f9065719d"
-    },
     "ux-copy": {
       "source": "anthropics/knowledge-work-plugins",
       "sourceType": "github",
       "computedHash": "be952a0ebb04d72c59716a5fc9325c30c88eea0aa2a3075c35fb6a6fa28a07e9"
-    },
-    "vercel-sandbox": {
-      "source": "vercel-labs/agent-browser",
-      "sourceType": "github",
-      "computedHash": "671b75f67dffa9ed48143d2f91542abbb7b9465e1d41568ad0a05e9341f7542c"
     }
   }
 }

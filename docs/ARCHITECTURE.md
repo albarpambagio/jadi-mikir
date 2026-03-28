@@ -42,9 +42,10 @@ src/
 **Documentation (`docs/`):**
 - `wireframes/` — screen specs
 - `audits/` — UX / interface audit reports (e.g. session screen)
+- `archives/stale-storybook-ui-docs-2026-03/` — archived Storybook-era UI docs (not shipped; see `README.md` there). Active workflow: `WORKFLOW.md` + `npm run dev`.
 
 **Agent tooling (repo root, not under `src/`):**
-- `.agents/skills/` — AI skills (e.g. `ux-copy`, `grill-me`, `self-improvement`, `agent-browser`) installed via `npx skills add …`
+- `.agents/skills/` — AI skills installed via `npx skills add …`: `ux-copy`, `grill-me`, `self-improvement`, `agent-browser`, `dogfood`, `electron`. [OpenCode](https://opencode.ai/docs/skills) loads `skills/*/SKILL.md` from here via the skill tool; `opencode.json` also injects `AGENTS.md` plus `docs/*` context files. Locked versions: `skills-lock.json`.
 - `.learnings/` — Agent/human learning logs (`LEARNINGS.md`, `ERRORS.md`, `FEATURE_REQUESTS.md`); see `AGENTS.md` (Self-improvement)
 - `.cursor/rules/` — Cursor project rules (e.g. `ux-copy.mdc`, `grill-me-strategy.mdc`)
 

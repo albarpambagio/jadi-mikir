@@ -340,6 +340,8 @@ npx skills add vercel-labs/agent-browser --yes
 
 **Grill-me (Matt Pocock):** Required for **product strategy design sessions** (see AGENTS.md, `.cursor/rules/grill-me-strategy.mdc`). Stress-tests plans through systematic Q&A via `.agents/skills/grill-me/SKILL.md` (install: `npx skills add https://github.com/mattpocock/skills --skill grill-me --yes`). See [skills.sh/mattpocock/skills/grill-me](https://skills.sh/mattpocock/skills/grill-me).
 
+**Self-improvement (pskoett):** Learning logs under `.learnings/`; skill at `.agents/skills/self-improvement/SKILL.md` (install: `npx skills add https://github.com/pskoett/self-improving-agent --skill self-improvement -y`). OpenCode discovers it from `.agents/skills/` and can load it with the **skill** tool; `AGENTS.md` is in `opencode.json` so the workflow is always in context. See [skills.sh/pskoett/self-improving-agent/self-improvement](https://skills.sh/pskoett/self-improving-agent/self-improvement).
+
 ### 3.3 Testing Workflow
 
 #### Step 1: Start Storybook

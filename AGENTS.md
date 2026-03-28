@@ -21,6 +21,8 @@ When suggesting UI changes:
 
 Use the [pskoett self-improvement](https://skills.sh/pskoett/self-improving-agent/self-improvement) skill: read `.agents/skills/self-improvement/SKILL.md` for the full quick reference, entry formats, and resolution workflow.
 
+**OpenCode:** Skills under `.agents/skills/` are discovered automatically ([OpenCode skills](https://opencode.ai/docs/skills)). Use the native **skill** tool to load `self-improvement` when you need the full checklist; this file (`AGENTS.md`) is listed in `opencode.json` so session instructions already include the workflow below.
+
 **Logs live in** `.learnings/`:
 
 | File | Use for |
@@ -38,8 +40,6 @@ Use the [pskoett self-improvement](https://skills.sh/pskoett/self-improving-agen
 **Git**: `.learnings/*.md` are **tracked** in this repo so the team and agents share the same memory. Do not add `.learnings/` to `.gitignore` unless the team explicitly switches to personal-only logs.
 
 **Other repositories**: Run `npx skills add https://github.com/pskoett/self-improving-agent --skill self-improvement -y`, add the same `.learnings/` files (copy templates from `.agents/skills/self-improvement/assets/` or this repo), and paste the self-improvement subsection above into that project’s `AGENTS.md` (or a shared template).
-
-**Note:** `.agents/skills/self-improving-agent/` (playbook) is a separate skill — multi-memory / hooks. It can coexist with pskoett’s markdown log workflow.
 
 ## Agent Behavior
 - Be concise — answer directly, avoid preamble/postamble

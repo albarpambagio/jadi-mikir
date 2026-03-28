@@ -36,6 +36,8 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 5. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
 
 ## Recent Updates
+- Project cleanup: archived Storybook-era docs to `docs/archives/stale-storybook-ui-docs-2026-03/`; removed unused skills (`superpowers`, `senior-fullstack`, charon-fan `self-improving-agent`); reconciled `skills-lock.json` with installed skills; removed Chromatic CI workflow (no Storybook build)
+- OpenCode: `opencode.json` includes `AGENTS.md` so self-improvement rules apply; skills in `.agents/skills/` (including `self-improvement`) are loaded via OpenCode’s skill tool per [OpenCode docs](https://opencode.ai/docs/skills)
 - Agent workflow: integrated [pskoett self-improvement](https://skills.sh/pskoett/self-improving-agent/self-improvement) — `.learnings/` logs + `AGENTS.md` section; skill at `.agents/skills/self-improvement/`
 - Product strategy: clarified Phase 2 P0 “Knowledge Graph / Skill Tree UI” as dependency UX first, full graph screen gated on content threshold (see [product-strategy.md](strategy/product-strategy.md) Pillar 5); CONTEXT/TODO aligned
 - UX audit report for session screen: [docs/audits/session-screen-ux-audit.md](audits/session-screen-ux-audit.md); audit follow-ups implemented (modal feedback dialog, quit confirm, progress formula, back tooltip, XP casing; see audit doc “Implementation follow-up”).
