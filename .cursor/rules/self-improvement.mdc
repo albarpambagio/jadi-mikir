@@ -1,0 +1,8 @@
+---
+description: Remind agents to log durable learnings to .learnings/ after non-trivial work
+alwaysApply: false
+---
+
+# Self-improvement logs
+
+When a task surfaces a **non-obvious** failure, a **user correction**, an **integration gotcha**, or a **requested capability** that is not implemented, consider appending an entry to `.learnings/` per `.agents/skills/self-improvement/SKILL.md` and `AGENTS.md` (Self-improvement section). Promote stable rules to `docs/TECH_STACK.md`, `docs/CONTEXT.md`, or `AGENTS.md` as appropriate.

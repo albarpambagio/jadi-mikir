@@ -44,7 +44,8 @@ src/
 - `audits/` — UX / interface audit reports (e.g. session screen)
 
 **Agent tooling (repo root, not under `src/`):**
-- `.agents/skills/` — AI skills (e.g. `ux-copy`, `grill-me`, `agent-browser`) installed via `npx skills add …`
+- `.agents/skills/` — AI skills (e.g. `ux-copy`, `grill-me`, `self-improvement`, `agent-browser`) installed via `npx skills add …`
+- `.learnings/` — Agent/human learning logs (`LEARNINGS.md`, `ERRORS.md`, `FEATURE_REQUESTS.md`); see `AGENTS.md` (Self-improvement)
 - `.cursor/rules/` — Cursor project rules (e.g. `ux-copy.mdc`, `grill-me-strategy.mdc`)
 
 ## Data Flow
