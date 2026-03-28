@@ -31,6 +31,9 @@ function EmptyState() {
           <Button variant="outline" asChild>
             <Link href="/session">Lewati, mulai dari awal</Link>
           </Button>
+          <Link href="/topics" className="text-muted-foreground hover:text-foreground text-xs transition-colors">
+            Or browse all topics first
+          </Link>
         </div>
       </div>
     </div>
@@ -96,9 +99,11 @@ export function DashboardPage() {
                 ))}
               </div>
               <div className="flex justify-end">
-                <Button variant="outline" size="sm" disabled>
-                  View all topics
-                  <ArrowRight aria-hidden />
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/topics">
+                    View all topics
+                    <ArrowRight aria-hidden />
+                  </Link>
                 </Button>
               </div>
             </section>

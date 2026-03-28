@@ -6,9 +6,7 @@ _(none)_
 ## Backlog
 
 ### Screens (build in this order)
-1. [ ] **Topic browser** — all topics list, topics within a subject
-   - Wireframes: `docs/wireframes/screen-17-all-topics-browser.md`, `screen-18-topic-list-within-subject.md`
-4. [ ] **Topic detail** — topic info, start session, mastery status
+1. [ ] **Topic detail** — topic info, start session, mastery status
    - Wireframe: `docs/wireframes/screen-12-topic-detail.md`
 5. [ ] **Mastery gate** — gate UI shown when advancing between levels
    - Wireframe: `docs/wireframes/screen-16-mastery-gate.md`
@@ -30,6 +28,7 @@ _(none)_
 - [ ] Content creator tooling — admin UI for authoring questions (move up if content bottleneck persists)
 
 ## Completed
+- **Topic browser** (wireframes 17, 18) — `src/pages/topics.tsx`, `src/pages/topic-list.tsx`, `src/components/topics/` (subject-card, topic-row), `src/lib/hooks/use-topic-browser.ts`; routes `/topics` and `/topics/:subject`; UX audit + 3 fixes applied
 - **Dashboard / Home** (wireframes 01, 06) — `src/pages/home.tsx`, `src/pages/progress.tsx`, `src/components/dashboard/` (header, stats-bar, today-session-card, topic-card, skeleton); routes `/` and `/progress`
 - Session complete **UI polish** (2026-03): streak pluralization, first-streak copy, band left-border accent, XP display fix, "Next due" copy, topic bar uses overall mastery — `src/components/session/session-complete-view.tsx`
 - Session complete **audit + dogfood follow-ups** (2026-03): multi-topic headline/copy, `<main>` + heading focus + `document.title`, summary skeleton, Confirm scroll + instant scroll on feedback — see [docs/audits/session-complete-screen-ux-audit-2026-03-28.md](audits/session-complete-screen-ux-audit-2026-03-28.md)
