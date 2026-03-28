@@ -98,6 +98,8 @@ A structured view of topic dependencies that should **drive behavior**, not only
 - **UI**: node graph, progress states (locked / available / in progress / mastered), pathway and prerequisite signals, optional focused "current path" to avoid clutter
 - Integrates with FIRe (SKILL 10) and Targeted Remediation (SKILL 5)
 
+**Phase split (roadmap vs. content threshold)**: Phase 2 **P0** covers **learner-visible dependency UX**—prerequisites, blocked vs ready, next-step and remediation path copy in topic and session flows—so behavior matches Pillar 5 before a large visualization exists. The **full skill tree / node-graph screen** is **optional until content volume** meets the deferral bar in [CONTEXT.md](../CONTEXT.md) (e.g. enough questions and topics that a map is informative, not empty).
+
 ---
 
 ## Content Strategy & FSRS Prerequisites
@@ -206,7 +208,7 @@ Implementation of pipelines, consent UI, and flags is **roadmap work**, not impl
 |---|---|---|
 | Interleaving + Non-Interference (SKILL 3) | P0 | Session scheduler |
 | Targeted Remediation (SKILL 5) | P0 | Mastery tracking |
-| Knowledge Graph / Skill Tree UI | P0 | Topic dependency graph |
+| Knowledge Graph / Skill Tree UI | P0 | Topic dependency graph — *ship dependency UX first; full graph screen per CONTEXT deferral* |
 | FIRe (SKILL 10) | P1 | Topic dependency graph |
 | Diagnostic Placement (SKILL 7) | P1 | Topic content |
 | Data Export/Import (SKILL 13) | P1 | Store |

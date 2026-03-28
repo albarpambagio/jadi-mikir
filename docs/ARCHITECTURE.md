@@ -39,6 +39,14 @@ src/
     └── index.ts         # Shared TypeScript types
 ```
 
+**Documentation (`docs/`):**
+- `wireframes/` — screen specs
+- `audits/` — UX / interface audit reports (e.g. session screen)
+
+**Agent tooling (repo root, not under `src/`):**
+- `.agents/skills/` — AI skills (e.g. `ux-copy`, `grill-me`, `agent-browser`) installed via `npx skills add …`
+- `.cursor/rules/` — Cursor project rules (e.g. `ux-copy.mdc`, `grill-me-strategy.mdc`)
+
 ## Data Flow
 
 ### Mermaid Diagram

@@ -336,6 +336,10 @@ npx skills add vercel-labs/agent-browser --yes
 .agents/skills/agent-browser/SKILL.md
 ```
 
+**UX copy (Anthropic):** For writing or reviewing interface copy, agents use `.agents/skills/ux-copy/SKILL.md` (install: `npx skills add https://github.com/anthropics/knowledge-work-plugins --skill ux-copy --yes`). See AGENTS.md and `.cursor/rules/ux-copy.mdc`.
+
+**Grill-me (Matt Pocock):** Required for **product strategy design sessions** (see AGENTS.md, `.cursor/rules/grill-me-strategy.mdc`). Stress-tests plans through systematic Q&A via `.agents/skills/grill-me/SKILL.md` (install: `npx skills add https://github.com/mattpocock/skills --skill grill-me --yes`). See [skills.sh/mattpocock/skills/grill-me](https://skills.sh/mattpocock/skills/grill-me).
+
 ### 3.3 Testing Workflow
 
 #### Step 1: Start Storybook

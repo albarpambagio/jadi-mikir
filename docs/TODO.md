@@ -24,7 +24,7 @@
 
 ### Future
 - [ ] **Learning lab / opt-in study pipeline** — consent UX, minimal de-identified events, experiment assignment (per [docs/strategy/product-strategy.md](strategy/product-strategy.md); infrastructure TBD)
-- [ ] Skill tree — visual topic dependency map *(defer until 50+ questions exist; wireframe removed)*
+- [ ] **Dependency UX** then **skill tree** — ship prerequisite/blocked/next-step UI first; full visual topic-dependency map deferred until 50+ questions exist *(see [product-strategy.md](strategy/product-strategy.md) Pillar 5 phase split)*
 - [ ] API integration layer
 - [ ] Authentication
 - [ ] Testing coverage — unit tests for engines, E2E for session loop

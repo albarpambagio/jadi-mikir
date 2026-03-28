@@ -1,0 +1,8 @@
+---
+description: Require grill-me skill for product strategy and roadmap design sessions
+alwaysApply: true
+---
+
+# Product strategy sessions (grill-me)
+
+When the conversation is a **product strategy design session** — work in `docs/strategy/`, roadmap or positioning choices, master project plan, critiques, or pre-implementation vetting of strategy — read `.agents/skills/grill-me/SKILL.md` at the start and follow it: one question at a time, a recommended answer with each question, and explore the codebase when that answers the question instead of asking the user.

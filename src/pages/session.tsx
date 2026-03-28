@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useParams, useLocation } from 'wouter'
 import { ArrowLeft, ArrowRight, X, Clock, CheckCircle2, XCircle, Shuffle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -6,6 +7,14 @@ import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { StepCounter } from '@/components/ui/step-counter'
 import { SectionLabel } from '@/components/ui/section-label'
+import {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogHeader,
+  DialogFooter,
+} from '@/components/ui/dialog'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { useQuestionsQuery, useTopicQuery } from '@/lib/content'
 import {
@@ -169,8 +178,7 @@ function QuestionArea({ randomized, phase, selectedChoiceId, onSelectChoice }: Q
 }
 
 // ---------------------------------------------------------------------------
-// FeedbackPanel — fixed bottom sheet that slides up after confirming
-// The question + colored choices remain visible above it.
+// FeedbackPanel — modal bottom sheet (Radix Dialog: focus trap, aria-modal)
 // ---------------------------------------------------------------------------
 
 interface FeedbackPanelProps {
@@ -190,58 +198,82 @@ function FeedbackPanel({
   onNext,
   isLast,
 }: FeedbackPanelProps) {
+  const nextLabel = isLast ? 'Finish session' : 'Next question'
+
   return (
-    <div
-      className={cn(
-        'fixed bottom-0 left-0 right-0 z-50',
-        'animate-in slide-in-from-bottom duration-300',
-        'border-t-4 bg-card shadow-lg',
-        isCorrect ? 'border-success' : 'border-destructive',
-      )}
-    >
-      <div className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-6">
-        {/* Verdict row */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {isCorrect ? (
-              <CheckCircle2 className="text-success size-6 shrink-0" />
-            ) : (
-              <XCircle className="text-destructive size-6 shrink-0" />
-            )}
-            <span
-              className={cn(
-                'text-base font-semibold',
-                isCorrect ? 'text-success' : 'text-destructive',
-              )}
-            >
-              {isCorrect ? 'Correct!' : 'Incorrect'}
-            </span>
-            {isCorrect && (
-              <span className="text-success font-mono text-sm font-semibold tabular-nums">
-                +{xpAwarded} xp
-              </span>
-            )}
-          </div>
-          <div className="text-muted-foreground flex items-center gap-1.5">
-            <Clock className="size-3.5" />
-            <span className="font-mono text-xs tabular-nums">{elapsedTime}s</span>
-          </div>
-        </div>
+    <Dialog open modal>
+      <DialogPortal>
+        <DialogOverlay className="z-50 bg-black/50" />
+        <DialogPrimitive.Content
+          aria-labelledby="feedback-dialog-title"
+          aria-describedby={explanation ? 'feedback-dialog-desc' : undefined}
+          className={cn(
+            'fixed bottom-0 left-0 right-0 z-50 max-h-[85vh] overflow-y-auto',
+            'animate-in slide-in-from-bottom duration-300',
+            'border-t-4 bg-card rounded-t-lg',
+            isCorrect ? 'border-success' : 'border-destructive',
+          )}
+          onEscapeKeyDown={(e) => e.preventDefault()}
+          onPointerDownOutside={(e) => e.preventDefault()}
+          onInteractOutside={(e) => e.preventDefault()}
+        >
+          <div className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-6">
+            <DialogPrimitive.Title id="feedback-dialog-title" className="sr-only">
+              {isCorrect ? 'Answer correct' : 'Answer incorrect'}
+            </DialogPrimitive.Title>
 
-        {/* Explanation */}
-        {explanation && (
-          <p className="text-muted-foreground text-sm leading-relaxed">{explanation}</p>
-        )}
+            <div aria-live="polite" className="sr-only">
+              {isCorrect
+                ? `Correct. ${xpAwarded} XP. Time ${elapsedTime} seconds. ${nextLabel} to continue.`
+                : `Incorrect. Time ${elapsedTime} seconds. ${nextLabel} to continue.`}
+            </div>
 
-        {/* Next button */}
-        <div className="flex justify-end">
-          <Button onClick={onNext}>
-            {isLast ? 'Finish session' : 'Next question'}
-            <ArrowRight />
-          </Button>
-        </div>
-      </div>
-    </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {isCorrect ? (
+                  <CheckCircle2 className="text-success size-6 shrink-0" aria-hidden />
+                ) : (
+                  <XCircle className="text-destructive size-6 shrink-0" aria-hidden />
+                )}
+                <span
+                  className={cn(
+                    'text-base font-semibold',
+                    isCorrect ? 'text-success' : 'text-destructive',
+                  )}
+                >
+                  {isCorrect ? 'Correct' : 'Incorrect'}
+                </span>
+                {isCorrect && (
+                  <span className="text-success font-mono text-sm font-semibold tabular-nums">
+                    +{xpAwarded} XP
+                  </span>
+                )}
+              </div>
+              <div className="text-muted-foreground flex items-center gap-1.5">
+                <Clock className="size-3.5" aria-hidden />
+                <span className="font-mono text-xs tabular-nums">{elapsedTime}s</span>
+              </div>
+            </div>
+
+            {explanation && (
+              <p
+                id="feedback-dialog-desc"
+                className="text-muted-foreground text-sm leading-relaxed"
+              >
+                {explanation}
+              </p>
+            )}
+
+            <div className="flex justify-end">
+              <Button type="button" onClick={onNext} autoFocus>
+                {nextLabel}
+                <ArrowRight />
+              </Button>
+            </div>
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPortal>
+    </Dialog>
   )
 }
 
@@ -329,7 +361,7 @@ function SessionComplete({
             <p className="text-muted-foreground text-xs font-medium">Earned</p>
             <p className="text-primary font-mono text-2xl font-semibold tabular-nums">
               +{stats.xpEarned}
-              <span className="text-muted-foreground text-base font-normal"> xp</span>
+              <span className="text-muted-foreground text-base font-normal"> XP</span>
             </p>
           </div>
         </div>
@@ -353,6 +385,62 @@ function SessionComplete({
 }
 
 // ---------------------------------------------------------------------------
+// QuitSessionDialog — confirm before leaving with progress at risk
+// ---------------------------------------------------------------------------
+
+interface QuitSessionDialogProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  onConfirmExit: () => void
+}
+
+function QuitSessionDialog({ open, onOpenChange, onConfirmExit }: QuitSessionDialogProps) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange} modal>
+      <DialogPortal>
+        <DialogOverlay className="bg-black/50" />
+        <DialogPrimitive.Content
+          className={cn(
+            'fixed left-[50%] top-[50%] z-50 w-full max-w-md translate-x-[-50%] translate-y-[-50%]',
+            'border border-border bg-card p-6 shadow-md rounded-lg',
+            'data-[state=open]:animate-in data-[state=closed]:animate-out',
+            'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+            'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
+            'duration-200',
+          )}
+          aria-labelledby="quit-dialog-title"
+          aria-describedby="quit-dialog-desc"
+        >
+          <DialogHeader className="text-left">
+            <DialogPrimitive.Title
+              id="quit-dialog-title"
+              className="text-lg leading-none font-semibold tracking-tight"
+            >
+              End session?
+            </DialogPrimitive.Title>
+            <DialogPrimitive.Description
+              id="quit-dialog-desc"
+              className="text-muted-foreground pt-2 text-sm"
+            >
+              Your progress in this run will be lost.
+            </DialogPrimitive.Description>
+          </DialogHeader>
+          <DialogFooter className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
+            <Button type="button" variant="destructive" onClick={onConfirmExit}>
+              End session
+            </Button>
+          </DialogFooter>
+        </DialogPrimitive.Content>
+      </DialogPortal>
+    </Dialog>
+  )
+}
+
+
+// ---------------------------------------------------------------------------
 // SessionPage (main export)
 // ---------------------------------------------------------------------------
 
@@ -370,6 +458,7 @@ export function SessionPage() {
   const [phase, setPhase] = useState<SessionPhase>('answering')
   const [elapsedTime, setElapsedTime] = useState(0)
   const [stats, setStats] = useState<SessionStats>({ correct: 0, xpEarned: 0 })
+  const [quitDialogOpen, setQuitDialogOpen] = useState(false)
 
   const startTimeRef = useRef<number>(Date.now())
 
@@ -417,6 +506,26 @@ export function SessionPage() {
     navigate('/')
   }, [navigate])
 
+  const exitSession = useCallback(() => {
+    setQuitDialogOpen(false)
+    navigate('/')
+  }, [navigate])
+
+  const shouldConfirmQuit =
+    currentIndex > 0 ||
+    phase === 'feedback' ||
+    selectedChoiceId !== null ||
+    stats.correct > 0 ||
+    stats.xpEarned > 0
+
+  const requestExit = useCallback(() => {
+    if (shouldConfirmQuit) {
+      setQuitDialogOpen(true)
+    } else {
+      exitSession()
+    }
+  }, [shouldConfirmQuit, exitSession])
+
   const handlePracticeAgain = useCallback(() => {
     setCurrentIndex(0)
     setSelectedChoiceId(null)
@@ -426,7 +535,9 @@ export function SessionPage() {
   }, [])
 
   const progressPercent =
-    questions.length > 0 ? Math.round((currentIndex / questions.length) * 100) : 0
+    questions.length > 0
+      ? Math.round(((currentIndex + 1) / questions.length) * 100)
+      : 0
 
   // Unique topic tags across all session questions for the session mix footer
   const sessionTags = Array.from(new Set(questions.flatMap((q) => q.tags))).slice(0, 6)
@@ -483,81 +594,100 @@ export function SessionPage() {
     currentQuestion.choices.find((c) => c.id === selectedChoiceId)?.isCorrect ?? false
 
   return (
-    // Extra bottom padding when feedback panel is open so content isn't hidden
-    <div className={cn('mx-auto max-w-2xl flex flex-col gap-6', phase === 'feedback' && 'pb-52')}>
-      {/* ── Session header ── */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between gap-4">
-          {/* Left: back + topic title */}
-          <div className="flex min-w-0 items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={handleQuit} aria-label="Go back">
-              <ArrowLeft />
-            </Button>
+    <>
+      <div
+        className={cn(
+          'mx-auto max-w-2xl flex flex-col gap-6',
+          phase === 'feedback' && 'pb-52',
+        )}
+        aria-hidden={quitDialogOpen}
+      >
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex min-w-0 items-center gap-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={requestExit}
+                    aria-label="Go back"
+                  >
+                    <ArrowLeft />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">Back</TooltipContent>
+              </Tooltip>
             <span className="text-foreground truncate text-sm font-medium">
               {topic?.title ?? 'Review session'}
             </span>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-4">
+              <StepCounter
+                current={currentIndex + 1}
+                total={questions.length}
+                prefix="Q"
+                size="sm"
+              />
+              <Button variant="outline" size="sm" onClick={requestExit}>
+                <X />
+                Quit
+              </Button>
+            </div>
           </div>
 
-          {/* Right: step counter + quit */}
-          <div className="flex shrink-0 items-center gap-4">
-            <StepCounter current={currentIndex + 1} total={questions.length} prefix="Q" size="sm" />
-            <Button variant="outline" size="sm" onClick={handleQuit}>
-              <X />
-              Quit
+          <Progress value={progressPercent} className="h-1.5" />
+        </div>
+
+        <QuestionArea
+          randomized={randomized}
+          phase={phase === 'feedback' ? 'feedback' : 'answering'}
+          selectedChoiceId={selectedChoiceId}
+          onSelectChoice={phase === 'answering' ? setSelectedChoiceId : undefined}
+        />
+
+        {phase === 'answering' && (
+          <div className="flex justify-end">
+            <Button onClick={handleConfirm} disabled={!selectedChoiceId}>
+              Confirm answer
+              <ArrowRight />
             </Button>
           </div>
-        </div>
+        )}
 
-        {/* Progress bar */}
-        <Progress value={progressPercent} className="h-1.5" />
+        {phase === 'feedback' && (
+          <FeedbackPanel
+            isCorrect={selectedIsCorrect}
+            elapsedTime={elapsedTime}
+            xpAwarded={selectedIsCorrect ? 50 : 0}
+            explanation={randomized.explanation}
+            onNext={handleNext}
+            isLast={currentIndex + 1 >= questions.length}
+          />
+        )}
+
+        {sessionTags.length > 0 && (
+          <div className="border-border flex flex-col gap-2 border-t pt-4">
+            <div className="text-muted-foreground flex items-center gap-1.5">
+              <Shuffle className="size-3.5 shrink-0" />
+              <span className="text-xs font-medium">Topics in this session</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {sessionTags.map((tag) => (
+                <Badge key={tag} variant="tag">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* ── Question area (shared between answering + feedback) ── */}
-      <QuestionArea
-        randomized={randomized}
-        phase={phase === 'feedback' ? 'feedback' : 'answering'}
-        selectedChoiceId={selectedChoiceId}
-        onSelectChoice={phase === 'answering' ? setSelectedChoiceId : undefined}
+      <QuitSessionDialog
+        open={quitDialogOpen}
+        onOpenChange={setQuitDialogOpen}
+        onConfirmExit={exitSession}
       />
-
-      {/* ── Confirm button (answering only) ── */}
-      {phase === 'answering' && (
-        <div className="flex justify-end">
-          <Button onClick={handleConfirm} disabled={!selectedChoiceId}>
-            Confirm answer
-            <ArrowRight />
-          </Button>
-        </div>
-      )}
-
-      {/* ── Feedback panel — slides up from bottom ── */}
-      {phase === 'feedback' && (
-        <FeedbackPanel
-          isCorrect={selectedIsCorrect}
-          elapsedTime={elapsedTime}
-          xpAwarded={selectedIsCorrect ? 50 : 0}
-          explanation={randomized.explanation}
-          onNext={handleNext}
-          isLast={currentIndex + 1 >= questions.length}
-        />
-      )}
-
-      {/* ── Session mix footer — shows active interleaving ── */}
-      {sessionTags.length > 0 && (
-        <div className="border-border flex flex-col gap-2 border-t pt-4">
-          <div className="text-muted-foreground flex items-center gap-1.5">
-            <Shuffle className="size-3.5 shrink-0" />
-            <span className="text-xs font-medium">Topics in this session</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {sessionTags.map((tag) => (
-              <Badge key={tag} variant="tag">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   )
 }

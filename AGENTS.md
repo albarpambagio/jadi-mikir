@@ -13,6 +13,10 @@ When suggesting UI changes:
 - **Use shadcn/ui before building from scratch.** When a standard UI primitive is needed (button, input, card, dialog, table, select, etc.), install it from shadcn/ui. Only build a custom component if shadcn/ui has no equivalent, or the Figma design requires behavior shadcn cannot provide.
 - Apply tokens and rules from TECH_STACK.md and VISUAL-SPEC.md on top of the shadcn base.
 
+**UX copy (microcopy, labels, errors, empty states, CTAs, confirmations, tooltips, onboarding, loading copy):** Before writing or reviewing user-facing strings, read `.agents/skills/ux-copy/SKILL.md` and follow its principles and **Output** structure (recommended copy, alternatives table, rationale, localization notes). When implementing copy in UI, still follow Figma and shadcn rules above.
+
+**Product strategy design sessions** (roadmap, positioning, `docs/strategy/` docs, critiques, master project plan, pre-implementation vetting): Use `.agents/skills/grill-me/SKILL.md` for the session — stress-test the plan through systematic questioning (one question at a time, recommended answer each time); explore the codebase when it resolves a question. Do not skip this workflow when the user is explicitly in a strategy design or review session.
+
 ## Agent Behavior
 - Be concise — answer directly, avoid preamble/postamble
 - Run lint before committing: npm run lint && npm run lint:css

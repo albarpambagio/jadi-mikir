@@ -16,6 +16,11 @@
       "sourceType": "github",
       "computedHash": "3d181f9030fed4355ff97626b3a75d3e324091563595b8950592347e49e3e238"
     },
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "computedHash": "daf64ca15f4fa081a6747766db538e2dbd1131725ed4fcdd3d538dc62c7035ba"
+    },
     "self-improving-agent": {
       "source": "charon-fan/agent-playbook",
       "sourceType": "github",
@@ -25,6 +30,11 @@
       "source": "vercel-labs/agent-browser",
       "sourceType": "github",
       "computedHash": "b6d2f40ec99896e8b787f1f402dbe96108d656e97f9e6f1b239de76f9065719d"
+    },
+    "ux-copy": {
+      "source": "anthropics/knowledge-work-plugins",
+      "sourceType": "github",
+      "computedHash": "be952a0ebb04d72c59716a5fc9325c30c88eea0aa2a3075c35fb6a6fa28a07e9"
     },
     "vercel-sandbox": {
       "source": "vercel-labs/agent-browser",

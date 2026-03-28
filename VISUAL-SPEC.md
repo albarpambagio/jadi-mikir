@@ -35,6 +35,9 @@
 - No shadow by default. shadow-sm on hover if the card is interactive.
 - Never nest cards more than one level deep.
 
+### Fixed bottom sheets (modal feedback)
+- Session answer feedback uses a **modal** bottom region (Radix Dialog): semi-transparent full-viewport overlay plus anchored sheet. This is **not** a resting card — omit resting `shadow-lg` on the sheet; rely on `border-t` / status border and overlay for separation.
+
 ### Form inputs
 - Height: 36px (h-9)
 - Border: border-border, focus:border-primary, focus:ring-2 focus:ring-primary/20

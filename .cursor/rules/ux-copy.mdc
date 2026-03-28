@@ -1,0 +1,8 @@
+---
+description: Require anthropics ux-copy skill for user-facing copy work
+alwaysApply: true
+---
+
+# UX copy
+
+When the task involves **writing, reviewing, or refining user-facing copy** (labels, errors, empty states, CTAs, confirmations, tooltips, onboarding, loading copy, microcopy), read `.agents/skills/ux-copy/SKILL.md` at the start of the task and follow its principles and output format before delivering final copy.
