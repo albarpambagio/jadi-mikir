@@ -66,7 +66,7 @@ export function getMasteryProgress(topic: TopicMastery): {
 } {
   const level = calculateMasteryLevel(topic)
   const threshold = MASTERY_LEVELS[level].threshold
-  const nextThreshold = level < 5 ? MASTERY_LEVELS[level + 1].threshold : 1
+  const nextThreshold = level < 5 ? MASTERY_LEVELS[(level + 1) as MasteryLevel].threshold : 1
   
   const ratio = topic.masteredQuestions / topic.totalQuestions
   const current = ratio

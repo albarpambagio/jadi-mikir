@@ -4,7 +4,7 @@
 
 **JadiMikir** is a privacy-first, local-only MCQ learning platform that brings tutor-level personalization to self-study through adaptive spaced repetition, targeted remediation, and interleaved practice—all without requiring user accounts or data transmission.
 
-The platform targets self-directed learners who want efficient, scientifically-grounded study tools without compromising privacy. Its core value: **2 standard deviation improvement potential** (matching one-on-one tutoring) through an intelligent question engine that adapts to individual performance.
+The platform targets self-directed learners who want efficient, scientifically-grounded study tools without the friction of accounts or data exposure. Its core value: **tutor-level retention** through an intelligent question engine that adapts to individual performance using FSRS, targeted remediation, and interleaved practice.
 
 ---
 
@@ -70,11 +70,12 @@ The question engine is the product. Every answer updates the learner's model:
 - **Interleaving + non-interference** for retention
 - **Response time tracking** for automaticity signals
 
-### 2. Privacy-First Architecture
-- Zero account requirement
-- All data on-device (localStorage/IndexedDB)
-- Full data portability (export/import)
-- No tracking, no analytics
+### 2. Privacy as Trust Infrastructure
+Privacy is not a marketing angle — it's what makes instant start possible. No sign-up friction, no data exposure risk, works offline and on any device without syncing. The user benefit is immediate access and full ownership:
+- Zero account requirement (start in seconds, no barrier)
+- All data on-device (localStorage/IndexedDB, never leaves the browser)
+- Full data portability (export/import — user owns their history)
+- No tracking, no analytics by default
 
 ### 3. Visible Mastery
 - Clear mastery gates (not "good enough")
@@ -134,7 +135,7 @@ This feature integrates with FIRe (SKILL 10) and Targeted Remediation (SKILL 5) 
 
 | Feature | Priority | Dependencies |
 |---|---|---|
-| TanStack stack setup (Query/Router/Store) | P0 | None |
+| Stack setup (React 19 + Vite + wouter + TanStack Query/Store) | P0 | None |
 | Topic/Question data model + content validation | P0 | None |
 | Topic Dependency Graph (data model) | P0 | Content model |
 | Mastery Gate (SKILL 1) | P0 | Store setup |
@@ -173,6 +174,16 @@ This feature integrates with FIRe (SKILL 10) and Targeted Remediation (SKILL 5) 
 | Streak notifications (browser) | P2 | PWA |
 
 **Success Criteria**: Product feels polished, content can be added without code, users return habitually
+
+---
+
+## Design North Star
+
+> **Internal reference only — not a user-facing claim.**
+
+Bloom's 2-sigma problem: the most effective known learning intervention (live 1:1 human tutoring) produces roughly 2 standard deviations of improvement over conventional instruction. No software product has reliably reproduced this at scale.
+
+JadiMikir uses this as its design target, not its marketing copy. Every product decision should be evaluated against the question: *does this move outcomes closer to what a good tutor would achieve?* The specific claim should not appear in user-facing copy until there is evidence from actual user outcomes.
 
 ---
 

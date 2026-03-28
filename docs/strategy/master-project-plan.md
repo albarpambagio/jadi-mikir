@@ -9,7 +9,7 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 | Aspect | Detail |
 |--------|--------|
 | **Product** | Privacy-first adaptive MCQ learning platform |
-| **Core Value** | 2 standard deviation improvement (tutor-level) via FSRS + mastery gates |
+| **Core Value** | Tutor-level retention via FSRS + mastery gates + targeted remediation |
 | **Target Users** | Self-driven learners (students, exam candidates, lifelong learners) |
 | **Storage** | Local-first (localStorage → IndexedDB → PWA) |
 | **Accounts** | Zero — fully local, no auth required |
@@ -24,7 +24,7 @@ Master execution plan covering all phases from MVP through Scale & Polish.
 
 | # | Feature | SKILL | Dependencies | Status |
 |---|---------|-------|--------------|--------|
-| 1 | TanStack stack setup (Query/Router/Store) | - | None | ✅ Complete |
+| 1 | Stack setup (React 19 + Vite + wouter + TanStack Query/Store) | - | None | ✅ Complete |
 | 2 | Topic and Question data models | - | None | ✅ Complete |
 | 3 | Content validation system | SKILL 11 | Data models | ✅ Complete |
 | 4 | Mastery Gate system | SKILL 1 | Store setup | ✅ Complete |
@@ -276,4 +276,29 @@ Here's the recommended build order for Phase 3 UI:
 
 ---
 
-*Last Updated: 2026-03-14*
+---
+
+## Content Minimum
+
+Content is the existential risk for v1. All engines are built, but 14 questions across 5 topics cannot demonstrate the learning loop to a real user in a meaningful way.
+
+### Minimum viable content bar (first real user test)
+- **1 complete subject track**
+- **5 topics** with clear prerequisite relationships (enough to make the skill tree non-trivial)
+- **10 questions per topic minimum** (50 questions total)
+- Each question must have: deliberate plausible distractors + distractor-specific explanations
+
+Until this bar is reached, do not run user tests. The engines cannot demonstrate their value on toy data.
+
+### Skill tree deferral rule
+The skill tree UI should not be built until there are at least **3 subject tracks** with **15+ questions per topic**. Building a graph on 5 topics produces a near-empty visualization that misrepresents the feature. The skill tree is a Phase 2 feature but its UI build should follow the content, not precede it.
+
+### Content creation priority
+Content creator tooling (admin UI for authoring questions) is listed as Phase 3. If the content bottleneck persists after the MVP build, **move content creator tooling ahead of PWA and notifications** in the Phase 3 priority order. The ability to add content quickly is more valuable than offline installability at early stage.
+
+### Suggested first subject track
+Choose one subject with a clear curriculum structure (e.g., high school mathematics, biology, Indonesian history) and build it to the minimum bar before moving to a second subject. Breadth without depth produces a product that looks big but demonstrates nothing.
+
+---
+
+*Last Updated: 2026-03-21*

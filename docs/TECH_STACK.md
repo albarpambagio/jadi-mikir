@@ -3,7 +3,7 @@
 ## Tech Stack
 - **Framework**: React 19 + Vite 6
 - **Language**: TypeScript 5
-- **Routing**: TanStack Router 1.0
+- **Routing**: wouter 3.x
 - **State Management**: TanStack Query 5 + TanStack Store
 - **Styling**: Tailwind CSS v4 + CVA
 - **Forms**: React Hook Form + Zod

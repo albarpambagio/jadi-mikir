@@ -1,20 +1,20 @@
 # ARCHITECTURE.md — Project Map
 
 ## Tech Stack Overview
-- **Routing**: wouter (stand-in; TECH_STACK.md specifies TanStack Router — migration pending)
+- **Routing**: wouter 3.x (committed; pattern-based, lightweight, no loaders)
 - **Server State**: TanStack Query (async data fetching, caching)
 - **Client State**: TanStack Store (simple client-side state)
 - **UI**: shadcn/ui components with Tailwind CSS v4
 
 ## Entry Points
 - **Main**: `src/main.tsx` — Application bootstrap
-- **Router**: `src/router.tsx` — Route definitions (wouter)
+- **Router**: `src/router.tsx` — Route definitions
 
 ## Directory Structure
 ```
 src/
 ├── main.tsx              # Entry point
-├── router.tsx            # Route definitions (wouter)
+├── router.tsx            # Route definitions
 ├── index.css             # Design tokens + Tailwind v4
 ├── components/
 │   ├── ui/              # shadcn/ui primitives
