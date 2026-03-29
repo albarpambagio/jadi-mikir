@@ -80,6 +80,10 @@ export interface LearnerState {
   /** Minimum mastery ratio (percent) for prerequisite topics to unlock dependents; default 70; Settings TBD. */
   masteryGateThresholdPercent: number
   lastPracticeDate: string | null
+  /** Whether onboarding has been completed */
+  hasCompletedOnboarding: boolean
+  /** Selected subject during onboarding (e.g., "Matematika") */
+  selectedSubject: string | null
   topics: Record<string, TopicMastery>
   cards: Record<string, CardState>
   reviewLogs: ReviewLog[]

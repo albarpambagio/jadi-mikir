@@ -13,6 +13,10 @@ export interface LearnerActions {
   /** Remove topic mastery, all cards for question IDs, and review logs for those questions. */
   resetTopic: (topicId: string, questionIds: string[]) => void
   setState: (state: Partial<LearnerState>) => void
+  /** Mark onboarding as completed and set selected subject */
+  completeOnboarding: (subject: string) => void
+  /** Set the selected subject during onboarding */
+  setSelectedSubject: (subject: string) => void
 }
 
 const defaultState: LearnerState = {
@@ -22,6 +26,8 @@ const defaultState: LearnerState = {
   streakGoalDays: 30,
   masteryGateThresholdPercent: 70,
   lastPracticeDate: null,
+  hasCompletedOnboarding: false,
+  selectedSubject: null,
   topics: {},
   cards: {},
   reviewLogs: [],
@@ -161,6 +167,21 @@ export const learnerActions: LearnerActions = {
 
   setState: (newState) => {
     learnerStore.setState((state) => ({ ...state, ...newState }))
+  },
+
+  completeOnboarding: (subject) => {
+    learnerStore.setState((state) => ({
+      ...state,
+      hasCompletedOnboarding: true,
+      selectedSubject: subject,
+    }))
+  },
+
+  setSelectedSubject: (subject) => {
+    learnerStore.setState((state) => ({
+      ...state,
+      selectedSubject: subject,
+    }))
   },
 }
 

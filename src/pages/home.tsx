@@ -1,5 +1,6 @@
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { ArrowRight, Play } from 'lucide-react'
+import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { SectionLabel } from '@/components/ui/section-label'
 import { DashboardHeader } from '@/components/dashboard/dashboard-header'
@@ -8,6 +9,7 @@ import { StatsBar } from '@/components/dashboard/stats-bar'
 import { TodaySessionCard } from '@/components/dashboard/today-session-card'
 import { TopicCard } from '@/components/dashboard/topic-card'
 import { useDashboardStats } from '@/lib/hooks/use-dashboard-stats'
+import { learnerStore } from '@/store/learnerStore'
 
 const MAX_TOPIC_CARDS = 6
 
@@ -38,6 +40,7 @@ function EmptyState() {
 }
 
 export function DashboardPage() {
+  const [, setLocation] = useLocation()
   const {
     isLoading,
     streak,
@@ -49,6 +52,13 @@ export function DashboardPage() {
     getSortedTopics,
     motivationalMessage,
   } = useDashboardStats()
+
+  useEffect(() => {
+    const state = learnerStore.get()
+    if (!state.hasCompletedOnboarding) {
+      setLocation('/onboarding')
+    }
+  }, [setLocation])
 
   const isEmpty =
     completedCount === 0 &&
@@ -69,7 +79,7 @@ export function DashboardPage() {
         <>
           <div className="flex flex-col gap-1">
             <h1 className="text-foreground text-2xl font-semibold tracking-tight">
-              Selamat kembali!
+              Selamat datang kembali!
             </h1>
             <p className="text-muted-foreground text-sm">{motivationalMessage}</p>
           </div>
