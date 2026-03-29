@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useParams, useLocation } from 'wouter'
-import { ArrowLeft, ArrowRight, X, Clock, CheckCircle2, XCircle, Shuffle } from 'lucide-react'
+import { ArrowRight, X, CheckCircle2, XCircle, Shuffle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
@@ -14,7 +14,6 @@ import {
   DialogHeader,
   DialogFooter,
 } from '@/components/ui/dialog'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import { useQuestionsQuery, useTopicQuery, useTopicsQuery } from '@/lib/content'
 import { getMasteryProgress } from '@/lib/engines/mastery'
@@ -53,7 +52,7 @@ interface SessionStats {
 // ---------------------------------------------------------------------------
 
 const DIFFICULTY_CONFIG: Record<Question['difficulty'], { label: string; filled: number }> = {
-  easy: { label: 'Easy', filled: 1 },
+  easy: { label: 'Easy', filled: 2 },
   medium: { label: 'Medium', filled: 3 },
   hard: { label: 'Hard', filled: 5 },
 }
@@ -70,7 +69,7 @@ function DifficultyLabel({ difficulty }: { difficulty: Question['difficulty'] })
           />
         ))}
       </div>
-      <span className="text-muted-foreground text-xs font-medium">{label}</span>
+      <span className="text-muted-foreground text-xs font-medium">{label} · {filled}/5</span>
     </div>
   )
 }
@@ -115,14 +114,13 @@ function QuestionArea({ randomized, phase, selectedChoiceId, onSelectChoice }: Q
           const letter = getDisplayLetter(choice.displayIndex)
 
           if (isFeedback) {
-            // Non-interactive — show correctness coloring
             const isSelectedChoice = choice.id === selectedChoiceId
             const isCorrectChoice = choice.isCorrect
 
             const cardClass = isCorrectChoice
-              ? 'border-success/30 bg-success/5'
+              ? 'border-l-4 border-l-success border-border bg-card'
               : isSelectedChoice
-                ? 'border-destructive/30 bg-destructive/5'
+                ? 'border-l-4 border-l-destructive border-border bg-card'
                 : 'border-border bg-card opacity-50'
 
             const letterClass = isCorrectChoice
@@ -137,6 +135,19 @@ function QuestionArea({ randomized, phase, selectedChoiceId, onSelectChoice }: Q
                 ? 'text-destructive'
                 : 'text-muted-foreground'
 
+            let rowLabel: string | null = null
+            let rowLabelClass = ''
+            if (isCorrectChoice && isSelectedChoice) {
+              rowLabel = '✓ Jawaban kamu · Benar'
+              rowLabelClass = 'text-success'
+            } else if (isCorrectChoice) {
+              rowLabel = '✓ Jawaban benar'
+              rowLabelClass = 'text-success'
+            } else if (isSelectedChoice) {
+              rowLabel = '✗ Jawaban kamu'
+              rowLabelClass = 'text-destructive'
+            }
+
             return (
               <div
                 key={choice.id}
@@ -148,11 +159,10 @@ function QuestionArea({ randomized, phase, selectedChoiceId, onSelectChoice }: Q
                 <span className={cn('text-sm flex-1 leading-snug', textClass)}>
                   {choice.text}
                 </span>
-                {isCorrectChoice && (
-                  <span className="text-success shrink-0 text-xs font-medium">✓ correct</span>
-                )}
-                {isSelectedChoice && !isCorrectChoice && (
-                  <span className="text-destructive shrink-0 text-xs font-medium">✗ your answer</span>
+                {rowLabel && (
+                  <span className={cn('shrink-0 text-xs font-medium', rowLabelClass)}>
+                    {rowLabel}
+                  </span>
                 )}
               </div>
             )
@@ -190,102 +200,46 @@ function QuestionArea({ randomized, phase, selectedChoiceId, onSelectChoice }: Q
 }
 
 // ---------------------------------------------------------------------------
-// FeedbackPanel — modal bottom sheet (Radix Dialog: focus trap, aria-modal)
+// FeedbackBanner — inline result banner shown above question during feedback
 // ---------------------------------------------------------------------------
 
-interface FeedbackPanelProps {
+interface FeedbackBannerProps {
   isCorrect: boolean
-  elapsedTime: number
   xpAwarded: number
-  explanation?: string
-  onNext: () => void
-  isLast: boolean
 }
 
-function FeedbackPanel({
-  isCorrect,
-  elapsedTime,
-  xpAwarded,
-  explanation,
-  onNext,
-  isLast,
-}: FeedbackPanelProps) {
-  const nextLabel = isLast ? 'Finish session' : 'Next question'
-
+function FeedbackBanner({ isCorrect, xpAwarded }: FeedbackBannerProps) {
   return (
-    <Dialog open modal>
-      <DialogPortal>
-        <DialogOverlay className="z-50 bg-black/50" />
-        <DialogPrimitive.Content
-          aria-labelledby="feedback-dialog-title"
-          aria-describedby={explanation ? 'feedback-dialog-desc' : undefined}
-          className={cn(
-            'fixed bottom-0 left-0 right-0 z-50 max-h-[85vh] overflow-y-auto',
-            'animate-in slide-in-from-bottom duration-300',
-            'border-t-4 bg-card rounded-t-lg',
-            isCorrect ? 'border-success' : 'border-destructive',
-          )}
-          onEscapeKeyDown={(e) => e.preventDefault()}
-          onPointerDownOutside={(e) => e.preventDefault()}
-          onInteractOutside={(e) => e.preventDefault()}
-        >
-          <div className="mx-auto flex max-w-2xl flex-col gap-4 px-4 py-6">
-            <DialogPrimitive.Title id="feedback-dialog-title" className="sr-only">
-              {isCorrect ? 'Answer correct' : 'Answer incorrect'}
-            </DialogPrimitive.Title>
-
-            <div aria-live="polite" className="sr-only">
-              {isCorrect
-                ? `Correct. ${xpAwarded} XP. Time ${elapsedTime} seconds. ${nextLabel} to continue.`
-                : `Incorrect. Time ${elapsedTime} seconds. ${nextLabel} to continue.`}
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                {isCorrect ? (
-                  <CheckCircle2 className="text-success size-6 shrink-0" aria-hidden />
-                ) : (
-                  <XCircle className="text-destructive size-6 shrink-0" aria-hidden />
-                )}
-                <span
-                  className={cn(
-                    'text-base font-semibold',
-                    isCorrect ? 'text-success' : 'text-destructive',
-                  )}
-                >
-                  {isCorrect ? 'Correct' : 'Incorrect'}
-                </span>
-                {isCorrect && (
-                  <span className="text-success font-mono text-sm font-semibold tabular-nums">
-                    +{xpAwarded} XP
-                  </span>
-                )}
-              </div>
-              <div className="text-muted-foreground flex items-center gap-1.5">
-                <Clock className="size-3.5" aria-hidden />
-                <span className="font-mono text-xs tabular-nums">{elapsedTime}s</span>
-              </div>
-            </div>
-
-            {explanation && (
-              <p
-                id="feedback-dialog-desc"
-                className="text-muted-foreground text-sm leading-relaxed"
-              >
-                {explanation}
-              </p>
-            )}
-
-            <div className="flex justify-end">
-              <Button type="button" onClick={onNext} autoFocus>
-                {nextLabel}
-                <ArrowRight />
-              </Button>
-            </div>
-          </div>
-        </DialogPrimitive.Content>
-      </DialogPortal>
-    </Dialog>
+    <div
+      className={cn(
+        'flex items-center gap-3 border-b-2 pb-4',
+        isCorrect ? 'border-success' : 'border-destructive',
+      )}
+    >
+      {isCorrect ? (
+        <CheckCircle2 className="text-success size-6 shrink-0" aria-hidden />
+      ) : (
+        <XCircle className="text-destructive size-6 shrink-0" aria-hidden />
+      )}
+      <span
+        className={cn(
+          'text-base font-semibold',
+          isCorrect ? 'text-success' : 'text-destructive',
+        )}
+      >
+        {isCorrect ? 'Jawaban benar!' : 'Belum tepat.'}
+      </span>
+      {isCorrect && (
+        <span className="text-success font-mono text-sm font-semibold tabular-nums">
+          +{xpAwarded} XP
+        </span>
+      )}
+      <div aria-live="polite" className="sr-only">
+        {isCorrect
+          ? `Jawaban benar. ${xpAwarded} XP.`
+          : 'Belum tepat.'}
+      </div>
+    </div>
   )
 }
 
@@ -323,21 +277,21 @@ function QuitSessionDialog({ open, onOpenChange, onConfirmExit }: QuitSessionDia
               id="quit-dialog-title"
               className="text-lg leading-none font-semibold tracking-tight"
             >
-              End session?
+              Keluar sesi?
             </DialogPrimitive.Title>
             <DialogPrimitive.Description
               id="quit-dialog-desc"
               className="text-muted-foreground pt-2 text-sm"
             >
-              Your progress in this run will be lost.
+              Progress sesi ini tidak disimpan.
             </DialogPrimitive.Description>
           </DialogHeader>
           <DialogFooter className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Cancel
+              Lanjutkan sesi
             </Button>
             <Button type="button" variant="destructive" onClick={onConfirmExit}>
-              End session
+              Ya, keluar
             </Button>
           </DialogFooter>
         </DialogPrimitive.Content>
@@ -676,32 +630,14 @@ export function SessionPage() {
   return (
     <>
       <div
-        className={cn(
-          'mx-auto max-w-2xl flex flex-col gap-6',
-          phase === 'feedback' && 'pb-52',
-        )}
+        className="mx-auto flex max-w-2xl flex-col gap-6"
         aria-hidden={quitDialogOpen}
       >
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex min-w-0 items-center gap-2">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={requestExit}
-                    aria-label="Go back"
-                  >
-                    <ArrowLeft />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">Back</TooltipContent>
-              </Tooltip>
-            <span className="text-foreground truncate text-sm font-medium">
+            <span className="text-foreground min-w-0 truncate text-sm font-medium">
               {topic?.title ?? 'Review session'}
             </span>
-            </div>
 
             <div className="flex shrink-0 items-center gap-4">
               <StepCounter
@@ -710,15 +646,24 @@ export function SessionPage() {
                 prefix="Q"
                 size="sm"
               />
-              <Button variant="outline" size="sm" onClick={requestExit}>
-                <X />
-                Quit
-              </Button>
+              {phase === 'answering' && (
+                <Button variant="outline" size="sm" onClick={requestExit}>
+                  <X />
+                  Quit session
+                </Button>
+              )}
             </div>
           </div>
 
           <Progress value={progressPercent} className="h-1.5" />
         </div>
+
+        {phase === 'feedback' && (
+          <FeedbackBanner
+            isCorrect={selectedIsCorrect}
+            xpAwarded={selectedIsCorrect ? 50 : 0}
+          />
+        )}
 
         <QuestionArea
           randomized={randomized}
@@ -737,17 +682,36 @@ export function SessionPage() {
         )}
 
         {phase === 'feedback' && (
-          <FeedbackPanel
-            isCorrect={selectedIsCorrect}
-            elapsedTime={elapsedTime}
-            xpAwarded={selectedIsCorrect ? 50 : 0}
-            explanation={randomized.explanation}
-            onNext={handleNext}
-            isLast={currentIndex + 1 >= questions.length}
-          />
+          <>
+            {randomized.explanation && (
+              <div className="border-border bg-muted/20 rounded-lg border p-4">
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {randomized.explanation}
+                </p>
+              </div>
+            )}
+
+            <div className="flex justify-end">
+              <Button
+                type="button"
+                onClick={handleNext}
+                autoFocus
+                className={
+                  selectedIsCorrect
+                    ? 'bg-success text-success-foreground hover:bg-success/90 focus-visible:ring-success/30'
+                    : undefined
+                }
+              >
+                {currentIndex + 1 >= questions.length
+                  ? 'Selesaikan sesi'
+                  : 'Pertanyaan berikutnya'}
+                <ArrowRight />
+              </Button>
+            </div>
+          </>
         )}
 
-        {sessionTags.length > 0 && (
+        {sessionTags.length > 0 && phase === 'answering' && (
           <div className="border-border flex flex-col gap-2 border-t pt-4">
             <div className="text-muted-foreground flex items-center gap-1.5">
               <Shuffle className="size-3.5 shrink-0" />

@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Home + progress dashboard audit complete — 1 Critical (state persistence) + 3 High + 2 Medium fixes applied. Next: Topic detail (screen 12).
+S2 + S3 session screen rebuild complete (wireframe v2 alignment). Next: remaining screen rebuilds (S6, S11, S17, S18), then Topic detail (screen 12).
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -12,7 +12,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **State**: `src/store/learnerStore.ts` — learner progress, session state, streaks
 - **Design tokens**: `src/index.css` — Nature theme, light + dark mode, full token set
 - **UI primitives** (`src/components/ui/`): button, card, badge, input, dialog, tabs, progress, tooltip, avatar, scroll-area, separator — all themed to VISUAL-SPEC
-- **Session screen** (`src/pages/session.tsx`): answering + feedback phases, choice randomization, XP award (+50 per correct), `updateStreak()` on finish; routes `/session` and `/session/:topicId`
+- **Session screen** (`src/pages/session.tsx`): answering + inline feedback phases (wireframe v2), quit-only exit with confirm dialog (no back button), `StepCounter` progress, difficulty dots with "Easy · 2/5" label, inline feedback banner + left-border choice accents + Indonesian labels, choice randomization, XP award (+50 per correct), `updateStreak()` on finish; routes `/session` and `/session/:topicId`
 - **Session complete UI** (`src/components/session/session-complete-view.tsx` + `src/lib/session-complete-aggregates.ts`): wireframe 11 summary — metrics, streak goal bar, per-topic session stats + optional overall mastery, next review / due line, weak-tag CTA; multi-topic sessions use **Your results** + multi-topic band copy; `<main>` + focus on primary heading, `document.title` on complete; summary loading uses skeleton (`SessionCompleteSummarySkeleton` in `session.tsx`)
 - **Layout shell**: `src/components/layout/layout.tsx`
 - **Routing**: wouter 3.x — committed router
@@ -39,6 +39,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 4. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
 
 ## Recent Updates
+- **S2 + S3 session screen rebuild** (2026-03-29): wireframe v2 alignment — removed back button (quit-only exit with Indonesian confirm dialog), difficulty label now shows "Easy · 2/5" format (easy=2 filled dots), modal bottom-sheet feedback panel replaced with inline `FeedbackBanner` + left-border choice accents (`border-l-4 border-l-success/destructive`) + inline explanation panel + inline next button, response time hidden from UI (kept as internal FSRS signal), choice row labels updated to Indonesian ("Jawaban benar" / "Jawaban kamu"), session mix tags hidden during feedback, "Quit session" button hidden during feedback phase. All in `src/pages/session.tsx`.
 - **Home + progress dashboard audit** (2026-03-28): CRITICAL — `learnerStore` was not persisted (no `loadState`/`saveState` wiring); fixed by loading from localStorage on init and subscribing to save changes. HIGH — "Start new topic" linked to `/session` (now `/topics`); duplicate EmptyState CTA removed, replaced with Indonesian "Jelajahi topik dulu → /topics"; XP `unit="xp"` redundancy in StatsBar removed. MEDIUM — motivational message handles `streak=0` for returning users; `TopicCard` 0% progress bar now uses neutral track. See [docs/ux-audit-dashboard-2026-03-28.md](ux-audit-dashboard-2026-03-28.md).
 - **Topic browser** (2026-03): subject grid (`/topics`) and topic list (`/topics/:subject`) — active card left-border accent + "Continue" CTA, inactive card topic name preview, due count `tag-primary` badge, locked group collapse, "Review in N days" for mastered, "Available to start" group label. UX audit found and fixed: no path to /topics from empty state home, "1 topics" grammar, raw slug as 404 heading. See [docs/ux-audit-topics-2026-03-28.md](ux-audit-topics-2026-03-28.md).
 - **Home + progress dashboards** (2026-03): home dashboard (wireframe 01) with greeting, 4-stat bar, today's session card, continue-learning grid, empty state; progress dashboard (wireframe 06) with summary stats, mastery-by-topic list, retention health, export. `MasteryBar` helper fixes 0%-looks-full bug. Routes `/` and `/progress`.
