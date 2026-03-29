@@ -94,7 +94,7 @@ function ToggleOption({
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`relative h-5 w-9 shrink-0 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+        className={`relative h-5 w-9 shrink-0 cursor-pointer rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
           checked ? 'bg-primary' : 'bg-border'
         }`}
       >
@@ -125,7 +125,7 @@ function RadioGroup<T extends string>({
           <button
             type="button"
             onClick={() => onChange(opt.value)}
-            className={`flex h-4 w-4 items-center justify-center rounded-full border transition-colors ${
+            className={`flex h-4 w-4 cursor-pointer items-center justify-center rounded-full border transition-colors ${
               value === opt.value
                 ? 'border-primary bg-primary'
                 : 'border-border bg-transparent'
