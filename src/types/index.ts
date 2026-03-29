@@ -71,19 +71,43 @@ export const ReviewLogSchema = z.object({
 
 export type ReviewLog = z.infer<typeof ReviewLogSchema>
 
+export type SessionDuration = 10 | 20 | 30 | 0 // 0 = custom
+export type NewCardsLimit = 5 | 10 | 15 | 0 // 0 = unlimited
+export type StreakGoal = 14 | 30 | 60 | 0 // 0 = custom
+export type MasteryThreshold = 60 | 70 | 80 | 90
+export type RemediationTrigger = 'auto' | 'manual'
+
 export interface LearnerState {
   id: string
   xp: number
   streak: number
-  /** Monthly streak goal (days); shown on session complete; default 30; Settings TBD. */
+  /** Monthly streak goal (days); shown on session complete; default 30. */
   streakGoalDays: number
-  /** Minimum mastery ratio (percent) for prerequisite topics to unlock dependents; default 70; Settings TBD. */
+  /** Minimum mastery ratio (percent) for prerequisite topics to unlock dependents; default 70. */
   masteryGateThresholdPercent: number
   lastPracticeDate: string | null
   /** Whether onboarding has been completed */
   hasCompletedOnboarding: boolean
   /** Selected subject during onboarding (e.g., "Matematika") */
   selectedSubject: string | null
+  /** Current onboarding step for flow control */
+  onboardingStep: 'welcome' | 'subject' | 'diagnostic' | 'results' | null
+  /** Target session duration in minutes; 0 = custom (stored but not enforced) */
+  sessionDurationMinutes: SessionDuration
+  /** Number of new cards per session; 0 = unlimited */
+  newCardsPerSession: NewCardsLimit
+  /** Whether to show difficulty labels on questions */
+  showDifficultyLabels: boolean
+  /** Whether to show answer timer (internal FSRS signal, not displayed to user) */
+  showAnswerTimer: boolean
+  /** Whether daily reminder is enabled (stored for future implementation) */
+  dailyReminderEnabled: boolean
+  /** Daily reminder time in HH:mm format */
+  dailyReminderTime: string
+  /** Remediation trigger mode */
+  remediationTrigger: RemediationTrigger
+  /** Whether interleaving is enabled */
+  interleavingEnabled: boolean
   topics: Record<string, TopicMastery>
   cards: Record<string, CardState>
   reviewLogs: ReviewLog[]

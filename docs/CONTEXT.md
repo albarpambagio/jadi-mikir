@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Onboarding (screens 7–10) shipped. Next: Settings + Export (screens 13–14).
+Settings + Export (screens 13–14) shipped. Next: Remediation drill (screen 5).
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -23,6 +23,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Topic browser** (`src/pages/topics.tsx`, `src/pages/topic-list.tsx`, `src/components/topics/`, `src/lib/hooks/use-topic-browser.ts`): wireframes 17, 18 v2 — *Subjek saat ini* summary, inactive cards with inline switch warning, CTAs *Lihat Daftar Topik* / *Ganti ke subjek ini*; topic rows *Prasyarat:* / *Butuh:* with prerequisite titles, progress bar only for in-progress topics with non-zero % or mastered topics; back to subject list via header *Semua Topik* only (no duplicate footer CTA); Indonesian copy throughout; routes `/topics` and `/topics/:subject`
 - **Topic detail** (`src/pages/topic-detail.tsx`, `src/lib/topic-detail-aggregates.ts`): wireframe 12 — ringkasan mastery, kartu FSRS per soal, tabel subtopik (tag), topik yang dibuka setelah ini, CTAs, reset dengan konfirmasi; **Mastery gate** (wireframe 16) — panel *Kenapa ada mastery gate?* + status + CTAs when in-progress, has downstream unlocks, mastery below `masteryGateThresholdPercent`; `?gate=1` focuses panel — `src/components/mastery/mastery-gate-panel.tsx`, `src/lib/mastery-gate-aggregates.ts`; route `/topics/:subject/:topicId`; judul topik di daftar mengarah ke detail; kartu beranda *Detail topik* + sesi
 - **Onboarding** (`src/pages/onboarding/`): welcome (S7) → subject-select (S8) → diagnostic (S9) → results (S10); routes `/onboarding`, `/onboarding/subject`, `/onboarding/diagnostic`, `/onboarding/results`; adaptive diagnostic (max 15 questions, 3 consecutive correct advances); Matematika pre-selected, other subjects disabled; redirect from home if `hasCompletedOnboarding` false; `onboarding-layout.tsx` (no chrome); `completeOnboarding()` and `setSelectedSubject()` actions in store
+- **Settings + Export** (`src/pages/settings.tsx`, `src/pages/export.tsx`): screens 13–14 — preferences (session duration, new cards per session, difficulty labels, answer timer, daily reminder), mastery settings (threshold, remediation trigger, interleaving), streak goal, data & privacy with JSON export/import; routes `/settings`, `/settings/export`
 
 ## Active Constraints
 - **Self-improvement logs**: Non-obvious corrections, errors, and feature wishes go to `.learnings/` per `.agents/skills/self-improvement/SKILL.md` and `AGENTS.md`; promote stable learnings to `docs/` or `AGENTS.md`
@@ -37,9 +38,11 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 
 ## Next Steps (in order)
 1. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
-2. [ ] Settings + Export (screens 13–14)
+2. [ ] **Settings + Export** (screens 13–14) — ✅ done
+3. [ ] Remediation drill (screen 5)
 
 ## Recent Updates
+- **Settings + Export S13–S14** (2026-03-30): Preferences (session duration, new cards, difficulty labels, answer timer, daily reminder), mastery settings (threshold, remediation trigger, interleaving), streak goal, JSON export/import; routes `/settings`, `/settings/export` — `settings.tsx`, `export.tsx`, types in `types/index.ts`, `updatePreferences` in `learnerStore`.
 - **Onboarding S7–S10** (2026-03-30): 4-step flow — welcome → subject-select (Matematika pre-selected, others disabled) → adaptive diagnostic (max 15 Q, 3 consecutive correct advances) → results with skipped topics; routes `/onboarding/*`; redirect from home if `hasCompletedOnboarding` false; `onboarding-layout.tsx` without chrome — `welcome.tsx`, `subject-select.tsx`, `diagnostic.tsx`, `results.tsx`, `onboarding-layout.tsx`, store actions `completeOnboarding()`/`setSelectedSubject()`.
 - **Mastery gate S16** (2026-03-29): Gate panel on topic detail, `masteryGateThresholdPercent`, `isPrerequisiteMasterySatisfied` / prerequisite unlock, session `TopicMastery` sync — `mastery-gate-panel.tsx`, `mastery-gate-aggregates.ts`, `topic-detail.tsx`, `session.tsx`, `mastery.ts`, `use-topic-browser.ts`.
 - **Topic detail S12** (2026-03-29): Route `/topics/:subject/:topicId`, aggregates `topic-detail-aggregates.ts`, `resetTopic`, session `?tag=` filter, navigation from topic list + home topic cards — [`docs/audits/topic-detail-s12-2026-03-29.md`](audits/topic-detail-s12-2026-03-29.md).

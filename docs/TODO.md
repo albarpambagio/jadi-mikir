@@ -25,7 +25,7 @@ Screens already in production that need to be updated to match the revised wiref
 3. [x] **Onboarding** — four-step flow + diagnostic results (Screens 7–10) — ✅ done
    - Wireframe: `docs/archives/wireframes_1.md` Screens 7, 8, 9, 10
    - Note: Matematika pre-selected per content.json subject field; other subjects disabled
-4. [ ] **Settings + Export** — preferences, data portability
+4. [x] **Settings + Export** — preferences, data portability — ✅ done
    - Wireframe: `docs/archives/wireframes_1.md` Screens 13, 14
 5. [ ] **Remediation drill** — two sub-screens: gate prompt (5a) + drill in progress (5b)
    - Wireframe: `docs/archives/wireframes_1.md` Screen 5
@@ -41,6 +41,7 @@ Screens already in production that need to be updated to match the revised wiref
 - [ ] Content creator tooling — admin UI for authoring questions (move up if content bottleneck persists)
 
 ## Completed
+- **Settings + Export (S13–S14)** (2026-03-30) — Preferences (session duration, new cards, difficulty labels, answer timer, daily reminder), mastery settings (threshold, remediation trigger, interleaving), streak goal, JSON export/import; routes `/settings`, `/settings/export` — `settings.tsx`, `export.tsx`, types in `types/index.ts`, `updatePreferences` in `learnerStore`.
 - **Onboarding (S7–S10)** (2026-03-30) — 4-step flow: welcome → subject-select (Matematika pre-selected, others disabled) → adaptive diagnostic (max 15 Q, 3 consecutive correct advances) → results with skipped topics; routes `/onboarding/*`; redirect from home if `hasCompletedOnboarding` false; `onboarding-layout.tsx` without chrome — `welcome.tsx`, `subject-select.tsx`, `diagnostic.tsx`, `results.tsx`, `onboarding-layout.tsx`, store actions `completeOnboarding()`/`setSelectedSubject()`
 - **Mastery gate (S16)** (2026-03-29) — Panel on topic detail when *Berlangsung*, membuka topik lain, mastery &lt; threshold (default 70%); rationale + progress + kartu perlu diperkuat + dua subtopik terlemah; CTAs *Lanjutkan review* / *Latih … dulu*; `?gate=1` scroll/focus; prerequisite unlock + `prereqInfo` use `isPrerequisiteMasterySatisfied`; session initializes/updates `TopicMastery` — `mastery-gate-panel.tsx`, `mastery-gate-aggregates.ts`, `topic-detail.tsx`, `session.tsx`, `mastery.ts`, `use-topic-browser.ts`
 - **Topic detail (S12)** (2026-03-29) — `/topics/:subject/:topicId`: ringkasan penguasaan + status, baris kartu FSRS (jatuh tempo / mendatang / selesai review), tabel subtopik dari tag soal + akurasi dari review log, blok *Membuka topik baru* (prerequisite reverse), *Mulai sesi* / *Latih subtopik lemah* (`?tag=`), *Reset topik* + dialog konfirmasi; `learnerActions.resetTopic`; `useTopicBrowserData.findTopicWithStatus`; link judul topik dari daftar + *Detail topik* di kartu beranda — `src/pages/topic-detail.tsx`, `src/lib/topic-detail-aggregates.ts`; UX notes: [`docs/audits/topic-detail-s12-2026-03-29.md`](audits/topic-detail-s12-2026-03-29.md)

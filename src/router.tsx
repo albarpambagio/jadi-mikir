@@ -10,15 +10,34 @@ import { OnboardingWelcome } from '@/pages/onboarding/welcome'
 import { OnboardingSubjectSelect } from '@/pages/onboarding/subject-select'
 import { OnboardingDiagnostic } from '@/pages/onboarding/diagnostic'
 import { OnboardingResults } from '@/pages/onboarding/results'
+import { OnboardingRouteGuard } from '@/components/onboarding-route-guard'
+import { SettingsPage } from '@/pages/settings'
+import { ExportPage } from '@/pages/export'
 
 export function AppRouter() {
   return (
     <Router>
       <Switch>
-        <Route path="/onboarding" component={OnboardingWelcome} />
-        <Route path="/onboarding/subject" component={OnboardingSubjectSelect} />
-        <Route path="/onboarding/diagnostic" component={OnboardingDiagnostic} />
-        <Route path="/onboarding/results" component={OnboardingResults} />
+        <Route path="/onboarding">
+          <OnboardingRouteGuard>
+            <OnboardingWelcome />
+          </OnboardingRouteGuard>
+        </Route>
+        <Route path="/onboarding/subject">
+          <OnboardingRouteGuard>
+            <OnboardingSubjectSelect />
+          </OnboardingRouteGuard>
+        </Route>
+        <Route path="/onboarding/diagnostic">
+          <OnboardingRouteGuard>
+            <OnboardingDiagnostic />
+          </OnboardingRouteGuard>
+        </Route>
+        <Route path="/onboarding/results">
+          <OnboardingRouteGuard>
+            <OnboardingResults />
+          </OnboardingRouteGuard>
+        </Route>
         <Route path="/">
           <Layout>
             <DashboardPage />
@@ -52,6 +71,16 @@ export function AppRouter() {
         <Route path="/session">
           <Layout>
             <SessionPage />
+          </Layout>
+        </Route>
+        <Route path="/settings">
+          <Layout>
+            <SettingsPage />
+          </Layout>
+        </Route>
+        <Route path="/settings/export">
+          <Layout>
+            <ExportPage />
           </Layout>
         </Route>
         <Route>

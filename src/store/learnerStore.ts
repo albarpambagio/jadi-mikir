@@ -1,6 +1,6 @@
 import { createStore } from '@tanstack/store'
 import { loadState, saveState } from '@/lib/storage'
-import type { CardState, ReviewLog, TopicMastery, LearnerState } from '@/types'
+import type { CardState, ReviewLog, TopicMastery, LearnerState, SessionDuration, NewCardsLimit, StreakGoal, MasteryThreshold, RemediationTrigger } from '@/types'
 
 export interface LearnerActions {
   addXP: (amount: number) => void
@@ -17,6 +17,21 @@ export interface LearnerActions {
   completeOnboarding: (subject: string) => void
   /** Set the selected subject during onboarding */
   setSelectedSubject: (subject: string) => void
+  /** Update onboarding step for flow control */
+  setOnboardingStep: (step: 'welcome' | 'subject' | 'diagnostic' | 'results' | null) => void
+  /** Update preference settings */
+  updatePreferences: (prefs: Partial<{
+    sessionDurationMinutes: SessionDuration
+    newCardsPerSession: NewCardsLimit
+    showDifficultyLabels: boolean
+    showAnswerTimer: boolean
+    dailyReminderEnabled: boolean
+    dailyReminderTime: string
+    remediationTrigger: RemediationTrigger
+    interleavingEnabled: boolean
+    streakGoalDays: StreakGoal
+    masteryGateThresholdPercent: MasteryThreshold
+  }>) => void
 }
 
 const defaultState: LearnerState = {
@@ -28,6 +43,15 @@ const defaultState: LearnerState = {
   lastPracticeDate: null,
   hasCompletedOnboarding: false,
   selectedSubject: null,
+  onboardingStep: null,
+  sessionDurationMinutes: 20,
+  newCardsPerSession: 10,
+  showDifficultyLabels: true,
+  showAnswerTimer: false,
+  dailyReminderEnabled: false,
+  dailyReminderTime: '19:00',
+  remediationTrigger: 'auto',
+  interleavingEnabled: true,
   topics: {},
   cards: {},
   reviewLogs: [],
@@ -181,6 +205,20 @@ export const learnerActions: LearnerActions = {
     learnerStore.setState((state) => ({
       ...state,
       selectedSubject: subject,
+    }))
+  },
+
+  setOnboardingStep: (step) => {
+    learnerStore.setState((state) => ({
+      ...state,
+      onboardingStep: step,
+    }))
+  },
+
+  updatePreferences: (prefs) => {
+    learnerStore.setState((state) => ({
+      ...state,
+      ...prefs,
     }))
   },
 }
