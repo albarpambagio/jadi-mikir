@@ -412,6 +412,8 @@ export function SessionPage() {
   const sessionWallStartRef = useRef<number | null>(null)
   const sessionStreakStartRef = useRef(0)
   const confirmActionsRef = useRef<HTMLDivElement>(null)
+  /** Prevents double-applying mastery updates (e.g. React Strict Mode). */
+  const masteryAppliedSessionRunId = useRef<number | null>(null)
 
   const currentQuestion = questions[currentIndex] ?? null
   const randomized = useChoiceRandomization(currentQuestion)
@@ -434,6 +436,44 @@ export function SessionPage() {
     if (phase !== 'answering' || !selectedChoiceId) return
     confirmActionsRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
   }, [phase, selectedChoiceId])
+
+  // Ensure TopicMastery exists for this topic so progress / mastery gate reflect sessions.
+  useEffect(() => {
+    if (!topicId || !topic) return
+    const existing = learnerStore.get().topics[topicId]
+    if (existing) return
+    learnerActions.initializeTopicMastery(topicId, topic.questionCount)
+  }, [topicId, topic])
+
+  // Blend session accuracy into topic mastery when a run finishes (see plan: mastery sync).
+  useEffect(() => {
+    if (phase !== 'complete' || !sessionEndMeta) return
+    if (masteryAppliedSessionRunId.current === sessionRunId) return
+    masteryAppliedSessionRunId.current = sessionRunId
+
+    const now = new Date().toISOString()
+    for (const [tid, roll] of Object.entries(topicRollup)) {
+      const meta = allTopics.find((t) => t.id === tid)
+      if (!meta || roll.attempted === 0) continue
+      const totalQ = meta.questionCount
+      const sessionAcc = roll.correct / roll.attempted
+      let prev = learnerStore.get().topics[tid]
+      if (!prev) {
+        learnerActions.initializeTopicMastery(tid, totalQ)
+        prev = learnerStore.get().topics[tid]
+      }
+      if (!prev) continue
+      const prevRatio = prev.totalQuestions > 0 ? prev.masteredQuestions / prev.totalQuestions : 0
+      const blended =
+        prev.masteredQuestions > 0 ? prevRatio * 0.5 + sessionAcc * 0.5 : sessionAcc
+      const nextMastered = Math.min(totalQ, Math.round(blended * totalQ))
+      learnerActions.updateTopicMastery(tid, {
+        totalQuestions: totalQ,
+        masteredQuestions: Math.max(prev.masteredQuestions, nextMastered),
+        lastPracticed: now,
+      })
+    }
+  }, [phase, sessionEndMeta, topicRollup, allTopics, sessionRunId])
 
   const topicTitle = useCallback(
     (id: string) => allTopics.find((t) => t.id === id)?.title ?? id,

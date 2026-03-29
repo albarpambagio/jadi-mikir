@@ -77,6 +77,8 @@ export interface LearnerState {
   streak: number
   /** Monthly streak goal (days); shown on session complete; default 30; Settings TBD. */
   streakGoalDays: number
+  /** Minimum mastery ratio (percent) for prerequisite topics to unlock dependents; default 70; Settings TBD. */
+  masteryGateThresholdPercent: number
   lastPracticeDate: string | null
   topics: Record<string, TopicMastery>
   cards: Record<string, CardState>

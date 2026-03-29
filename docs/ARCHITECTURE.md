@@ -28,6 +28,7 @@ src/
 │   │                    #   (step-counter, stat-display, section-label,
 │   │                    #    NumberedTabsList/Trigger in tabs.tsx)
 │   ├── session/         # Session complete summary (wireframe 11)
+│   ├── mastery/         # Mastery gate panel (wireframe 16)
 │   ├── layout/          # Layout shell
 │   └── showcase/        # Component dev sandbox (temporary)
 ├── store/
@@ -39,6 +40,7 @@ src/
 │   ├── storage/         # IndexedDB + hybrid storage adapter
 │   ├── session-complete-aggregates.ts  # Pure helpers for session end (duration, due dates, weak tags)
 │   ├── topic-detail-aggregates.ts    # Topic detail: card buckets, subtopic rows, unlock list
+│   ├── mastery-gate-aggregates.ts   # Mastery gate: cards needing work, weakest subtopics
 │   ├── content.ts       # TanStack Query hooks for /content/*.json
 │   ├── validation.ts    # Zod content validation
 │   ├── logger.ts        # Dev logging

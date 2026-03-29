@@ -28,14 +28,25 @@ export function calculateMasteryLevel(
   return 0
 }
 
+/** Prerequisite satisfied when mastery ratio meets the configured gate threshold (e.g. 70%). */
+export function isPrerequisiteMasterySatisfied(
+  topic: TopicMastery,
+  thresholdPercent: number
+): boolean {
+  if (topic.totalQuestions <= 0) return false
+  const ratio = topic.masteredQuestions / topic.totalQuestions
+  return ratio >= thresholdPercent / 100
+}
+
 export function canAccessTopic(
   topicId: string,
   prerequisites: string[],
-  allTopics: Record<string, TopicMastery>
+  allTopics: Record<string, TopicMastery>,
+  masteryGateThresholdPercent: number
 ): boolean {
   for (const prereqId of prerequisites) {
     const prereq = allTopics[prereqId]
-    if (!prereq || calculateMasteryLevel(prereq) < 3) {
+    if (!prereq || !isPrerequisiteMasterySatisfied(prereq, masteryGateThresholdPercent)) {
       return false
     }
   }
@@ -64,6 +75,16 @@ export function getMasteryProgress(topic: TopicMastery): {
   level: MasteryLevel
   levelName: string
 } {
+  if (topic.totalQuestions <= 0) {
+    return {
+      current: 0,
+      target: Math.round(MASTERY_LEVELS[1].threshold * 100),
+      percentage: 0,
+      level: 0,
+      levelName: MASTERY_LEVELS[0].name,
+    }
+  }
+
   const level = calculateMasteryLevel(topic)
   const threshold = MASTERY_LEVELS[level].threshold
   const nextThreshold = level < 5 ? MASTERY_LEVELS[(level + 1) as MasteryLevel].threshold : 1

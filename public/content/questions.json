@@ -1,162 +1,22 @@
 [
   {
-    "id": "eg-001",
-    "topicId": "english-grammar",
-    "stem": "Which sentence uses the present simple tense correctly?",
+    "id": "mab-001",
+    "topicId": "math-algebra-basics",
+    "stem": "Berapakah nilai x jika 2x + 5 = 13?",
     "choices": [
-      { "id": "a", "text": "She goes to school every day.", "isCorrect": true },
-      { "id": "b", "text": "She go to school every day.", "isCorrect": false },
-      { "id": "c", "text": "She going to school every day.", "isCorrect": false },
-      { "id": "d", "text": "She gone to school every day.", "isCorrect": false }
+      { "id": "a", "text": "x = 3", "isCorrect": false },
+      { "id": "b", "text": "x = 4", "isCorrect": true },
+      { "id": "c", "text": "x = 5", "isCorrect": false },
+      { "id": "d", "text": "x = 6", "isCorrect": false }
     ],
-    "explanation": "The present simple tense for third-person singular subjects adds 's' to the verb. 'She goes' is correct.",
+    "explanation": "2x + 5 = 13 → 2x = 13 - 5 = 8 → x = 8/2 = 4",
     "difficulty": "easy",
-    "tags": ["present-simple", "verbs"]
+    "tags": ["persamaan", "aljabar-dasar"]
   },
   {
-    "id": "eg-002",
-    "topicId": "english-grammar",
-    "stem": "Choose the correct plural form of 'child':",
-    "choices": [
-      { "id": "a", "text": "childs", "isCorrect": false },
-      { "id": "b", "text": "children", "isCorrect": true },
-      { "id": "c", "text": "childrens", "isCorrect": false },
-      { "id": "d", "text": "childes", "isCorrect": false }
-    ],
-    "explanation": "'Child' is an irregular noun that becomes 'children' in plural, not by adding 's'.",
-    "difficulty": "easy",
-    "tags": ["nouns", "plural", "irregular"]
-  },
-  {
-    "id": "eg-003",
-    "topicId": "english-grammar",
-    "stem": "Identify the adjective in this sentence: 'The beautiful sunset amazed everyone.'",
-    "choices": [
-      { "id": "a", "text": "sunset", "isCorrect": false },
-      { "id": "b", "text": "beautiful", "isCorrect": true },
-      { "id": "c", "text": "amazed", "isCorrect": false },
-      { "id": "d", "text": "everyone", "isCorrect": false }
-    ],
-    "explanation": "An adjective describes a noun. 'Beautiful' describes the noun 'sunset'.",
-    "difficulty": "easy",
-    "tags": ["adjectives", "parts-of-speech"]
-  },
-  {
-    "id": "eg-004",
-    "topicId": "english-grammar",
-    "stem": "Which sentence uses the past continuous tense?",
-    "choices": [
-      { "id": "a", "text": "I was eating dinner when she called.", "isCorrect": true },
-      { "id": "b", "text": "I ate dinner when she called.", "isCorrect": false },
-      { "id": "c", "text": "I eat dinner when she called.", "isCorrect": false },
-      { "id": "d", "text": "I will eat dinner when she called.", "isCorrect": false }
-    ],
-    "explanation": "Past continuous uses 'was/were + verb-ing' to describe an action in progress in the past.",
-    "difficulty": "medium",
-    "tags": ["past-continuous", "tenses"]
-  },
-  {
-    "id": "eg-005",
-    "topicId": "english-grammar",
-    "stem": "What is the correct possessive form of 'the team won its first game'?",
-    "choices": [
-      { "id": "a", "text": "team's", "isCorrect": false },
-      { "id": "b", "text": "teams'", "isCorrect": false },
-      { "id": "c", "text": "its", "isCorrect": true },
-      { "id": "d", "text": "it's", "isCorrect": false }
-    ],
-    "explanation": "'Its' (without apostrophe) is the possessive pronoun. 'It's' means 'it is'.",
-    "difficulty": "medium",
-    "tags": ["possessives", "pronouns"]
-  },
-  {
-    "id": "ev-001",
-    "topicId": "english-vocabulary",
-    "stem": "What does the idiom 'break the ice' mean?",
-    "choices": [
-      { "id": "a", "text": "To physically break ice", "isCorrect": false },
-      { "id": "b", "text": "To make people feel comfortable in a social situation", "isCorrect": true },
-      { "id": "c", "text": "To end a relationship", "isCorrect": false },
-      { "id": "d", "text": "To solve a difficult problem", "isCorrect": false }
-    ],
-    "explanation": "'Break the ice' means to initiate conversation or make people feel more comfortable in a group.",
-    "difficulty": "easy",
-    "tags": ["idioms", "expressions"]
-  },
-  {
-    "id": "ev-002",
-    "topicId": "english-vocabulary",
-    "stem": "Which word is a synonym of 'happy'?",
-    "choices": [
-      { "id": "a", "text": "Sad", "isCorrect": false },
-      { "id": "b", "text": "Ecstatic", "isCorrect": true },
-      { "id": "c", "text": "Angry", "isCorrect": false },
-      { "id": "d", "text": "Tired", "isCorrect": false }
-    ],
-    "explanation": "Synonyms are words with similar meanings. 'Ecstatic' is a synonym for 'happy'.",
-    "difficulty": "easy",
-    "tags": ["synonyms", "vocabulary"]
-  },
-  {
-    "id": "ev-003",
-    "topicId": "english-vocabulary",
-    "stem": "What does the phrase 'once in a blue moon' mean?",
-    "choices": [
-      { "id": "a", "text": "Every month", "isCorrect": false },
-      { "id": "b", "text": "Very rarely or never", "isCorrect": true },
-      { "id": "c", "text": "During a full moon", "isCorrect": false },
-      { "id": "d", "text": "At midnight", "isCorrect": false }
-    ],
-    "explanation": "'Once in a blue moon' means something happens very rarely.",
-    "difficulty": "medium",
-    "tags": ["idioms", "expressions"]
-  },
-  {
-    "id": "ev-004",
-    "topicId": "english-vocabulary",
-    "stem": "Choose the antonym of 'ancient':",
-    "choices": [
-      { "id": "a", "text": "Old", "isCorrect": false },
-      { "id": "b", "text": "Historic", "isCorrect": false },
-      { "id": "c", "text": "Modern", "isCorrect": true },
-      { "id": "d", "text": "Classic", "isCorrect": false }
-    ],
-    "explanation": "Antonyms are words with opposite meanings. 'Modern' is the antonym of 'ancient'.",
-    "difficulty": "easy",
-    "tags": ["antonyms", "vocabulary"]
-  },
-  {
-    "id": "ev-005",
-    "topicId": "english-vocabulary",
-    "stem": "What is the meaning of the word 'ubiquitous'?",
-    "choices": [
-      { "id": "a", "text": "Rare or unique", "isCorrect": false },
-      { "id": "b", "text": "Present everywhere", "isCorrect": true },
-      { "id": "c", "text": "Impossible to find", "isCorrect": false },
-      { "id": "d", "text": "Extremely valuable", "isCorrect": false }
-    ],
-    "explanation": "'Ubiquitous' means existing or being everywhere at the same time.",
-    "difficulty": "medium",
-    "tags": ["vocabulary", "advanced"]
-  },
-  {
-    "id": "ma-001",
-    "topicId": "math-algebra",
-    "stem": "Solve for x: 2x + 5 = 15",
-    "choices": [
-      { "id": "a", "text": "x = 5", "isCorrect": true },
-      { "id": "b", "text": "x = 10", "isCorrect": false },
-      { "id": "c", "text": "x = 7.5", "isCorrect": false },
-      { "id": "d", "text": "x = 4", "isCorrect": false }
-    ],
-    "explanation": "2x + 5 = 15 → 2x = 10 → x = 5",
-    "difficulty": "easy",
-    "tags": ["equations", "linear"]
-  },
-  {
-    "id": "ma-002",
-    "topicId": "math-algebra",
-    "stem": "Simplify: 3(x + 4) - 2x",
+    "id": "mab-002",
+    "topicId": "math-algebra-basics",
+    "stem": "Sederhanakan: 3(x + 4) - 2x",
     "choices": [
       { "id": "a", "text": "x + 12", "isCorrect": true },
       { "id": "b", "text": "5x + 12", "isCorrect": false },
@@ -165,48 +25,398 @@
     ],
     "explanation": "3(x + 4) - 2x = 3x + 12 - 2x = x + 12",
     "difficulty": "easy",
-    "tags": ["expressions", "simplify"]
+    "tags": ["ekspresi", "aljabar-dasar"]
   },
   {
-    "id": "ma-003",
-    "topicId": "math-algebra",
-    "stem": "Solve: x/3 - 4 = 2",
+    "id": "mab-003",
+    "topicId": "math-algebra-basics",
+    "stem": "Jika a = 2 dan b = 5, berapakah 3a + 2b?",
     "choices": [
-      { "id": "a", "text": "x = 18", "isCorrect": true },
-      { "id": "b", "text": "x = 6", "isCorrect": false },
-      { "id": "c", "text": "x = -6", "isCorrect": false },
-      { "id": "d", "text": "x = 2", "isCorrect": false }
+      { "id": "a", "text": "16", "isCorrect": true },
+      { "id": "b", "text": "21", "isCorrect": false },
+      { "id": "c", "text": "17", "isCorrect": false },
+      { "id": "d", "text": "11", "isCorrect": false }
     ],
-    "explanation": "x/3 - 4 = 2 → x/3 = 6 → x = 18",
-    "difficulty": "medium",
-    "tags": ["equations", "fractions"]
+    "explanation": "3(2) + 2(5) = 6 + 10 = 16",
+    "difficulty": "easy",
+    "tags": ["substitusi", "aljabar-dasar"]
   },
   {
-    "id": "ma-004",
-    "topicId": "math-algebra",
-    "stem": "What is the value of x in 5x - 3 = 2x + 9?",
+    "id": "mab-004",
+    "topicId": "math-algebra-basics",
+    "stem": "Manakah yang merupakan bentuk aljabar?",
     "choices": [
-      { "id": "a", "text": "x = 4", "isCorrect": true },
-      { "id": "b", "text": "x = 3", "isCorrect": false },
-      { "id": "c", "text": "x = 6", "isCorrect": false },
-      { "id": "d", "text": "x = 5", "isCorrect": false }
+      { "id": "a", "text": "2x + 3 = 10", "isCorrect": false },
+      { "id": "b", "text": "x² - 4x + 4", "isCorrect": true },
+      { "id": "c", "text": "5 + 7 = 12", "isCorrect": false },
+      { "id": "d", "text": "3 × 6 = 18", "isCorrect": false }
     ],
-    "explanation": "5x - 3 = 2x + 9 → 5x - 2x = 9 + 3 → 3x = 12 → x = 4",
-    "difficulty": "medium",
-    "tags": ["equations", "variables"]
+    "explanation": "Bentuk aljabar adalah ungkapan yang mengandung variabel. x² - 4x + 4 adalah ekspresi aljabar.",
+    "difficulty": "easy",
+    "tags": ["konsep-dasar", "aljabar-dasar"]
   },
   {
-    "id": "ma-005",
-    "topicId": "math-algebra",
-    "stem": "If 2(x + 3) = 4x - 6, what is x?",
+    "id": "mab-005",
+    "topicId": "math-algebra-basics",
+    "stem": "Tentukan nilai 4y - 3 jika y = 7",
     "choices": [
-      { "id": "a", "text": "x = 6", "isCorrect": true },
-      { "id": "b", "text": "x = 3", "isCorrect": false },
+      { "id": "a", "text": "25", "isCorrect": true },
+      { "id": "b", "text": "28", "isCorrect": false },
+      { "id": "c", "text": "22", "isCorrect": false },
+      { "id": "d", "text": "31", "isCorrect": false }
+    ],
+    "explanation": "4(7) - 3 = 28 - 3 = 25",
+    "difficulty": "easy",
+    "tags": ["substitusi", "aljabar-dasar"]
+  },
+  {
+    "id": "mle-001",
+    "topicId": "math-linear-equations",
+    "stem": "Himpunan penyelesaian dari 3x - 9 = 0 adalah?",
+    "choices": [
+      { "id": "a", "text": "x = 3", "isCorrect": true },
+      { "id": "b", "text": "x = -3", "isCorrect": false },
+      { "id": "c", "text": "x = 9", "isCorrect": false },
+      { "id": "d", "text": "x = 0", "isCorrect": false }
+    ],
+    "explanation": "3x - 9 = 0 → 3x = 9 → x = 3",
+    "difficulty": "medium",
+    "tags": ["persamaan-linear", "satu-variabel"]
+  },
+  {
+    "id": "mle-002",
+    "topicId": "math-linear-equations",
+    "stem": "Jika 2(x - 3) = 4x + 6, maka nilai x adalah?",
+    "choices": [
+      { "id": "a", "text": "-6", "isCorrect": false },
+      { "id": "b", "text": "-3", "isCorrect": true },
+      { "id": "c", "text": "3", "isCorrect": false },
+      { "id": "d", "text": "6", "isCorrect": false }
+    ],
+    "explanation": "2x - 6 = 4x + 6 → 2x - 4x = 6 + 6 → -2x = 12 → x = -6",
+    "difficulty": "medium",
+    "tags": ["persamaan-linear", "distributif"]
+  },
+  {
+    "id": "mle-003",
+    "topicId": "math-linear-equations",
+    "stem": "Persamaan garis yang melalui titik (2, 3) dan (4, 7) memiliki gradien?",
+    "choices": [
+      { "id": "a", "text": "2", "isCorrect": true },
+      { "id": "b", "text": "1", "isCorrect": false },
+      { "id": "c", "text": "3", "isCorrect": false },
+      { "id": "d", "text": "4", "isCorrect": false }
+    ],
+    "explanation": "m = (7-3)/(4-2) = 4/2 = 2",
+    "difficulty": "medium",
+    "tags": ["gradien", "persamaan-garis"]
+  },
+  {
+    "id": "mle-004",
+    "topicId": "math-linear-equations",
+    "stem": "Nilai x yang memenuhi 5x + 2 = 2x + 11 adalah?",
+    "choices": [
+      { "id": "a", "text": "x = 3", "isCorrect": true },
+      { "id": "b", "text": "x = 2", "isCorrect": false },
       { "id": "c", "text": "x = 4", "isCorrect": false },
-      { "id": "d", "text": "x = 2", "isCorrect": false }
+      { "id": "d", "text": "x = 1", "isCorrect": false }
     ],
-    "explanation": "2(x + 3) = 4x - 6 → 2x + 6 = 4x - 6 → 6 + 6 = 4x - 2x → 12 = 2x → x = 6",
+    "explanation": "5x + 2 = 2x + 11 → 5x - 2x = 11 - 2 → 3x = 9 → x = 3",
     "difficulty": "medium",
-    "tags": ["equations", "distributive"]
+    "tags": ["persamaan-linear", "variabel-di-kedua-sisi"]
+  },
+  {
+    "id": "mle-005",
+    "topicId": "math-linear-equations",
+    "stem": "Titik potong garis y = 2x + 1 dengan sumbu y adalah?",
+    "choices": [
+      { "id": "a", "text": "(0, 1)", "isCorrect": true },
+      { "id": "b", "text": "(1, 0)", "isCorrect": false },
+      { "id": "c", "text": "(0, 2)", "isCorrect": false },
+      { "id": "d", "text": "(2, 0)", "isCorrect": false }
+    ],
+    "explanation": "Titik potong sumbu y terjadi saat x = 0, sehingga y = 2(0) + 1 = 1",
+    "difficulty": "medium",
+    "tags": ["persamaan-garis", "titik-potong"]
+  },
+  {
+    "id": "mqe-001",
+    "topicId": "math-quadratic-equations",
+    "stem": "Akar-akar dari x² - 5x + 6 = 0 adalah?",
+    "choices": [
+      { "id": "a", "text": "x = 2 atau x = 3", "isCorrect": true },
+      { "id": "b", "text": "x = 1 atau x = 6", "isCorrect": false },
+      { "id": "c", "text": "x = -2 atau x = -3", "isCorrect": false },
+      { "id": "d", "text": "x = 0 atau x = 5", "isCorrect": false }
+    ],
+    "explanation": "(x-2)(x-3) = 0, sehingga x = 2 atau x = 3",
+    "difficulty": "medium",
+    "tags": ["faktorisasi", "persamaan-kuadrat"]
+  },
+  {
+    "id": "mqe-002",
+    "topicId": "math-quadratic-equations",
+    "stem": "Nilai diskriminan dari persamaan x² + 4x + 4 = 0 adalah?",
+    "choices": [
+      { "id": "a", "text": "0", "isCorrect": true },
+      { "id": "b", "text": "4", "isCorrect": false },
+      { "id": "c", "text": "8", "isCorrect": false },
+      { "id": "d", "text": "16", "isCorrect": false }
+    ],
+    "explanation": "D = b² - 4ac = 4² - 4(1)(4) = 16 - 16 = 0",
+    "difficulty": "hard",
+    "tags": ["diskriminan", "persamaan-kuadrat"]
+  },
+  {
+    "id": "mqe-003",
+    "topicId": "math-quadratic-equations",
+    "stem": "Selesaikan x² = 9 menggunakan akar kuadrat",
+    "choices": [
+      { "id": "a", "text": "x = 3 atau x = -3", "isCorrect": true },
+      { "id": "b", "text": "x = 3", "isCorrect": false },
+      { "id": "c", "text": "x = -3", "isCorrect": false },
+      { "id": "d", "text": "x = 9", "isCorrect": false }
+    ],
+    "explanation": "x² = 9 → x = ±√9 → x = 3 atau x = -3",
+    "difficulty": "easy",
+    "tags": ["akar-kuadrat", "persamaan-kuadrat"]
+  },
+  {
+    "id": "mqe-004",
+    "topicId": "math-quadratic-equations",
+    "stem": "Akar-akar dari 2x² - 8x + 6 = 0 adalah?",
+    "choices": [
+      { "id": "a", "text": "x = 1 atau x = 3", "isCorrect": true },
+      { "id": "b", "text": "x = 2 atau x = 3", "isCorrect": false },
+      { "id": "c", "text": "x = -1 atau x = -3", "isCorrect": false },
+      { "id": "d", "text": "x = 0 atau x = 4", "isCorrect": false }
+    ],
+    "explanation": "Bagi 2: x² - 4x + 3 = 0 → (x-1)(x-3) = 0 → x = 1 atau x = 3",
+    "difficulty": "medium",
+    "tags": ["faktorisasi", "persamaan-kuadrat"]
+  },
+  {
+    "id": "mqe-005",
+    "topicId": "math-quadratic-equations",
+    "stem": "Rumus abc untuk persamaan ax² + bx + c = 0 menghasilkan akar-akar?",
+    "choices": [
+      { "id": "a", "text": "x = (-b ± √(b²-4ac)) / 2a", "isCorrect": true },
+      { "id": "b", "text": "x = (-b ± √(b²+4ac)) / 2a", "isCorrect": false },
+      { "id": "c", "text": "x = (b ± √(b²-4ac)) / 2a", "isCorrect": false },
+      { "id": "d", "text": "x = (-b ± √(b²-4ac)) / a", "isCorrect": false }
+    ],
+    "explanation": "Ini adalah rumus abc standar untuk menyelesaikan persamaan kuadrat",
+    "difficulty": "easy",
+    "tags": ["rumus-abc", "persamaan-kuadrat"]
+  },
+  {
+    "id": "mf-001",
+    "topicId": "math-functions",
+    "stem": "Jika f(x) = 2x + 1, maka f(3) = ?",
+    "choices": [
+      { "id": "a", "text": "7", "isCorrect": true },
+      { "id": "b", "text": "6", "isCorrect": false },
+      { "id": "c", "text": "8", "isCorrect": false },
+      { "id": "d", "text": "5", "isCorrect": false }
+    ],
+    "explanation": "f(3) = 2(3) + 1 = 6 + 1 = 7",
+    "difficulty": "easy",
+    "tags": ["fungsi-linear", "evaluasi"]
+  },
+  {
+    "id": "mf-002",
+    "topicId": "math-functions",
+    "stem": "Domain dari fungsi f(x) = 1/(x-2) adalah?",
+    "choices": [
+      { "id": "a", "text": "Semua bilangan real kecuali 2", "isCorrect": true },
+      { "id": "b", "text": "Semua bilangan real", "isCorrect": false },
+      { "id": "c", "text": "x > 2", "isCorrect": false },
+      { "id": "d", "text": "x < 2", "isCorrect": false }
+    ],
+    "explanation": "Pembagian dengan nol tidak terdefinisi, jadi x ≠ 2",
+    "difficulty": "medium",
+    "tags": ["domain", "fungsi-rasional"]
+  },
+  {
+    "id": "mf-003",
+    "topicId": "math-functions",
+    "stem": "Grafik fungsi y = x² terbuka ke arah?",
+    "choices": [
+      { "id": "a", "text": "Atas", "isCorrect": true },
+      { "id": "b", "text": "Bawah", "isCorrect": false },
+      { "id": "c", "text": "Kiri", "isCorrect": false },
+      { "id": "d", "text": "Kanan", "isCorrect": false }
+    ],
+    "explanation": "Koefisien x² positif, sehingga parabola terbuka ke atas",
+    "difficulty": "easy",
+    "tags": ["parabola", "fungsi-kuadrat"]
+  },
+  {
+    "id": "mf-004",
+    "topicId": "math-functions",
+    "stem": "Komposisi fungsi (f ∘ g)(x) dimana f(x) = x + 1 dan g(x) = x² adalah?",
+    "choices": [
+      { "id": "a", "text": "x² + 1", "isCorrect": true },
+      { "id": "b", "text": "(x + 1)²", "isCorrect": false },
+      { "id": "c", "text": "x² + x + 1", "isCorrect": false },
+      { "id": "d", "text": "x² - 1", "isCorrect": false }
+    ],
+    "explanation": "(f ∘ g)(x) = f(g(x)) = f(x²) = x² + 1",
+    "difficulty": "hard",
+    "tags": ["komposisi", "fungsi"]
+  },
+  {
+    "id": "mf-005",
+    "topicId": "math-functions",
+    "stem": "Invers dari f(x) = 3x - 2 adalah?",
+    "choices": [
+      { "id": "a", "text": "f⁻¹(x) = (x + 2)/3", "isCorrect": true },
+      { "id": "b", "text": "f⁻¹(x) = 3x + 2", "isCorrect": false },
+      { "id": "c", "text": "f⁻¹(x) = (x - 2)/3", "isCorrect": false },
+      { "id": "d", "text": "f⁻¹(x) = x/3 + 2", "isCorrect": false }
+    ],
+    "explanation": "y = 3x - 2 → x = (y + 2)/3 → f⁻¹(x) = (x + 2)/3",
+    "difficulty": "hard",
+    "tags": ["invers", "fungsi"]
+  },
+  {
+    "id": "eb-001",
+    "topicId": "english-basics",
+    "stem": "What is the correct plural form of 'child'?",
+    "choices": [
+      { "id": "a", "text": "childs", "isCorrect": false },
+      { "id": "b", "text": "children", "isCorrect": true },
+      { "id": "c", "text": "childrens", "isCorrect": false },
+      { "id": "d", "text": "childes", "isCorrect": false }
+    ],
+    "explanation": "'Child' is an irregular noun. The plural form is 'children'.",
+    "difficulty": "easy",
+    "tags": ["nouns", "plural"]
+  },
+  {
+    "id": "eb-002",
+    "topicId": "english-basics",
+    "stem": "Choose the correct sentence:",
+    "choices": [
+      { "id": "a", "text": "She goes to school every day.", "isCorrect": true },
+      { "id": "b", "text": "She go to school every day.", "isCorrect": false },
+      { "id": "c", "text": "She going to school every day.", "isCorrect": false },
+      { "id": "d", "text": "She gone to school every day.", "isCorrect": false }
+    ],
+    "explanation": "Third person singular takes '-s' in present simple: 'She goes'.",
+    "difficulty": "easy",
+    "tags": ["present-simple", "verbs"]
+  },
+  {
+    "id": "eb-003",
+    "topicId": "english-basics",
+    "stem": "Which word is an adjective?",
+    "choices": [
+      { "id": "a", "text": "beautiful", "isCorrect": true },
+      { "id": "b", "text": "quickly", "isCorrect": false },
+      { "id": "c", "text": "run", "isCorrect": false },
+      { "id": "d", "text": "they", "isCorrect": false }
+    ],
+    "explanation": "An adjective describes a noun. 'Beautiful' describes something.",
+    "difficulty": "easy",
+    "tags": ["parts-of-speech", "adjectives"]
+  },
+  {
+    "id": "eb-004",
+    "topicId": "english-basics",
+    "stem": "What is the past tense of 'go'?",
+    "choices": [
+      { "id": "a", "text": "went", "isCorrect": true },
+      { "id": "b", "text": "goes", "isCorrect": false },
+      { "id": "c", "text": "gone", "isCorrect": false },
+      { "id": "d", "text": "going", "isCorrect": false }
+    ],
+    "explanation": "'Go' is an irregular verb. Past tense is 'went'.",
+    "difficulty": "easy",
+    "tags": ["verbs", "irregular-verbs"]
+  },
+  {
+    "id": "eb-005",
+    "topicId": "english-basics",
+    "stem": "Which sentence is in the past continuous tense?",
+    "choices": [
+      { "id": "a", "text": "I was eating dinner when she called.", "isCorrect": true },
+      { "id": "b", "text": "I ate dinner when she called.", "isCorrect": false },
+      { "id": "c", "text": "I eat dinner every day.", "isCorrect": false },
+      { "id": "d", "text": "I will eat dinner.", "isCorrect": false }
+    ],
+    "explanation": "Past continuous uses 'was/were + -ing': 'I was eating'.",
+    "difficulty": "easy",
+    "tags": ["past-continuous", "tenses"]
+  },
+  {
+    "id": "ec-001",
+    "topicId": "english-conversation",
+    "stem": "How do you ask someone's name in a formal way?",
+    "choices": [
+      { "id": "a", "text": "What is your name?", "isCorrect": true },
+      { "id": "b", "text": "What's up?", "isCorrect": false },
+      { "id": "c", "text": "Hey you!", "isCorrect": false },
+      { "id": "d", "text": "Name?", "isCorrect": false }
+    ],
+    "explanation": "'What is your name?' is the polite, formal way to ask.",
+    "difficulty": "easy",
+    "tags": ["greetings", "formal"]
+  },
+  {
+    "id": "ec-002",
+    "topicId": "english-conversation",
+    "stem": "Choose the correct response to 'How are you?'",
+    "choices": [
+      { "id": "a", "text": "I'm fine, thank you!", "isCorrect": true },
+      { "id": "b", "text": "I am John.", "isCorrect": false },
+      { "id": "c", "text": "Good morning.", "isCorrect": false },
+      { "id": "d", "text": "See you later.", "isCorrect": false }
+    ],
+    "explanation": "'I'm fine, thank you!' is the standard polite response.",
+    "difficulty": "easy",
+    "tags": ["greetings", "responses"]
+  },
+  {
+    "id": "ec-003",
+    "topicId": "english-conversation",
+    "stem": "What does 'Nice to meet you' mean?",
+    "choices": [
+      { "id": "a", "text": "Senang bertemu denganmu", "isCorrect": true },
+      { "id": "b", "text": "Apa kabar?", "isCorrect": false },
+      { "id": "c", "text": "Selamat pagi", "isCorrect": false },
+      { "id": "d", "text": "Sampai jumpa", "isCorrect": false }
+    ],
+    "explanation": "'Nice to meet you' = 'Senang bertemu denganmu' (said when meeting someone new)",
+    "difficulty": "easy",
+    "tags": ["greetings", "meaning"]
+  },
+  {
+    "id": "ec-004",
+    "topicId": "english-conversation",
+    "stem": "How do you say 'Terima kasih' in English?",
+    "choices": [
+      { "id": "a", "text": "Thank you", "isCorrect": true },
+      { "id": "b", "text": "Please", "isCorrect": false },
+      { "id": "c", "text": "Sorry", "isCorrect": false },
+      { "id": "d", "text": "Excuse me", "isCorrect": false }
+    ],
+    "explanation": "'Thank you' is the direct translation of 'Terima kasih'.",
+    "difficulty": "easy",
+    "tags": ["vocabulary", "polite"]
+  },
+  {
+    "id": "ec-005",
+    "topicId": "english-conversation",
+    "stem": "What is the correct way to say goodbye?",
+    "choices": [
+      { "id": "a", "text": "Goodbye", "isCorrect": true },
+      { "id": "b", "text": "Hello", "isCorrect": false },
+      { "id": "c", "text": "Good morning", "isCorrect": false },
+      { "id": "d", "text": "How are you?", "isCorrect": false }
+    ],
+    "explanation": "'Goodbye' is the standard way to say farewell.",
+    "difficulty": "easy",
+    "tags": ["farewell", "vocabulary"]
   }
 ]

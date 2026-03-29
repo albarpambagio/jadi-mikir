@@ -1,7 +1,12 @@
 import { useMemo, useState, useEffect } from 'react'
 import { useTopicsQuery } from '@/lib/content'
 import { learnerStore } from '@/store/learnerStore'
-import { getMasteryProgress, canAccessTopic, calculateMasteryLevel } from '@/lib/engines/mastery'
+import {
+  getMasteryProgress,
+  canAccessTopic,
+  calculateMasteryLevel,
+  isPrerequisiteMasterySatisfied,
+} from '@/lib/engines/mastery'
 import { isDue } from '@/lib/engines/fsrs'
 import type { LearnerState, Topic } from '@/types'
 import type { TopicWithProgress } from '@/lib/hooks/use-dashboard-stats'
@@ -66,13 +71,19 @@ function getNextReviewDays(topicId: string, cards: LearnerState['cards']): numbe
 function getTopicStatus(
   topic: Topic,
   learnerTopics: LearnerState['topics'],
+  masteryGateThresholdPercent: number,
 ): 'inProgress' | 'mastered' | 'available' | 'locked' {
   const mastery = learnerTopics[topic.id]
   if (mastery) {
     const level = calculateMasteryLevel(mastery)
     return level >= 5 ? 'mastered' : 'inProgress'
   }
-  const accessible = canAccessTopic(topic.id, topic.prerequisites, learnerTopics)
+  const accessible = canAccessTopic(
+    topic.id,
+    topic.prerequisites,
+    learnerTopics,
+    masteryGateThresholdPercent,
+  )
   return accessible ? 'available' : 'locked'
 }
 
@@ -94,11 +105,12 @@ export function useTopicBrowserData(): {
   const enrichedTopics = useMemo<TopicWithStatus[]>(() => {
     if (!topics) return []
     const { topics: learnerTopics, cards } = learnerState
+    const gatePct = learnerState.masteryGateThresholdPercent ?? 70
     return topics.map((topic) => {
       const mastery = learnerTopics[topic.id]
       const masteryProgress = mastery ? getMasteryProgress(mastery) : null
       const dueCount = getDueCountFromCards(topic.id, cards)
-      const status = getTopicStatus(topic, learnerTopics)
+      const status = getTopicStatus(topic, learnerTopics, gatePct)
       const nextReviewDays = status === 'mastered' ? getNextReviewDays(topic.id, cards) : null
       return { ...topic, masteryProgress, dueCount, status, prereqInfo: [], nextReviewDays }
     })
@@ -171,7 +183,10 @@ export function useTopicBrowserData(): {
               ? Math.round((prereqMastery.masteredQuestions / prereqMastery.totalQuestions) * 100)
               : 0
             const satisfied = prereqMastery
-              ? getMasteryProgress(prereqMastery).level >= 3
+              ? isPrerequisiteMasterySatisfied(
+                  prereqMastery,
+                  learnerState.masteryGateThresholdPercent ?? 70,
+                )
               : false
             return {
               topicId: prereqId,
@@ -205,7 +220,7 @@ export function useTopicBrowserData(): {
 
       return result
     }
-  }, [enrichedTopics, topicById, learnerState.topics])
+  }, [enrichedTopics, topicById, learnerState.topics, learnerState.masteryGateThresholdPercent])
 
   const findTopicWithStatus = useMemo(() => {
     return (topicId: string): TopicWithStatus | null =>

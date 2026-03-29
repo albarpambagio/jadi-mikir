@@ -20,6 +20,7 @@ const defaultState: LearnerState = {
   xp: 0,
   streak: 0,
   streakGoalDays: 30,
+  masteryGateThresholdPercent: 70,
   lastPracticeDate: null,
   topics: {},
   cards: {},

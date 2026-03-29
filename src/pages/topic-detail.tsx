@@ -23,6 +23,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Progress } from '@/components/ui/progress'
+import { MasteryGatePanel } from '@/components/mastery/mastery-gate-panel'
 import { useQuestionsQuery, useTopicQuery, useTopicsQuery } from '@/lib/content'
 import { useTopicBrowserData, toSlug } from '@/lib/hooks/use-topic-browser'
 import type { TopicWithStatus } from '@/lib/hooks/use-topic-browser'
@@ -32,6 +33,10 @@ import {
   getCardBucketStats,
   getUnlockTopics,
 } from '@/lib/topic-detail-aggregates'
+import {
+  countCardsNeedingWork,
+  getTwoWeakestSubtopics,
+} from '@/lib/mastery-gate-aggregates'
 import { learnerStore, learnerActions } from '@/store/learnerStore'
 
 function statusLabel(status: TopicWithStatus['status']): string {
@@ -128,14 +133,44 @@ export function TopicDetailPage() {
     [topicId, allTopics],
   )
 
+  const gateThreshold = learnerState.masteryGateThresholdPercent ?? 70
+  const gateFocus = useMemo(() => {
+    const q = search.startsWith('?') ? search.slice(1) : search
+    return new URLSearchParams(q).get('gate') === '1'
+  }, [search])
+
   const masteryPct = topicStatus?.masteryProgress?.current ?? 0
+  const showMasteryGate =
+    topicStatus?.status === 'inProgress' &&
+    unlocks.length > 0 &&
+    masteryPct < gateThreshold
+
+  const cardsNeedingWork = useMemo(
+    () => countCardsNeedingWork(questionIds, learnerState.cards),
+    [questionIds, learnerState.cards],
+  )
+
+  const weakestTwo = useMemo(() => getTwoWeakestSubtopics(subtopicRows), [subtopicRows])
   const showProgressBar =
     topicStatus?.status === 'mastered' ||
     (topicStatus?.status === 'inProgress' && masteryPct > 0)
 
-  const sessionHref = weakTag
-    ? `/session/${topicId}?tag=${encodeURIComponent(weakTag)}`
-    : `/session/${topicId}`
+  const sessionHref = useMemo(() => {
+    const base = weakTag
+      ? `/session/${topicId}?tag=${encodeURIComponent(weakTag)}`
+      : `/session/${topicId}`
+    const q = querySuffix.startsWith('?') ? querySuffix.slice(1) : querySuffix
+    if (!q) return base
+    const sep = base.includes('?') ? '&' : '?'
+    return `${base}${sep}${q}`
+  }, [topicId, weakTag, querySuffix])
+
+  const sessionHrefPlain = useMemo(() => {
+    const base = `/session/${topicId}`
+    const q = querySuffix.startsWith('?') ? querySuffix.slice(1) : querySuffix
+    if (!q) return base
+    return `${base}?${q}`
+  }, [topicId, querySuffix])
 
   const canStartSession = Boolean(topicStatus && topicStatus.status !== 'locked')
 
@@ -187,6 +222,19 @@ export function TopicDetailPage() {
           {topic.title}
         </h1>
       </div>
+
+      {showMasteryGate && (
+        <MasteryGatePanel
+          topicId={topicId}
+          querySuffix={querySuffix}
+          masteryPct={masteryPct}
+          thresholdPct={gateThreshold}
+          unlockTopicTitles={unlocks.map((u) => u.topic.title)}
+          cardsNeedingWork={cardsNeedingWork}
+          weakestSubtopics={weakestTwo}
+          focusOnMount={gateFocus}
+        />
+      )}
 
       {/* Summary card */}
       <Card>
@@ -326,7 +374,7 @@ export function TopicDetailPage() {
                         <Link href={`/topics/${slug}/${u.id}${querySuffix}`}>Lihat</Link>
                       </Button>
                       <Button size="sm" asChild>
-                        <Link href={`/session/${u.id}`}>
+                        <Link href={`/session/${u.id}${querySuffix}`}>
                           Mulai
                           <ArrowRight className="size-4" aria-hidden />
                         </Link>
@@ -344,7 +392,7 @@ export function TopicDetailPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <Button className="sm:min-w-40" disabled={!canStartSession} asChild={canStartSession}>
           {canStartSession ? (
-            <Link href={`/session/${topicId}`}>
+            <Link href={sessionHrefPlain}>
               Mulai sesi
               <ArrowRight className="size-4" aria-hidden />
             </Link>

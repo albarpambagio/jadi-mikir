@@ -1,29 +1,56 @@
 [
   {
-    "id": "english-grammar",
-    "title": "English Grammar Fundamentals",
-    "description": "Master the basics of English grammar including parts of speech, tenses, and subject-verb agreement",
-    "subject": "English",
+    "id": "math-algebra-basics",
+    "title": "Aljabar Dasar",
+    "description": "Konsep dasar aljabar termasuk persamaan, ekspresi, dan pertidaksamaan",
+    "subject": "Matematika",
     "difficulty": "beginner",
     "prerequisites": [],
-    "questionCount": 5
+    "questionCount": 10
   },
   {
-    "id": "english-vocabulary",
-    "title": "English Vocabulary Building",
-    "description": "Expand your vocabulary with common words, idioms, and phrases for everyday use",
-    "subject": "English",
-    "difficulty": "beginner",
-    "prerequisites": [],
-    "questionCount": 5
-  },
-  {
-    "id": "math-algebra",
-    "title": "Algebra Basics",
-    "description": "Learn fundamental algebraic concepts including equations, expressions, and inequalities",
-    "subject": "Mathematics",
+    "id": "math-linear-equations",
+    "title": "Persamaan Linear",
+    "description": "Memahami dan menyelesaikan persamaan linear satu variabel",
+    "subject": "Matematika",
     "difficulty": "intermediate",
+    "prerequisites": ["math-algebra-basics"],
+    "questionCount": 10
+  },
+  {
+    "id": "math-quadratic-equations",
+    "title": "Persamaan Kuadrat",
+    "description": "Memahami dan menyelesaikan persamaan kuadrat dengan berbagai metode",
+    "subject": "Matematika",
+    "difficulty": "intermediate",
+    "prerequisites": ["math-linear-equations"],
+    "questionCount": 10
+  },
+  {
+    "id": "math-functions",
+    "title": "Fungsi dan Grafik",
+    "description": "Memahami konsep fungsi, grafik, dan transformasi fungsi",
+    "subject": "Matematika",
+    "difficulty": "advanced",
+    "prerequisites": ["math-linear-equations", "math-quadratic-equations"],
+    "questionCount": 10
+  },
+  {
+    "id": "english-basics",
+    "title": "Dasar-dasar Bahasa Inggris",
+    "description": "Pengenalan kosakata dan tata bahasa dasar bahasa Inggris",
+    "subject": "English",
+    "difficulty": "beginner",
     "prerequisites": [],
-    "questionCount": 5
+    "questionCount": 10
+  },
+  {
+    "id": "english-conversation",
+    "title": "Percakapan Sehari-hari",
+    "description": "Latihan percakapan bahasa Inggris untuk kehidupan sehari-hari",
+    "subject": "English",
+    "difficulty": "intermediate",
+    "prerequisites": ["english-basics"],
+    "questionCount": 10
   }
 ]
