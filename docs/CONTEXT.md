@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-S2–S3, S6, and S11 wireframe rebuilds complete. Next: screen rebuilds S17, S18, then Topic detail (screen 12).
+S17–S18 subject browser and topic list wireframe rebuilds complete. Next: Topic detail (screen 12).
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -20,7 +20,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Content fetching**: `src/lib/content.ts` — TanStack Query hooks for `/content/*.json`
 - **Home dashboard** (`src/pages/home.tsx`, `src/components/dashboard/`): wireframe 01 — greeting, 4-stat bar (streak/XP/topics/due), today's session card, continue-learning topic grid (up to 6), empty state (with "browse all topics" link); routes `/`
 - **Progress dashboard** (`src/pages/progress.tsx`): wireframe 06 v2 — page chrome and stats in Indonesian (*Dashboard progres*, *Ringkasan*, *Penguasaan per topik*, *Kesehatan retensi*, etc.), top overdue alert (*Kartu perlu ditinjau*, `AlertCircle`, *Tinjau Sekarang*) when `totalDue > 0`, summary stats, mastery-by-topic + `MasteryBar`, retention health (overdue count line), export; routes `/progress`
-- **Topic browser** (`src/pages/topics.tsx`, `src/pages/topic-list.tsx`, `src/components/topics/`, `src/lib/hooks/use-topic-browser.ts`): wireframes 17, 18 — subject grid with active/inactive differentiation, topic list grouped by status (in progress / mastered / available to start / locked), due badge, locked collapse, "Review in N days" for mastered; routes `/topics` and `/topics/:subject`
+- **Topic browser** (`src/pages/topics.tsx`, `src/pages/topic-list.tsx`, `src/components/topics/`, `src/lib/hooks/use-topic-browser.ts`): wireframes 17, 18 v2 — *Subjek saat ini* summary, inactive cards with inline switch warning, CTAs *Lihat Daftar Topik* / *Ganti ke subjek ini*; topic rows *Prasyarat:* / *Butuh:* with prerequisite titles, progress bar only for in-progress topics with non-zero % or mastered topics; back to subject list via header *Semua Topik* only (no duplicate footer CTA); Indonesian copy throughout; routes `/topics` and `/topics/:subject`
 
 ## Active Constraints
 - **Self-improvement logs**: Non-obvious corrections, errors, and feature wishes go to `.learnings/` per `.agents/skills/self-improvement/SKILL.md` and `AGENTS.md`; promote stable learnings to `docs/` or `AGENTS.md`
@@ -39,6 +39,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 4. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
 
 ## Recent Updates
+- **S17 + S18 wireframe rebuild** (2026-03-29): Aligned subject browser and topic list to `wireframes_1.md` v2 — [`docs/audits/s17-s18-wireframe-2026-03-29.md`](audits/s17-s18-wireframe-2026-03-29.md).
 - **S6–S11 UX audit + Indonesian copy pass** (2026-03-30): Scoped audit [`docs/audits/ux-audit-s6-s11-2026-03-30.md`](audits/ux-audit-s6-s11-2026-03-30.md); copy inventory [`docs/ux-copy-rebuilds-s2-s11-2026-03-30.md`](ux-copy-rebuilds-s2-s11-2026-03-30.md). Session, progress dashboard, and session complete aligned to Indonesian learner-facing strings (`formatSessionDurationId`, bands, weak area, footers).
 - **S6 + S11 wireframe rebuild** (2026-03-29): Progress dashboard overdue card moved above Summary; session complete reordered (weak areas before schedule), Indonesian *Jadwal berikutnya* / *Review berikutnya* / *Besok* etc. via `formatNextReviewDateId`, `streakGoalDays` on `LearnerState`, secondary CTA *Tinjau lebih lanjut*.
 - **S2 + S3 session screen rebuild** (2026-03-29): wireframe v2 alignment — removed back button (quit-only exit with Indonesian confirm dialog), difficulty label now shows "Easy · 2/5" format (easy=2 filled dots), modal bottom-sheet feedback panel replaced with inline `FeedbackBanner` + left-border choice accents (`border-l-4 border-l-success/destructive`) + inline explanation panel + inline next button, response time hidden from UI (kept as internal FSRS signal), choice row labels updated to Indonesian ("Jawaban benar" / "Jawaban kamu"), session mix tags hidden during feedback, "Quit session" button hidden during feedback phase. All in `src/pages/session.tsx`.

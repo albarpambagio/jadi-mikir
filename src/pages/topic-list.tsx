@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { SectionLabel } from '@/components/ui/section-label'
 import { Skeleton } from '@/components/ui/skeleton'
 import { TopicRow } from '@/components/topics/topic-row'
-import { useTopicBrowserData, toSlug } from '@/lib/hooks/use-topic-browser'
+import { useTopicBrowserData } from '@/lib/hooks/use-topic-browser'
 import type { TopicWithStatus } from '@/lib/hooks/use-topic-browser'
 
 function TopicListSkeleton() {
@@ -52,10 +52,11 @@ function GroupSection({
       </div>
       {collapsible && !expanded && hiddenCount > 0 && (
         <button
+          type="button"
           onClick={() => setExpanded(true)}
           className="text-muted-foreground hover:text-foreground self-start pt-1 text-xs transition-colors"
         >
-          ··· {hiddenCount} more locked {hiddenCount === 1 ? 'topic' : 'topics'}
+          ··· {hiddenCount} topik terkunci lainnya
         </button>
       )}
     </section>
@@ -79,12 +80,13 @@ export function TopicListPage() {
     [group, getTopicsBySubject],
   )
 
-  const subjectTitle = group?.subject ?? 'Subject Not Found'
+  const subjectTitle = group?.subject ?? 'Subjek tidak ditemukan'
 
   useLayoutEffect(() => {
-    document.title = `${subjectTitle} — JadiMikir`
+    document.title =
+      group ? `${subjectTitle} — Daftar Topik — JadiMikir` : 'Topik — JadiMikir'
     headingRef.current?.focus()
-  }, [subjectTitle])
+  }, [subjectTitle, group])
 
   const totalCount = group?.totalTopics ?? 0
   const inProgressCount = categorized?.inProgress.length ?? 0
@@ -99,7 +101,7 @@ export function TopicListPage() {
         <Button variant="ghost" size="sm" asChild className="-ml-2">
           <Link href="/topics">
             <ArrowLeft aria-hidden />
-            All Topics
+            Semua Topik
           </Link>
         </Button>
         <h1
@@ -107,7 +109,7 @@ export function TopicListPage() {
           tabIndex={-1}
           className="text-foreground text-xl font-semibold outline-none"
         >
-          {subjectTitle}
+          {group ? `${subjectTitle} — Daftar Topik` : subjectTitle}
         </h1>
       </div>
 
@@ -115,36 +117,28 @@ export function TopicListPage() {
         <TopicListSkeleton />
       ) : !group ? (
         <div className="py-12 text-center">
-          <p className="text-muted-foreground text-sm">Subject not found.</p>
+          <p className="text-muted-foreground text-sm">Subjek tidak ditemukan.</p>
           <Button variant="outline" size="sm" asChild className="mt-4">
-            <Link href="/topics">Browse all subjects</Link>
+            <Link href="/topics">Lihat semua subjek</Link>
           </Button>
         </div>
       ) : (
         <>
           {/* Summary line */}
           <p className="text-muted-foreground text-sm">
-            {totalCount} {totalCount === 1 ? 'topic' : 'topics'}
-            {inProgressCount > 0 && ` · ${inProgressCount} in progress`}
-            {masteredCount > 0 && ` · ${masteredCount} mastered`}
-            {availableCount > 0 && ` · ${availableCount} available to start`}
-            {lockedCount > 0 && ` · ${lockedCount} locked`}
+            {totalCount} topik
+            {inProgressCount > 0 && ` · ${inProgressCount} sedang dipelajari`}
+            {masteredCount > 0 && ` · ${masteredCount} dikuasai`}
+            {availableCount > 0 && ` · ${availableCount} tersedia untuk dimulai`}
+            {lockedCount > 0 && ` · ${lockedCount} terkunci`}
           </p>
 
           {/* Topic groups */}
           <div className="flex flex-col gap-6">
-            <GroupSection label="In progress" topics={categorized!.inProgress} />
-            <GroupSection label="Mastered" topics={categorized!.mastered} />
-            <GroupSection label="Available to start" topics={categorized!.available} />
-            <GroupSection label="Locked" topics={categorized!.locked} collapsible />
-          </div>
-
-          {/* Skill tree CTA (deferred) */}
-          <div className="flex justify-end border-t border-border pt-4">
-            <Button variant="outline" size="sm" disabled>
-              View Skill Tree
-              <ArrowLeft className="rotate-180" aria-hidden />
-            </Button>
+            <GroupSection label="Sedang dipelajari" topics={categorized!.inProgress} />
+            <GroupSection label="Dikuasai" topics={categorized!.mastered} />
+            <GroupSection label="Tersedia (belum dimulai)" topics={categorized!.available} />
+            <GroupSection label="Terkunci" topics={categorized!.locked} collapsible />
           </div>
         </>
       )}

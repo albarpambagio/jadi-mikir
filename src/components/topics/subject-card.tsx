@@ -1,5 +1,5 @@
 import { Link } from 'wouter'
-import { ArrowRight } from 'lucide-react'
+import { AlertTriangle, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
@@ -27,11 +27,11 @@ export function SubjectCard({ group }: SubjectCardProps) {
           <div className="flex items-center gap-2">
             <h2 className="text-foreground text-base font-semibold">{group.subject}</h2>
             {group.isActive && (
-              <span className="text-primary text-xs font-medium">Active</span>
+              <span className="text-primary text-xs font-medium">Aktif</span>
             )}
           </div>
           <p className="text-muted-foreground text-xs">
-            {group.totalTopics} {group.totalTopics === 1 ? 'topic' : 'topics'} · {group.totalCards.toLocaleString()} {group.totalCards === 1 ? 'card' : 'cards'}
+            {group.totalTopics} topik · {group.totalCards.toLocaleString()} kartu
           </p>
         </div>
       </div>
@@ -40,7 +40,7 @@ export function SubjectCard({ group }: SubjectCardProps) {
         <div className="flex flex-col gap-2">
           <div className="flex items-baseline justify-between gap-2">
             <span className="text-muted-foreground text-xs">
-              {group.startedCount} / {group.totalTopics} started
+              {group.startedCount} / {group.totalTopics} dimulai
             </span>
             <span className="text-muted-foreground font-mono text-xs tabular-nums">
               {progressPct}%
@@ -48,35 +48,49 @@ export function SubjectCard({ group }: SubjectCardProps) {
           </div>
           <Progress value={progressPct} className="h-1.5" />
           <p className="text-muted-foreground text-xs">
-            {group.masteredCount} mastered
+            {group.masteredCount} dikuasai
             {group.totalDue > 0 && (
-              <span> · {group.totalDue} due today</span>
+              <span> · {group.totalDue} jatuh tempo hari ini</span>
             )}
           </p>
         </div>
       ) : (
         <div className="flex flex-col gap-1.5">
-          <p className="text-muted-foreground text-xs">0% started</p>
+          <p className="text-muted-foreground text-xs">Belum dimulai</p>
           {group.topicTitles.length > 0 && (
             <p className="text-muted-foreground text-xs leading-relaxed">
               {group.topicTitles.join(' · ')}
-              {group.totalTopics > 4 && ` · +${group.totalTopics - 4} more`}
+              {group.totalTopics > 4 && ` · +${group.totalTopics - 4} lainnya`}
             </p>
           )}
         </div>
       )}
 
-      <Button
-        variant={group.isActive ? 'default' : 'outline'}
-        size="sm"
-        asChild
-        className="mt-auto self-start"
-      >
-        <Link href={`/topics/${group.slug}`}>
-          {group.isActive ? 'Continue' : 'Browse'}
-          <ArrowRight aria-hidden />
-        </Link>
-      </Button>
+      <div className="mt-auto flex flex-col gap-2">
+        <Button
+          variant={group.isActive ? 'default' : 'outline'}
+          size="sm"
+          asChild
+          className="self-start"
+        >
+          <Link href={`/topics/${group.slug}`}>
+            {group.isActive ? 'Lihat Daftar Topik' : 'Ganti ke subjek ini'}
+            <ArrowRight aria-hidden />
+          </Link>
+        </Button>
+
+        {!group.isActive && (
+          <p className="text-muted-foreground flex gap-2 text-xs leading-relaxed">
+            <AlertTriangle
+              className="text-warning mt-0.5 size-4 shrink-0"
+              aria-hidden
+            />
+            <span>
+              Mengganti subjek menjeda sesi aktifmu. Progresmu tetap tersimpan.
+            </span>
+          </p>
+        )}
+      </div>
     </div>
   )
 }

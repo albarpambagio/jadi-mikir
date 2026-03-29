@@ -33,11 +33,11 @@ export function TopicsPage() {
   const headingRef = useRef<HTMLHeadingElement>(null)
 
   useLayoutEffect(() => {
-    document.title = 'All Topics — JadiMikir'
+    document.title = 'Semua Topik — JadiMikir'
     headingRef.current?.focus()
   }, [])
 
-  const activeCount = subjects.filter((s) => s.isActive).length
+  const currentSubject = subjects.find((s) => s.isActive)?.subject
 
   return (
     <div className="flex flex-col gap-6">
@@ -46,7 +46,7 @@ export function TopicsPage() {
         <Button variant="ghost" size="sm" asChild className="-ml-2">
           <Link href="/">
             <ArrowLeft aria-hidden />
-            Back
+            Kembali
           </Link>
         </Button>
         <h1
@@ -54,7 +54,7 @@ export function TopicsPage() {
           tabIndex={-1}
           className="text-foreground text-xl font-semibold outline-none"
         >
-          All Topics
+          Semua Topik
         </h1>
       </div>
 
@@ -64,12 +64,10 @@ export function TopicsPage() {
         <>
           {/* Summary line */}
           <p className="text-muted-foreground text-sm">
-            {subjects.length} {subjects.length === 1 ? 'subject' : 'subjects'}
-            {activeCount > 0 && (
-              <span>
-                {' '}
-                · {activeCount} active
-              </span>
+            {currentSubject ? (
+              <>Subjek saat ini: {currentSubject}</>
+            ) : (
+              <>Belum ada subjek yang sedang dipelajari.</>
             )}
           </p>
 
@@ -82,7 +80,7 @@ export function TopicsPage() {
 
           {/* Footer note */}
           <p className="text-muted-foreground border-border border-t pt-4 text-xs leading-relaxed">
-            Each subject is independent. Progress is saved between subjects.
+            Setiap subjek berdiri sendiri. Progresmu tetap tersimpan antar subjek.
           </p>
         </>
       )}

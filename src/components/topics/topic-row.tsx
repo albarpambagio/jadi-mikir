@@ -32,19 +32,19 @@ function CtaButton({ topic }: { topic: TopicWithStatus }) {
   if (topic.status === 'locked') {
     return (
       <Button size="sm" variant="outline" disabled className="shrink-0">
-        Locked
+        Terkunci
       </Button>
     )
   }
 
   const label =
     topic.status === 'mastered'
-      ? 'Review'
+      ? 'Tinjau'
       : topic.status === 'inProgress' && topic.dueCount > 0
-        ? 'Continue'
+        ? 'Lanjut'
         : topic.status === 'inProgress'
-          ? 'Study'
-          : 'Start'
+          ? 'Belajar'
+          : 'Mulai'
 
   return (
     <Button
@@ -63,8 +63,12 @@ function CtaButton({ topic }: { topic: TopicWithStatus }) {
 
 export function TopicRow({ topic }: TopicRowProps) {
   const pct = topic.masteryProgress?.current ?? 0
-  const showBar = topic.status === 'inProgress' || topic.status === 'mastered'
+  const showBar =
+    topic.status === 'mastered' ||
+    (topic.status === 'inProgress' && pct > 0)
   const isLocked = topic.status === 'locked'
+
+  const prereqSep = ', '
 
   return (
     <div className={cn('flex flex-col gap-2 p-4', isLocked && 'opacity-60')}>
@@ -73,9 +77,9 @@ export function TopicRow({ topic }: TopicRowProps) {
           <StatusIcon status={topic.status} />
           <div className="flex min-w-0 flex-col gap-1">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-foreground text-sm font-medium leading-snug">{topic.title}</span>
+              <span className="text-foreground text-sm leading-snug font-medium">{topic.title}</span>
               {topic.dueCount > 0 && (
-                <Badge variant="tag-primary">{topic.dueCount} due</Badge>
+                <Badge variant="tag-primary">{topic.dueCount} jatuh</Badge>
               )}
             </div>
 
@@ -87,10 +91,10 @@ export function TopicRow({ topic }: TopicRowProps) {
                 )}
                 {topic.prereqInfo.length > 0 && (
                   <p className="text-muted-foreground text-xs">
-                    Prereqs:{' '}
+                    Prasyarat:{' '}
                     {topic.prereqInfo.map((p, i) => (
                       <span key={p.topicId}>
-                        {i > 0 && ' · '}
+                        {i > 0 && prereqSep}
                         <span className="text-success">✓</span> {p.title}
                       </span>
                     ))}
@@ -107,7 +111,9 @@ export function TopicRow({ topic }: TopicRowProps) {
                 )}
                 {topic.nextReviewDays !== null && (
                   <span className="text-muted-foreground text-xs">
-                    {topic.nextReviewDays === 0 ? 'Due today' : `Review in ${topic.nextReviewDays}d`}
+                    {topic.nextReviewDays === 0
+                      ? 'Jatuh tempo hari ini'
+                      : `Tinjau dalam ${topic.nextReviewDays} hari`}
                   </span>
                 )}
               </div>
@@ -116,10 +122,10 @@ export function TopicRow({ topic }: TopicRowProps) {
             {/* Available: prereq satisfied list */}
             {topic.status === 'available' && topic.prereqInfo.length > 0 && (
               <p className="text-muted-foreground text-xs">
-                Prereqs:{' '}
+                Prasyarat:{' '}
                 {topic.prereqInfo.map((p, i) => (
                   <span key={p.topicId}>
-                    {i > 0 && ' · '}
+                    {i > 0 && prereqSep}
                     <span className="text-success">✓</span> {p.title}
                   </span>
                 ))}
@@ -129,13 +135,13 @@ export function TopicRow({ topic }: TopicRowProps) {
             {/* Locked: unsatisfied prereqs */}
             {topic.status === 'locked' && topic.prereqInfo.length > 0 && (
               <p className="text-muted-foreground text-xs">
-                Needs:{' '}
+                Butuh:{' '}
                 {topic.prereqInfo
                   .filter((p) => !p.satisfied)
                   .map((p, i) => (
                     <span key={p.topicId}>
-                      {i > 0 && ' · '}
-                      {p.title} ({p.currentPct}%)
+                      {i > 0 && prereqSep}
+                      <span className="text-destructive">✗</span> {p.title} ({p.currentPct}%)
                     </span>
                   ))}
               </p>
@@ -145,13 +151,7 @@ export function TopicRow({ topic }: TopicRowProps) {
         <CtaButton topic={topic} />
       </div>
 
-      {showBar && (
-        pct === 0 ? (
-          <div className="h-1.5 w-full rounded-full bg-border" />
-        ) : (
-          <Progress value={pct} className="h-1.5" />
-        )
-      )}
+      {showBar && <Progress value={pct} className="h-1.5" />}
     </div>
   )
 }
