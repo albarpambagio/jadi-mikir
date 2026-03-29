@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation } from 'wouter'
 import { ArrowRight, ArrowLeft, BookOpen, Microscope, FileText, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { OnboardingLayout } from '@/components/layout/onboarding-layout'
-import { learnerActions } from '@/store/learnerStore'
+import { OnboardingProgress } from '@/components/ui/onboarding-progress'
+import { learnerActions, learnerStore } from '@/store/learnerStore'
 import { cn } from '@/lib/utils'
+import type { LearnerState } from '@/types'
 
 interface SubjectOption {
   id: string
@@ -52,7 +54,17 @@ const SUBJECTS: SubjectOption[] = [
 
 export function OnboardingSubjectSelect() {
   const [, setLocation] = useLocation()
-  const [selectedSubject, setSelectedSubject] = useState('Matematika')
+  const [state] = useState<LearnerState>(() => learnerStore.get())
+  const [selectedSubject, setSelectedSubject] = useState(state.selectedSubject || 'Matematika')
+
+  useEffect(() => {
+    document.title = 'JadiMikir - Pilih Subjek'
+    if (state.onboardingStep !== 'welcome' && state.onboardingStep !== 'subject') {
+      setLocation('/onboarding')
+      return
+    }
+    learnerActions.setOnboardingStep('subject')
+  }, [setLocation, state.onboardingStep])
 
   const handleContinue = () => {
     learnerActions.setSelectedSubject(selectedSubject)
@@ -64,15 +76,8 @@ export function OnboardingSubjectSelect() {
       <div className="flex flex-col gap-8">
         <div>
           <h1 className="text-xl font-semibold text-foreground">Pilih topik yang ingin kamu pelajari</h1>
-          <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Step 2 dari 4</span>
-            <span>•</span>
-            <div className="flex gap-1">
-              <div className="h-2 w-2 rounded-full bg-primary" />
-              <div className="h-2 w-2 rounded-full bg-primary" />
-              <div className="h-2 w-2 rounded-full bg-border" />
-              <div className="h-2 w-2 rounded-full bg-border" />
-            </div>
+          <div className="mt-1">
+            <OnboardingProgress currentStep={2} totalSteps={4} />
           </div>
         </div>
 
@@ -91,6 +96,8 @@ export function OnboardingSubjectSelect() {
                 key={subject.id}
                 type="button"
                 disabled={isDisabled}
+                aria-disabled={isDisabled}
+                aria-label={isDisabled ? `${subject.name} - Segera hadir` : `${subject.name}${isSelected ? ' (Aktif)' : ''}`}
                 onClick={() => subject.enabled && setSelectedSubject(subject.id)}
                 className={cn(
                   'flex items-center gap-4 rounded-lg border p-4 text-left transition-colors',

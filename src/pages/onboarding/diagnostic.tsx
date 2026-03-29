@@ -4,12 +4,12 @@ import { ArrowRight, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { OnboardingLayout } from '@/components/layout/onboarding-layout'
+import { OnboardingProgress } from '@/components/ui/onboarding-progress'
 import { useTopicsQuery, useQuestionsQuery } from '@/lib/content'
+import { DIAGNOSTIC_CONFIG } from '@/lib/onboarding-config'
+import { learnerActions, learnerStore } from '@/store/learnerStore'
 import { cn } from '@/lib/utils'
 import type { Question, Topic } from '@/types'
-
-const MAX_QUESTIONS = 3
-const CONSECUTIVE_CORRECT_TO_ADVANCE = 2
 
 interface DiagnosticAnswer {
   questionId: string
@@ -21,13 +21,13 @@ interface DiagnosticAnswer {
 function getFoundationalTopics(topics: Topic[], subject: string): Topic[] {
   return topics
     .filter((t) => t.subject === subject && t.prerequisites.length === 0)
-    .slice(0, 4)
+    .slice(0, DIAGNOSTIC_CONFIG.FOUNDATIONAL_TOPICS_LIMIT)
 }
 
 function selectDiagnosticQuestions(
   topics: Topic[],
   questions: Question[],
-  countPerTopic: number = 4
+  countPerTopic: number = DIAGNOSTIC_CONFIG.QUESTIONS_PER_TOPIC
 ): Question[] {
   const selected: Question[] = []
   for (const topic of topics) {
@@ -58,8 +58,8 @@ function shuffleArray<T>(array: T[]): T[] {
 
 export function OnboardingDiagnostic() {
   const [, setLocation] = useLocation()
-  const { data: topics, isLoading: topicsLoading } = useTopicsQuery()
-  const { data: allQuestions, isLoading: questionsLoading } = useQuestionsQuery()
+  const { data: topics, isLoading: topicsLoading, error: topicsError } = useTopicsQuery()
+  const { data: allQuestions, isLoading: questionsLoading, error: questionsError } = useQuestionsQuery()
 
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -70,7 +70,17 @@ export function OnboardingDiagnostic() {
   const [randomizedChoices, setRandomizedChoices] = useState<Question['choices']>([])
   const [isComplete, setIsComplete] = useState(false)
 
-  const subject = 'Matematika'
+  const subject = learnerStore.get().selectedSubject || 'Matematika'
+
+  useEffect(() => {
+    document.title = 'JadiMikir - Tes Penplacement'
+    const state = learnerStore.get()
+    if (state.onboardingStep !== 'subject' && state.onboardingStep !== 'diagnostic') {
+      setLocation('/onboarding/subject')
+      return
+    }
+    learnerActions.setOnboardingStep('diagnostic')
+  }, [setLocation])
 
   useEffect(() => {
     if (topics && allQuestions && questions.length === 0) {
@@ -116,8 +126,8 @@ export function OnboardingDiagnostic() {
       setConsecutiveCorrect(newConsecutive)
 
       if (
-        newConsecutive >= CONSECUTIVE_CORRECT_TO_ADVANCE &&
-        newAnswers.length < MAX_QUESTIONS
+        newConsecutive >= DIAGNOSTIC_CONFIG.CONSECUTIVE_CORRECT_TO_ADVANCE &&
+        newAnswers.length < DIAGNOSTIC_CONFIG.MAX_QUESTIONS
       ) {
         setTimeout(() => finishDiagnostic(newAnswers), 1500)
         return
@@ -126,7 +136,7 @@ export function OnboardingDiagnostic() {
       setConsecutiveCorrect(0)
     }
 
-    if (newAnswers.length >= MAX_QUESTIONS) {
+    if (newAnswers.length >= DIAGNOSTIC_CONFIG.MAX_QUESTIONS) {
       setTimeout(() => finishDiagnostic(newAnswers), 1500)
     }
   }
@@ -156,7 +166,7 @@ export function OnboardingDiagnostic() {
   }
 
   const handleNext = () => {
-    if (currentIndex < questions.length - 1 && answers.length < MAX_QUESTIONS) {
+    if (currentIndex < questions.length - 1 && answers.length < DIAGNOSTIC_CONFIG.MAX_QUESTIONS) {
       setCurrentIndex((prev) => prev + 1)
     } else {
       finishDiagnostic(answers)
@@ -177,6 +187,21 @@ export function OnboardingDiagnostic() {
     )
   }
 
+  if (topicsError || questionsError) {
+    return (
+      <OnboardingLayout>
+        <div className="flex h-64 flex-col items-center justify-center gap-4">
+          <div className="text-center text-destructive">
+            Gagal memuat konten. Silakan coba lagi.
+          </div>
+          <Button variant="secondary" onClick={() => window.location.reload()}>
+            Muat Ulang
+          </Button>
+        </div>
+      </OnboardingLayout>
+    )
+  }
+
   const correctCount = answers.filter((a) => a.isCorrect).length
 
   return (
@@ -191,18 +216,16 @@ export function OnboardingDiagnostic() {
               <ArrowLeft className="size-4" aria-hidden />
               Kembali
             </button>
-            <div className="text-sm text-muted-foreground">
-              Step 3 dari 4
-            </div>
+            <OnboardingProgress currentStep={3} totalSteps={4} />
           </div>
           <h1 className="mt-4 text-xl font-semibold text-foreground">Tes Penempatan Singkat</h1>
         </div>
 
         <div className="flex flex-col gap-2">
-          <Progress value={(answers.length / MAX_QUESTIONS) * 100} className="h-2" />
+          <Progress value={(answers.length / DIAGNOSTIC_CONFIG.MAX_QUESTIONS) * 100} className="h-2" />
           <div className="flex justify-between text-xs text-muted-foreground">
             <span>{answers.length} soal dijawab</span>
-            <span> hingga {MAX_QUESTIONS} soal · Adaptif</span>
+            <span> hingga {DIAGNOSTIC_CONFIG.MAX_QUESTIONS} soal · Adaptif</span>
           </div>
         </div>
 
@@ -280,7 +303,7 @@ export function OnboardingDiagnostic() {
               </Button>
             ) : (
               <Button onClick={handleNext}>
-                {answers.length >= MAX_QUESTIONS || currentIndex >= questions.length - 1
+                {answers.length >= DIAGNOSTIC_CONFIG.MAX_QUESTIONS || currentIndex >= questions.length - 1
                   ? 'Lihat Hasil'
                   : 'Pertanyaan berikutnya'}
                 <ArrowRight className="ml-2 size-4" aria-hidden />

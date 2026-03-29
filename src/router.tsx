@@ -86,8 +86,8 @@ export function AppRouter() {
         <Route>
           <Layout>
             <div className="py-20 text-center">
-              <h1 className="text-2xl font-semibold">404 - Not found</h1>
-              <p className="text-muted-foreground mt-2">The page you're looking for doesn't exist.</p>
+              <h1 className="text-2xl font-semibold">404 - Halaman tidak ditemukan</h1>
+              <p className="text-muted-foreground mt-2">Halaman yang kamu cari tidak ada.</p>
             </div>
           </Layout>
         </Route>

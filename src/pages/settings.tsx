@@ -295,18 +295,20 @@ export function SettingsPage() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/settings/export">
-                <Download aria-hidden />
-                Ekspor semua data sebagai JSON
-              </Link>
-            </Button>
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/settings/export">
-                <Upload aria-hidden />
-                Impor file backup
-              </Link>
-            </Button>
+            <Link
+              href="/settings/export"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-transparent px-3 py-1.5 text-sm text-foreground hover:bg-neutral-100"
+            >
+              <Download aria-hidden className="h-4 w-4" />
+              Ekspor semua data sebagai JSON
+            </Link>
+            <Link
+              href="/settings/export"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-transparent px-3 py-1.5 text-sm text-foreground hover:bg-neutral-100"
+            >
+              <Upload aria-hidden className="h-4 w-4" />
+              Impor file backup
+            </Link>
           </div>
 
           <Separator />

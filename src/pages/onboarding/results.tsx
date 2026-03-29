@@ -3,7 +3,9 @@ import { useLocation } from 'wouter'
 import { CheckCircle, ArrowRight, ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { OnboardingLayout } from '@/components/layout/onboarding-layout'
-import { learnerActions } from '@/store/learnerStore'
+import { OnboardingProgress } from '@/components/ui/onboarding-progress'
+import { learnerActions, learnerStore } from '@/store/learnerStore'
+import { SKIP_THRESHOLD } from '@/lib/onboarding-config'
 import { useTopicsQuery } from '@/lib/content'
 import type { Topic, Question } from '@/types'
 
@@ -44,6 +46,16 @@ export function OnboardingResults() {
   const [results, setResults] = useState<DiagnosticResults | null>(null)
 
   useEffect(() => {
+    document.title = 'JadiMikir - Hasil Tes Penempatan'
+    const state = learnerStore.get()
+    if (state.onboardingStep !== 'diagnostic' && state.onboardingStep !== 'results') {
+      setLocation('/onboarding/subject')
+      return
+    }
+    learnerActions.setOnboardingStep('results')
+  }, [setLocation])
+
+  useEffect(() => {
     const stored = sessionStorage.getItem('diagnosticResults')
     if (stored) {
       setResults(JSON.parse(stored))
@@ -52,7 +64,7 @@ export function OnboardingResults() {
     }
   }, [])
 
-  const subject = 'Matematika'
+  const subject = learnerStore.get().selectedSubject || 'Matematika'
 
   const topicResults = useMemo(() => {
     if (!topics || !results) return []
@@ -77,7 +89,7 @@ export function OnboardingResults() {
       const total = topicAnswers.length
       const percent = total > 0 ? Math.round((correct / total) * 100) : 0
 
-      const isSkipped = total >= 3 && correct >= 2
+      const isSkipped = total >= SKIP_THRESHOLD.MIN_ANSWERS && correct >= SKIP_THRESHOLD.MIN_CORRECT
 
       return {
         topic,
@@ -93,7 +105,7 @@ export function OnboardingResults() {
   const learningCount = topicResults.filter((r) => r.status === 'learning').length
 
   const handleStart = () => {
-    const subject = 'Matematika'
+  const subject = learnerStore.get().selectedSubject || 'Matematika'
     learnerActions.completeOnboarding(subject)
     sessionStorage.removeItem('diagnosticResults')
     setLocation('/')
@@ -121,16 +133,7 @@ export function OnboardingResults() {
             <ArrowLeft className="mr-1 size-4" aria-hidden />
             Kembali
           </button>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span>Step 4 dari 4</span>
-            <span>•</span>
-            <div className="flex gap-1">
-              <div className="h-2 w-2 rounded-full bg-primary" />
-              <div className="h-2 w-2 rounded-full bg-primary" />
-              <div className="h-2 w-2 rounded-full bg-primary" />
-              <div className="h-2 w-2 rounded-full bg-primary" />
-            </div>
-          </div>
+          <OnboardingProgress currentStep={4} totalSteps={4} />
         </div>
 
         <div className="text-center">
@@ -197,7 +200,7 @@ export function OnboardingResults() {
                   ))}
                   <div className="flex justify-between border-t border-border bg-neutral-50 p-3 text-sm">
                     <div className="text-muted-foreground">{skippedCount} topik dilewati</div>
-                    <div className="text-muted-foreground">→ {topicResults.length - skippedCount + 20} topik lainnya</div>
+                    <div className="text-muted-foreground">→ {Math.max(0, (topics?.length ?? 0) - skippedCount)} topik tersisa</div>
                   </div>
                 </div>
               </div>
@@ -205,11 +208,13 @@ export function OnboardingResults() {
           </>
         )}
 
-        <p className="text-center text-sm text-muted-foreground">
-          Estimasi untuk menguasai seluruh track: {calculateTimeEstimate(skippedCount, 24)}
-          <br />
-          (dihitung berdasarkan hasil tes penempatan kamu)
-        </p>
+        {!results.skipped && (
+          <p className="text-center text-sm text-muted-foreground">
+            Estimasi untuk menguasai seluruh track: {calculateTimeEstimate(skippedCount, 24)}
+            <br />
+            (dihitung berdasarkan hasil tes penempatan kamu)
+          </p>
+        )}
 
         <Button className="w-full" onClick={handleStart}>
           Mulai Belajar

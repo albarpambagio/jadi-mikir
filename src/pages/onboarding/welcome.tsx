@@ -1,7 +1,17 @@
+import { useEffect } from 'react'
 import { useLocation } from 'wouter'
 import { Lock, Brain, TrendingUp, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { OnboardingLayout } from '@/components/layout/onboarding-layout'
+import { OnboardingProgress } from '@/components/ui/onboarding-progress'
+import { learnerActions } from '@/store/learnerStore'
+
+const ONBOARDING_TITLES = {
+  welcome: 'JadiMikir - Mulai Perjalanan Belajarmu',
+  subject: 'JadiMikir - Pilih Subjek',
+  diagnostic: 'JadiMikir - Tes Penempatan',
+  results: 'JadiMikir - Hasil Tes Penempatan',
+} as const
 
 const FEATURES = [
   {
@@ -23,6 +33,11 @@ const FEATURES = [
 
 export function OnboardingWelcome() {
   const [, setLocation] = useLocation()
+
+  useEffect(() => {
+    document.title = ONBOARDING_TITLES.welcome
+    learnerActions.setOnboardingStep('welcome')
+  }, [])
 
   return (
     <OnboardingLayout>
@@ -47,16 +62,7 @@ export function OnboardingWelcome() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-            <span>Step 1 dari 4</span>
-            <span>•</span>
-            <div className="flex gap-1">
-              <div className="h-2 w-2 rounded-full bg-primary" />
-              <div className="h-2 w-2 rounded-full bg-border" />
-              <div className="h-2 w-2 rounded-full bg-border" />
-              <div className="h-2 w-2 rounded-full bg-border" />
-            </div>
-          </div>
+          <OnboardingProgress currentStep={1} totalSteps={4} />
 
           <Button className="w-full" onClick={() => setLocation('/onboarding/subject')}>
             Mulai
