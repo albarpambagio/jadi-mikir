@@ -25,7 +25,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 ## Active Constraints
 - **Self-improvement logs**: Non-obvious corrections, errors, and feature wishes go to `.learnings/` per `.agents/skills/self-improvement/SKILL.md` and `AGENTS.md`; promote stable learnings to `docs/` or `AGENTS.md`
 - **UX copy**: For user-facing strings, follow `.agents/skills/ux-copy/SKILL.md` (see AGENTS.md, `.cursor/rules/ux-copy.mdc`)
-- **UX audit + dogfood**: Integrated workflow — ranked findings / walkthroughs → **ux-audit** (`docs/`); repro evidence / agent-browser → **dogfood** (`./dogfood-output/`); combined pipeline in `AGENTS.md` and `docs/WORKFLOW.md` (see `.cursor/rules/ux-audit.mdc`, `.cursor/rules/dogfood.mdc`)
+- **UX audit + dogfood**: Integrated workflow — ranked findings / walkthroughs → **ux-audit** (`docs/`); repro evidence / agent-browser → **dogfood** (`./dogfood-output/`); combined pipeline in `AGENTS.md` and `docs/WORKFLOW.md` (see `.cursor/rules/ux-audit.mdc`, `.cursor/rules/dogfood.mdc`). **When to run** (vs the screenshot loop, milestones): [docs/WORKFLOW.md](WORKFLOW.md) — *QA vs the screenshot loop*, *After Each Screen*.
 - **Product strategy sessions**: Use `.agents/skills/grill-me/SKILL.md` for strategy design and review work in `docs/strategy/` and related roadmap/positioning discussions (see AGENTS.md, `.cursor/rules/grill-me-strategy.mdc`)
 - Figma is the source of truth for visual decisions — fetch design context before writing any markup
 - shadcn/ui before custom components

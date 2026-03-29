@@ -102,6 +102,15 @@ Two agent skills cover browser-based quality work; use **both** for release-styl
 
 **Local app URL:** `http://localhost:5173` with `npm run dev`. Full rules: [`AGENTS.md`](../AGENTS.md) (UX audit + dogfood).
 
+### QA vs the screenshot loop
+
+The [Overview](#overview) loop (wireframe → screenshot → feedback) is for **fast** layout and visual alignment. **ux-audit** and **dogfood** sit **beside** that loop: they add ranked findings, friction/resilience notes, and repro evidence—not a substitute for quick screenshot review.
+
+- **During iteration:** Rely on screenshots and lint; optional **quick** ux-audit pass after a risky change (see depth levels in `.agents/skills/ux-audit/SKILL.md`).
+- **Do not** treat **standard** or **thorough** ux-audit plus full dogfood as mandatory after every small tweak—it slows the loop this doc is optimized for.
+- **Natural gates:** Run the combined pipeline (or at least ux-audit) when a **major screen** is done, before a **release** or demo, or when merging a **large UI chunk**—then use **dogfood** on Critical/High flows for step-by-step repro (see **Suggested flow** above).
+- **Dogfood alone** for a targeted bug hunt on one flow; **ux-audit alone** for holistic “is it good UX?” without deep repro.
+
 ---
 
 ## Available Factory.ai Components
@@ -222,6 +231,8 @@ The agent enforces these automatically. Listed here so your feedback aligns with
 | Check lint | `"Run lint and fix any errors"` |
 | Review after changes | `"Screenshot and compare against the wireframe"` |
 | Mobile check | `"Screenshot at 375px width"` |
+| UX audit before calling a screen done | `"Run a quick UX audit on [screen/route] and file findings under docs/"` |
+| Repro evidence for a flow | `"Dogfood the [session / topic / …] flow on localhost; save report under ./dogfood-output/"` |
 
 ---
 
@@ -256,5 +267,7 @@ The agent updates docs automatically when a screen is finished:
 - `docs/TODO.md` — screen moved to Completed
 - `docs/CONTEXT.md` — Current Focus updated
 - `docs/ARCHITECTURE.md` — new files listed
+
+**QA cadence (optional but recommended):** For day-to-day iteration, screenshot review is enough. When a screen or large UI change is ready to merge, run a **quick** ux-audit or rely on screenshots alone; for **major** screens or pre-release, prefer **standard** ux-audit and **dogfood** on Critical/High flows (see the **QA: UX audit + dogfood** section above).
 
 You don't need to manage these manually.

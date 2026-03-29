@@ -30,6 +30,8 @@ When suggesting UI changes:
 
 **Default URL for local runs:** `http://localhost:5173` (Vite). Prefer a deployed URL when testing production-only behavior or when the user specifies it. Details: [`docs/WORKFLOW.md`](docs/WORKFLOW.md) (QA section).
 
+**Cadence:** Do not treat a full ux-audit plus dogfood run as mandatory after every trivial UI change. For **when** to run these skills relative to the screenshot loop (iteration vs milestones, release, large UI merges), follow [`docs/WORKFLOW.md`](docs/WORKFLOW.md) — **QA vs the screenshot loop** and **After Each Screen**.
+
 ## Self-improvement (learning logs)
 
 Use the [pskoett self-improvement](https://skills.sh/pskoett/self-improving-agent/self-improvement) skill: read `.agents/skills/self-improvement/SKILL.md` for the full quick reference, entry formats, and resolution workflow.
