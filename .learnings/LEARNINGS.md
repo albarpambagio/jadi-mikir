@@ -20,16 +20,12 @@ Full entry format and ID rules: [`.agents/skills/self-improvement/SKILL.md`](../
 | `promoted_to_skill` | Extracted as a reusable skill |
 
 ## Skill Extraction Fields
-
 When a learning is promoted to a skill, add these fields:
-
 ```markdown
 **Status**: promoted_to_skill
 **Skill-Path**: skills/skill-name
 ```
-
 Example:
-
 ```markdown
 ## [LRN-20250115-001] best_practice
 
@@ -43,5 +39,30 @@ Example:
 Docker build fails on Apple Silicon due to platform mismatch
 ...
 ```
-
 ---
+## [LRN-20260329-001] best_practice
+**Logged**: 2026-03-29T00:00:00Z
+**Priority**: high
+**Status**: pending
+**Area**: docs
+
+### Summary
+When brainstorming product ideas, always align them with existing product strategy pillars and roadmap phases before proposing implementation. This ensures architectural integrity and reduces wasted effort on misaligned features. The educational tooltips feature provided a perfect vehicle to address multiple concerns without major redesign.
+
+## [LRN-20260329-002] best_practice
+**Logged**: 2026-03-29T00:00:00Z
+**Priority**: high
+**Status**: pending
+**Area**: docs
+
+### Summary
+Progressive disclosure patterns (like educational tooltips) can effectively address user complexity concerns while maintaining system integrity. Rather than hiding advanced features or creating parallel systems, reveal complexity gradually as users demonstrate readiness.
+
+## [LRN-20260329-003] best_practice
+**Logged**: 2026-03-29T00:00:00Z
+**Priority**: high
+**Status**: pending
+**Area**: docs
+
+### Summary
+Content model flexibility (structured vs unstructured) should be implemented as a spectrum rather than binary choice, allowing users to gradually add structure as their needs evolve.
