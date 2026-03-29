@@ -1,7 +1,7 @@
 # TODO.md — Roadmap
 
 ## In Progress
-Settings + Export (screens 13–14)_
+_(none)_
 
 ## Backlog
 
@@ -27,10 +27,11 @@ Screens already in production that need to be updated to match the revised wiref
    - Note: Matematika pre-selected per content.json subject field; other subjects disabled
 4. [x] **Settings + Export** — preferences, data portability — ✅ done
    - Wireframe: `docs/archives/wireframes_1.md` Screens 13, 14
-5. [ ] **Remediation drill** — two sub-screens: gate prompt (5a) + drill in progress (5b)
+5. [x] **Remediation drill** — two sub-screens: gate prompt (5a) + drill in progress (5b)
    - Wireframe: `docs/archives/wireframes_1.md` Screen 5
 
 ### Future
+- [ ] **Educational tooltips** — contextual tooltips explaining FSRS, mastery gates, streaks, XP with smart triggering (first-time → hints → action prompts); see [`docs/superpowers/specs/2026-03-29-educational-tooltips-design.md`](superpowers/specs/2026-03-29-educational-tooltips-design.md)
 - [ ] **Learning lab / opt-in study pipeline** — consent UX, minimal de-identified events, experiment assignment (per [docs/strategy/product-strategy.md](strategy/product-strategy.md); infrastructure TBD)
 - [ ] **Dependency UX** then **skill tree** — ship prerequisite/blocked/next-step UI first; full visual topic-dependency map deferred until 50+ questions exist *(see [product-strategy.md](strategy/product-strategy.md) Pillar 5 phase split)*
 - [ ] API integration layer
@@ -41,6 +42,7 @@ Screens already in production that need to be updated to match the revised wiref
 - [ ] Content creator tooling — admin UI for authoring questions (move up if content bottleneck persists)
 
 ## Completed
+- **Remediation drill (S5)** (2026-03-30) — Two sub-screens: gate prompt (5a) + drill in progress (5b); routes `/remediation/gate` and `/remediation/drill`; trigger on prerequisite failure (accuracy < 60%); returns to parent session with resumeAt index — `remediation-gate.tsx`, `remediation-drill.tsx`, trigger logic in `session.tsx`.
 - **Settings + Export (S13–S14)** (2026-03-30) — Preferences (session duration, new cards, difficulty labels, answer timer, daily reminder), mastery settings (threshold, remediation trigger, interleaving), streak goal, JSON export/import; routes `/settings`, `/settings/export` — `settings.tsx`, `export.tsx`, types in `types/index.ts`, `updatePreferences` in `learnerStore`.
 - **Onboarding (S7–S10)** (2026-03-30) — 4-step flow: welcome → subject-select (Matematika pre-selected, others disabled) → adaptive diagnostic (max 15 Q, 3 consecutive correct advances) → results with skipped topics; routes `/onboarding/*`; redirect from home if `hasCompletedOnboarding` false; `onboarding-layout.tsx` without chrome — `welcome.tsx`, `subject-select.tsx`, `diagnostic.tsx`, `results.tsx`, `onboarding-layout.tsx`, store actions `completeOnboarding()`/`setSelectedSubject()`
 - **Mastery gate (S16)** (2026-03-29) — Panel on topic detail when *Berlangsung*, membuka topik lain, mastery &lt; threshold (default 70%); rationale + progress + kartu perlu diperkuat + dua subtopik terlemah; CTAs *Lanjutkan review* / *Latih … dulu*; `?gate=1` scroll/focus; prerequisite unlock + `prereqInfo` use `isPrerequisiteMasterySatisfied`; session initializes/updates `TopicMastery` — `mastery-gate-panel.tsx`, `mastery-gate-aggregates.ts`, `topic-detail.tsx`, `session.tsx`, `mastery.ts`, `use-topic-browser.ts`

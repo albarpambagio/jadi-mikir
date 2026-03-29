@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Settings + Export (screens 13–14) shipped. Next: Remediation drill (screen 5).
+Remediation drill (screen 5) shipped. Next: Educational tooltips (FSRS, mastery gates, streaks, XP explanations).
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -24,6 +24,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Topic detail** (`src/pages/topic-detail.tsx`, `src/lib/topic-detail-aggregates.ts`): wireframe 12 — ringkasan mastery, kartu FSRS per soal, tabel subtopik (tag), topik yang dibuka setelah ini, CTAs, reset dengan konfirmasi; **Mastery gate** (wireframe 16) — panel *Kenapa ada mastery gate?* + status + CTAs when in-progress, has downstream unlocks, mastery below `masteryGateThresholdPercent`; `?gate=1` focuses panel — `src/components/mastery/mastery-gate-panel.tsx`, `src/lib/mastery-gate-aggregates.ts`; route `/topics/:subject/:topicId`; judul topik di daftar mengarah ke detail; kartu beranda *Detail topik* + sesi
 - **Onboarding** (`src/pages/onboarding/`): welcome (S7) → subject-select (S8) → diagnostic (S9) → results (S10); routes `/onboarding`, `/onboarding/subject`, `/onboarding/diagnostic`, `/onboarding/results`; adaptive diagnostic (max 15 questions, 3 consecutive correct advances); Matematika pre-selected, other subjects disabled; redirect from home if `hasCompletedOnboarding` false; `onboarding-layout.tsx` (no chrome); `completeOnboarding()` and `setSelectedSubject()` actions in store
 - **Settings + Export** (`src/pages/settings.tsx`, `src/pages/export.tsx`): screens 13–14 — preferences (session duration, new cards per session, difficulty labels, answer timer, daily reminder), mastery settings (threshold, remediation trigger, interleaving), streak goal, data & privacy with JSON export/import; routes `/settings`, `/settings/export`
+- **Remediation drill** (`src/pages/remediation-gate.tsx`, `src/pages/remediation-drill.tsx`): screen 5 — gate prompt (5a) with alert, reason, estimate, CTAs; drill in progress (5b) with parent session context header; triggers on prerequisite failure (accuracy < 60%); returns to parent session at resumed question index; routes `/remediation/gate`, `/remediation/drill`
 
 ## Active Constraints
 - **Self-improvement logs**: Non-obvious corrections, errors, and feature wishes go to `.learnings/` per `.agents/skills/self-improvement/SKILL.md` and `AGENTS.md`; promote stable learnings to `docs/` or `AGENTS.md`
@@ -37,11 +38,12 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Learning lab**: **Opt-in research studies** may eventually send minimal de-identified events/aggregates for A/B and impact evaluation; **not shipped yet**—no default telemetry. See [docs/strategy/product-strategy.md](strategy/product-strategy.md) (Evaluation & experimentation)
 
 ## Next Steps (in order)
-1. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
-2. [ ] **Settings + Export** (screens 13–14) — ✅ done
-3. [ ] Remediation drill (screen 5)
+1. [ ] **Educational tooltips** — contextual tooltips explaining FSRS, mastery gates, streaks, XP with smart triggering (first-time → hints → action prompts); design spec: [`docs/superpowers/specs/2026-03-29-educational-tooltips-design.md`](superpowers/specs/2026-03-29-educational-tooltips-design.md)
+2. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
+3. [x] **Remediation drill** (screen 5) — ✅ done
 
 ## Recent Updates
+- **Remediation drill S5** (2026-03-30): Two sub-screens — gate prompt (5a) with alert, reason, estimate, CTAs *Mulai Latihan Singkat* / *Lewati untuk sekarang*; drill in progress (5b) with parent session context header, 8-question targeted practice, returns to parent at resumed question. Trigger logic in `session.tsx` detects prerequisite weakness (accuracy < 60%) after wrong answer — routes `/remediation/gate` and `/remediation/drill` — `remediation-gate.tsx`, `remediation-drill.tsx`.
 - **Back button routing fix** (2026-03-30): Created reusable `BackButton` component using `window.history.back()` with fallback URL; replaced hardcoded back links in topic-detail, settings, progress, export, topic-list, topics pages; session exit buttons now use history-based navigation — `back-button.tsx`, `topic-detail.tsx`, `session.tsx`, `settings.tsx`, `progress.tsx`, `export.tsx`, `topic-list.tsx`, `topics.tsx`.
 - **Settings + Export S13–S14** (2026-03-30): Preferences (session duration, new cards, difficulty labels, answer timer, daily reminder), mastery settings (threshold, remediation trigger, interleaving), streak goal, JSON export/import; routes `/settings`, `/settings/export` — `settings.tsx`, `export.tsx`, types in `types/index.ts`, `updatePreferences` in `learnerStore`.
 - **Onboarding S7–S10** (2026-03-30): 4-step flow — welcome → subject-select (Matematika pre-selected, others disabled) → adaptive diagnostic (max 15 Q, 3 consecutive correct advances) → results with skipped topics; routes `/onboarding/*`; redirect from home if `hasCompletedOnboarding` false; `onboarding-layout.tsx` without chrome — `welcome.tsx`, `subject-select.tsx`, `diagnostic.tsx`, `results.tsx`, `onboarding-layout.tsx`, store actions `completeOnboarding()`/`setSelectedSubject()`.

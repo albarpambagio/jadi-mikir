@@ -13,6 +13,8 @@ import { OnboardingResults } from '@/pages/onboarding/results'
 import { OnboardingRouteGuard } from '@/components/onboarding-route-guard'
 import { SettingsPage } from '@/pages/settings'
 import { ExportPage } from '@/pages/export'
+import { RemediationGatePage } from '@/pages/remediation-gate'
+import { RemediationDrillPage } from '@/pages/remediation-drill'
 
 export function AppRouter() {
   return (
@@ -86,6 +88,16 @@ export function AppRouter() {
         <Route path="/settings/export">
           <Layout>
             <ExportPage />
+          </Layout>
+        </Route>
+        <Route path="/remediation/gate">
+          <Layout>
+            <RemediationGatePage />
+          </Layout>
+        </Route>
+        <Route path="/remediation/drill">
+          <Layout>
+            <RemediationDrillPage />
           </Layout>
         </Route>
         <Route>

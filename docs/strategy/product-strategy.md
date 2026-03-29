@@ -257,7 +257,7 @@ MCQ primarily tests **recognition** among options. Later modes may include **con
 | User confusion about "no account" | Medium | Onboarding copy: local storage, export, clearing data |
 | IndexedDB / browser storage limits or pressure | Medium | Hybrid storage layer; export; monitor size; compress where needed |
 | **Browser / OS clearing site data** | **High** | Treat as **trust risk**: prominent export reminders, first-run and periodic backup nudges; clear Settings messaging |
-| Mastery gates feel too hard | Medium | Helpful remediation; explain "why" |
+| Mastery gates feel too hard | Medium | Helpful remediation; **explain "why" via educational tooltips** — contextual tips on mastery gates, FSRS, streaks, XP (see [`specs/2026-03-29-educational-tooltips-design.md`](../superpowers/specs/2026-03-29-educational-tooltips-design.md)) |
 | Knowledge graph clutter | Medium | Collapsible branches, zoom, focused "current path" |
 | FSRS thin item pools | Medium | Content density targets per topic; transparent repetition when pool is small |
 

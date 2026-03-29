@@ -371,6 +371,12 @@ export function SessionPage() {
     return new URLSearchParams(q).get('tag')
   }, [search])
 
+  const resumeAtIndex = useMemo(() => {
+    const q = search.startsWith('?') ? search.slice(1) : search
+    const idx = new URLSearchParams(q).get('resumeAt')
+    return idx != null ? parseInt(idx, 10) : null
+  }, [search])
+
   // One hook call per data source at page level (WORKFLOW rule 8)
   const { data: rawQuestions = [], isLoading, isError } = useQuestionsQuery(topicId)
   const sessionCap = getSessionQuestionCap()
@@ -394,6 +400,13 @@ export function SessionPage() {
   }, [])
 
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    if (resumeAtIndex != null && resumeAtIndex > 0 && resumeAtIndex < questions.length) {
+      setCurrentIndex(resumeAtIndex)
+    }
+  }, [resumeAtIndex, questions.length])
+
   const [selectedChoiceId, setSelectedChoiceId] = useState<string | null>(null)
   const [phase, setPhase] = useState<SessionPhase>('answering')
   const [elapsedTime, setElapsedTime] = useState(0)
@@ -407,6 +420,11 @@ export function SessionPage() {
     durationMs: number
   } | null>(null)
   const [weakAreaDismissed, setWeakAreaDismissed] = useState(false)
+  const [remediationPrompt, setRemediationPrompt] = useState<{
+    topicId: string
+    topicTitle: string
+    accuracyPercent: number
+  } | null>(null)
 
   const startTimeRef = useRef<number>(Date.now())
   const sessionWallStartRef = useRef<number | null>(null)
@@ -519,9 +537,32 @@ export function SessionPage() {
       setStats((prev) => ({ correct: prev.correct + 1, xpEarned: prev.xpEarned + 50 }))
     }
 
+    if (!isCorrect) {
+      const currentTopic = allTopics.find(t => t.id === tid)
+      if (currentTopic?.prerequisites?.length) {
+        const state = learnerStore.get()
+        for (const prereqId of currentTopic.prerequisites) {
+          const prereqMastery = state.topics[prereqId]
+          if (prereqMastery && prereqMastery.totalQuestions > 0) {
+            const accuracy = prereqMastery.masteredQuestions / prereqMastery.totalQuestions
+            if (accuracy < 0.6) {
+              const prereqTopic = allTopics.find(t => t.id === prereqId)
+              const prereqTitle = prereqTopic?.title ?? prereqId
+              const prereqAccuracyPercent = Math.round(accuracy * 100)
+              setRemediationPrompt({
+                topicId: prereqId,
+                topicTitle: prereqTitle,
+                accuracyPercent: prereqAccuracyPercent,
+              })
+            }
+          }
+        }
+      }
+    }
+
     setPhase('feedback')
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [selectedChoiceId, currentQuestion, phase])
+  }, [selectedChoiceId, currentQuestion, phase, navigate, allTopics, rawQuestions, currentIndex])
 
   const handleNext = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -696,6 +737,9 @@ export function SessionPage() {
         weakAreaDismissed={weakAreaDismissed}
         onDismissWeakArea={() => setWeakAreaDismissed(true)}
         onPracticeWeakArea={() => weak && handlePracticeWeakArea(weak.topicId)}
+        remediationPrompt={remediationPrompt}
+        onStartRemediation={() => remediationPrompt && navigate(`/remediation/gate?topicId=${remediationPrompt.topicId}&fromTopic=${topic?.id ?? ''}&questionIndex=${currentIndex}`)}
+        onSkipRemediation={() => setRemediationPrompt(null)}
         onDone={handleQuit}
         onAnotherSession={handlePracticeAgain}
       />

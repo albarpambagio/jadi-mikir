@@ -75,6 +75,9 @@ export interface SessionCompleteViewProps {
   weakAreaDismissed: boolean
   onDismissWeakArea: () => void
   onPracticeWeakArea: () => void
+  remediationPrompt?: { topicId: string; topicTitle: string; accuracyPercent: number } | null
+  onStartRemediation: () => void
+  onSkipRemediation: () => void
   onDone: () => void
   onAnotherSession: () => void
 }
@@ -105,6 +108,9 @@ export function SessionCompleteView({
   weakAreaDismissed,
   onDismissWeakArea,
   onPracticeWeakArea,
+  remediationPrompt = null,
+  onStartRemediation = () => {},
+  onSkipRemediation = () => {},
   onDone,
   onAnotherSession,
 }: SessionCompleteViewProps) {
@@ -235,6 +241,26 @@ export function SessionCompleteView({
               </Button>
               <Button type="button" size="sm" variant="outline" onClick={onDismissWeakArea}>
                 Ingatkan di sesi berikutnya
+              </Button>
+            </div>
+          </Card>
+        </section>
+      )}
+
+      {remediationPrompt && (
+        <section className="flex flex-col gap-4">
+          <SectionLabel>Perlu penguatan</SectionLabel>
+          <Card className="border-border bg-surface-raised p-4">
+            <p className="text-foreground text-sm leading-relaxed">
+              Topik prerequisite <span className="font-medium">{remediationPrompt.topicTitle}</span> memiliki akurasi rendah ({remediationPrompt.accuracyPercent}%). 
+              Disarankan untuk memperkuat sebelum melanjutkan.
+            </p>
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+              <Button type="button" size="sm" onClick={onStartRemediation}>
+                Latihan sekarang
+              </Button>
+              <Button type="button" size="sm" variant="outline" onClick={onSkipRemediation}>
+                Lewati untuk sekarang
               </Button>
             </div>
           </Card>
