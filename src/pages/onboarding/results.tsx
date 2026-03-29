@@ -128,7 +128,7 @@ export function OnboardingResults() {
           <button
             type="button"
             onClick={() => setLocation('/onboarding/diagnostic')}
-            className="flex items-center text-sm text-muted-foreground hover:text-foreground"
+            className="cursor-pointer flex items-center text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="mr-1 size-4" aria-hidden />
             Kembali

@@ -16,6 +16,7 @@ export function RemediationGatePage() {
       prereqTopicId: sp.get('topicId') ?? '',
       fromTopicId: sp.get('fromTopic') ?? '',
       questionIndex: parseInt(sp.get('questionIndex') ?? '0', 10),
+      tag: sp.get('tag') ?? null,
     }
   }, [search])
 
@@ -44,15 +45,20 @@ export function RemediationGatePage() {
       fromTopic: params.fromTopicId,
       questionIndex: String(params.questionIndex),
     })
+    if (params.tag) qs.set('tag', params.tag)
     navigate(`/remediation/drill?${qs.toString()}`)
   }
 
   const handleSkip = () => {
-    const qs = new URLSearchParams({
-      topicId: params.fromTopicId,
-      resumeAt: String(params.questionIndex + 1),
-    })
-    navigate(`/session/${params.fromTopicId}?${qs.toString()}`)
+    if (params.fromTopicId) {
+      const qs = new URLSearchParams({
+        resumeAt: String(params.questionIndex + 1),
+      })
+      if (params.tag) qs.set('tag', params.tag)
+      navigate(`/session/${params.fromTopicId}?${qs.toString()}`)
+    } else {
+      navigate(`/`)
+    }
   }
 
   const prereqTitle = prereqTopic?.title ?? 'topik prasyarat'
@@ -63,14 +69,14 @@ export function RemediationGatePage() {
         <button
           type="button"
           onClick={handleSkip}
-          className="text-muted-foreground text-sm hover:text-foreground transition-colors"
+          className="cursor-pointer text-muted-foreground text-sm hover:text-foreground transition-colors"
         >
-          ← Kembali ke sesi
+          {params.fromTopicId ? '← Kembali ke sesi' : '← Kembali'}
         </button>
       </div>
 
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <span>{fromTopicTitle}</span>
+        <span>{fromTopicTitle}{params.tag ? ` · ${params.tag}` : ''}</span>
         <span>·</span>
         <span>Soal {params.questionIndex + 1}</span>
       </div>

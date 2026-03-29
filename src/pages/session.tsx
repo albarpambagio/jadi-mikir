@@ -738,7 +738,7 @@ export function SessionPage() {
         onDismissWeakArea={() => setWeakAreaDismissed(true)}
         onPracticeWeakArea={() => weak && handlePracticeWeakArea(weak.topicId)}
         remediationPrompt={remediationPrompt}
-        onStartRemediation={() => remediationPrompt && navigate(`/remediation/gate?topicId=${remediationPrompt.topicId}&fromTopic=${topic?.id ?? ''}&questionIndex=${currentIndex}`)}
+        onStartRemediation={() => remediationPrompt && navigate(`/remediation/gate?topicId=${remediationPrompt.topicId}&fromTopic=${topic?.id ?? ''}&questionIndex=${currentIndex}${tagFilter ? `&tag=${encodeURIComponent(tagFilter)}` : ''}`)}
         onSkipRemediation={() => setRemediationPrompt(null)}
         onDone={handleQuit}
         onAnotherSession={handlePracticeAgain}

@@ -81,7 +81,7 @@ export function TopicRow({ topic }: TopicRowProps) {
             <div className="flex flex-wrap items-center gap-2">
               <Link
                 href={`/topics/${toSlug(topic.subject)}/${topic.id}?from=${encodeURIComponent(location)}`}
-                className="text-foreground hover:text-primary text-sm leading-snug font-medium underline-offset-2 hover:underline"
+                className="cursor-pointer text-foreground hover:text-primary text-sm leading-snug font-medium underline-offset-2 hover:underline"
               >
                 {topic.title}
               </Link>

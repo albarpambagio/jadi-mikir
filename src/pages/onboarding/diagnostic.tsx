@@ -211,7 +211,7 @@ export function OnboardingDiagnostic() {
           <div className="flex items-center justify-between">
             <button
               onClick={handleBack}
-              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+              className="cursor-pointer flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="size-4" aria-hidden />
               Kembali
@@ -287,7 +287,7 @@ export function OnboardingDiagnostic() {
           <button
             type="button"
             onClick={handleSkip}
-            className="self-center text-sm text-muted-foreground hover:text-foreground hover:underline"
+            className="cursor-pointer self-center text-sm text-muted-foreground hover:text-foreground hover:underline"
           >
             Tidak ingin ikut tes? Lewati tes penempatan
           </button>

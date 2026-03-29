@@ -54,7 +54,7 @@ function GroupSection({
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="text-muted-foreground hover:text-foreground self-start pt-1 text-xs transition-colors"
+          className="cursor-pointer text-muted-foreground hover:text-foreground self-start pt-1 text-xs transition-colors"
         >
           ··· {hiddenCount} topik terkunci lainnya
         </button>

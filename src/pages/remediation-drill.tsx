@@ -267,6 +267,7 @@ export function RemediationDrillPage() {
       topicId: sp.get('topicId') ?? '',
       fromTopicId: sp.get('fromTopic') ?? '',
       questionIndex: parseInt(sp.get('questionIndex') ?? '0', 10),
+      tag: sp.get('tag') ?? null,
     }
   }, [search])
 
@@ -340,19 +341,19 @@ export function RemediationDrillPage() {
 
   const exitDrill = useCallback(() => {
     const qs = new URLSearchParams({
-      topicId: params.fromTopicId,
       resumeAt: String(params.questionIndex + 1),
     })
+    if (params.tag) qs.set('tag', params.tag)
     navigate(`/session/${params.fromTopicId}?${qs.toString()}`)
-  }, [navigate, params.fromTopicId, params.questionIndex])
+  }, [navigate, params.fromTopicId, params.questionIndex, params.tag])
 
   const handleDone = useCallback(() => {
     const qs = new URLSearchParams({
-      topicId: params.fromTopicId,
       resumeAt: String(params.questionIndex + 1),
     })
+    if (params.tag) qs.set('tag', params.tag)
     navigate(`/session/${params.fromTopicId}?${qs.toString()}`)
-  }, [navigate, params.fromTopicId, params.questionIndex])
+  }, [navigate, params.fromTopicId, params.questionIndex, params.tag])
 
   const progressPercent =
     questions.length > 0
@@ -438,7 +439,7 @@ export function RemediationDrillPage() {
         </div>
 
         <div className="border-border rounded-lg border bg-muted/20 p-3 text-sm text-muted-foreground">
-          Setelah latihan ini, kamu kembali ke {fromTopicTitle}, soal {params.questionIndex + 1}.
+          Setelah latihan ini, kamu kembali ke {fromTopicTitle}{params.tag ? ` · ${params.tag}` : ''}, soal {params.questionIndex + 1}.
         </div>
 
         {phase === 'feedback' && (
