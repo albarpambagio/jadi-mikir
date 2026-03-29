@@ -402,8 +402,10 @@ export function SessionPage() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
-    if (resumeAtIndex != null && resumeAtIndex > 0 && resumeAtIndex < questions.length) {
-      setCurrentIndex(resumeAtIndex)
+    if (resumeAtIndex != null && questions.length > 0) {
+      // Clamp resumeAtIndex to valid range [0, questions.length-1]
+      const clampedIndex = Math.max(0, Math.min(resumeAtIndex, questions.length - 1))
+      setCurrentIndex(clampedIndex)
     }
   }, [resumeAtIndex, questions.length])
 
@@ -420,11 +422,12 @@ export function SessionPage() {
     durationMs: number
   } | null>(null)
   const [weakAreaDismissed, setWeakAreaDismissed] = useState(false)
-  const [remediationPrompt, setRemediationPrompt] = useState<{
-    topicId: string
-    topicTitle: string
-    accuracyPercent: number
-  } | null>(null)
+const [remediationPrompt, setRemediationPrompt] = useState<{
+  topicId: string
+  topicTitle: string
+  accuracyPercent: number
+  returnTopicId: string
+} | null>(null)
 
   const startTimeRef = useRef<number>(Date.now())
   const sessionWallStartRef = useRef<number | null>(null)
@@ -537,28 +540,29 @@ export function SessionPage() {
       setStats((prev) => ({ correct: prev.correct + 1, xpEarned: prev.xpEarned + 50 }))
     }
 
-    if (!isCorrect) {
-      const currentTopic = allTopics.find(t => t.id === tid)
-      if (currentTopic?.prerequisites?.length) {
-        const state = learnerStore.get()
-        for (const prereqId of currentTopic.prerequisites) {
-          const prereqMastery = state.topics[prereqId]
-          if (prereqMastery && prereqMastery.totalQuestions > 0) {
-            const accuracy = prereqMastery.masteredQuestions / prereqMastery.totalQuestions
-            if (accuracy < 0.6) {
-              const prereqTopic = allTopics.find(t => t.id === prereqId)
-              const prereqTitle = prereqTopic?.title ?? prereqId
-              const prereqAccuracyPercent = Math.round(accuracy * 100)
-              setRemediationPrompt({
-                topicId: prereqId,
-                topicTitle: prereqTitle,
-                accuracyPercent: prereqAccuracyPercent,
-              })
-            }
-          }
-        }
-      }
-    }
+if (!isCorrect) {
+       const currentTopic = allTopics.find(t => t.id === tid)
+       if (currentTopic?.prerequisites?.length) {
+         const state = learnerStore.get()
+         for (const prereqId of currentTopic.prerequisites) {
+           const prereqMastery = state.topics[prereqId]
+           if (prereqMastery && prereqMastery.totalQuestions > 0) {
+             const accuracy = prereqMastery.masteredQuestions / prereqMastery.totalQuestions
+             if (accuracy < 0.6) {
+               const prereqTopic = allTopics.find(t => t.id === prereqId)
+               const prereqTitle = prereqTopic?.title ?? prereqId
+               const prereqAccuracyPercent = Math.round(accuracy * 100)
+               setRemediationPrompt({
+                 topicId: prereqId,
+                 topicTitle: prereqTitle,
+                 accuracyPercent: prereqAccuracyPercent,
+                 returnTopicId: tid,
+               })
+             }
+           }
+         }
+       }
+     }
 
     setPhase('feedback')
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -738,7 +742,7 @@ export function SessionPage() {
         onDismissWeakArea={() => setWeakAreaDismissed(true)}
         onPracticeWeakArea={() => weak && handlePracticeWeakArea(weak.topicId)}
         remediationPrompt={remediationPrompt}
-        onStartRemediation={() => remediationPrompt && navigate(`/remediation/gate?topicId=${remediationPrompt.topicId}&fromTopic=${topic?.id ?? ''}&questionIndex=${currentIndex}${tagFilter ? `&tag=${encodeURIComponent(tagFilter)}` : ''}`)}
+        onStartRemediation={() => remediationPrompt && navigate(`/remediation/gate?topicId=${remediationPrompt.topicId}&fromTopic=${remediationPrompt.returnTopicId}&questionIndex=${currentIndex}${tagFilter ? `&tag=${encodeURIComponent(tagFilter)}` : ''}`)}
         onSkipRemediation={() => setRemediationPrompt(null)}
         onDone={handleQuit}
         onAnotherSession={handlePracticeAgain}

@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Remediation drill (screen 5) shipped. Next: Educational tooltips (FSRS, mastery gates, streaks, XP explanations).
+Remediation drill (screen 5) shipped. Next: Product strategy rethink — persona validation, content workstream, assumption testing before building further (see `docs/strategy/iterations/jadimikir-pm-analysis.md`).
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -38,9 +38,10 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Learning lab**: **Opt-in research studies** may eventually send minimal de-identified events/aggregates for A/B and impact evaluation; **not shipped yet**—no default telemetry. See [docs/strategy/product-strategy.md](strategy/product-strategy.md) (Evaluation & experimentation)
 
 ## Next Steps (in order)
-1. [ ] **Educational tooltips** — contextual tooltips explaining FSRS, mastery gates, streaks, XP with smart triggering (first-time → hints → action prompts); design spec: [`docs/superpowers/specs/2026-03-29-educational-tooltips-design.md`](superpowers/specs/2026-03-29-educational-tooltips-design.md)
-2. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
-3. [x] **Remediation drill** (screen 5) — ✅ done
+1. [ ] **Product strategy rethink** — address PM analysis gaps before building further (persona validation, problem statements, content workstream, hypothesis-driven success criteria); see [`docs/strategy/iterations/jadimikir-pm-analysis.md`](strategy/iterations/jadimikir-pm-analysis.md) and [`docs/TODO.md`](TODO.md) Future section
+2. [ ] **Educational tooltips** — contextual tooltips explaining FSRS, mastery gates, streaks, XP with smart triggering (first-time → hints → action prompts); design spec: [`docs/superpowers/specs/2026-03-29-educational-tooltips-design.md`](superpowers/specs/2026-03-29-educational-tooltips-design.md)
+3. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
+4. [x] **Remediation drill** (screen 5) — ✅ done
 
 ## Recent Updates
 - **Remediation drill S5** (2026-03-30): Two sub-screens — gate prompt (5a) with alert, reason, estimate, CTAs *Mulai Latihan Singkat* / *Lewati untuk sekarang*; drill in progress (5b) with parent session context header, 8-question targeted practice, returns to parent at resumed question. Trigger logic in `session.tsx` detects prerequisite weakness (accuracy < 60%) after wrong answer — routes `/remediation/gate` and `/remediation/drill` — `remediation-gate.tsx`, `remediation-drill.tsx`.
