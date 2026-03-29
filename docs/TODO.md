@@ -31,6 +31,7 @@ Screens already in production that need to be updated to match the revised wiref
    - Wireframe: `docs/archives/wireframes_1.md` Screen 5
 
 ### Future
+- [ ] **Remediation & session consolidation** — fix navigation loop, update mastery after drill, extract shared components, align UX (see [`docs/remediation-session-consolidation-plan.md`](remediation-session-consolidation-plan.md))
 - [ ] **Educational tooltips** — contextual tooltips explaining FSRS, mastery gates, streaks, XP with smart triggering (first-time → hints → action prompts); see [`docs/superpowers/specs/2026-03-29-educational-tooltips-design.md`](superpowers/specs/2026-03-29-educational-tooltips-design.md)
 - [ ] **Learning lab / opt-in study pipeline** — consent UX, minimal de-identified events, experiment assignment (per [docs/strategy/product-strategy.md](strategy/product-strategy.md); infrastructure TBD)
 - [ ] **Dependency UX** then **skill tree** — ship prerequisite/blocked/next-step UI first; full visual topic-dependency map deferred until 50+ questions exist *(see [product-strategy.md](strategy/product-strategy.md) Pillar 5 phase split)*
@@ -71,3 +72,4 @@ Screens already in production that need to be updated to match the revised wiref
 - Removed dead dependencies: `@base-ui/react`, `framer-motion`
 - CONTEXT.md rewritten to reflect actual project state
 - Analytics simplified: deleted `analytics.ts` and `engines/dashboard.ts`; consolidated stats into `use-dashboard-stats.ts`
+- **Product strategy brainstorming alignment** (2026-03-29) — Created improved analysis aligning ideas with product strategy pillars and roadmap phases; added learnings about progressive disclosure and strategic alignment; see [`docs/product-strategy-brainstorming-2026-03-29-improved.md`](docs/product-strategy-brainstorming-2026-03-29-improved.md)
