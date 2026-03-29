@@ -1,9 +1,9 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Link, useRoute } from 'wouter'
-import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { SectionLabel } from '@/components/ui/section-label'
 import { Skeleton } from '@/components/ui/skeleton'
+import { BackButton } from '@/components/ui/back-button'
 import { TopicRow } from '@/components/topics/topic-row'
 import { useTopicBrowserData } from '@/lib/hooks/use-topic-browser'
 import type { TopicWithStatus } from '@/lib/hooks/use-topic-browser'
@@ -98,12 +98,7 @@ export function TopicListPage() {
     <div className="flex flex-col gap-6">
       {/* Header row */}
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" asChild className="-ml-2">
-          <Link href="/topics">
-            <ArrowLeft aria-hidden />
-            Semua Topik
-          </Link>
-        </Button>
+        <BackButton defaultHref="/topics" className="-ml-2" label="Semua Topik" />
         <h1
           ref={headingRef}
           tabIndex={-1}

@@ -54,9 +54,14 @@ export function AppRouter() {
           </Layout>
         </Route>
         <Route path="/topics/:subject/:topicId">
-          <Layout>
-            <TopicDetailPage />
-          </Layout>
+          {(params) => {
+            const fullPath = params ? `/topics/${params.subject}/${params.topicId}` : ''
+            return (
+              <Layout key={`layout-${fullPath}`}>
+                <TopicDetailPage key={`page-${fullPath}`} />
+              </Layout>
+            )
+          }}
         </Route>
         <Route path="/topics/:subject">
           <Layout>

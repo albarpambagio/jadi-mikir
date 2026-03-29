@@ -1,6 +1,7 @@
 import { useLayoutEffect, useMemo, useRef, useState, useEffect } from 'react'
-import { Link, useLocation, useRoute, useSearch } from 'wouter'
-import { ArrowLeft, ArrowRight, AlertTriangle, Check } from 'lucide-react'
+import { Link, useRoute, useSearch, useLocation } from 'wouter'
+import { ArrowRight, AlertTriangle, Check } from 'lucide-react'
+import { BackButton } from '@/components/ui/back-button'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { SectionLabel } from '@/components/ui/section-label'
@@ -68,7 +69,7 @@ export function TopicDetailPage() {
   const [, params] = useRoute<{ subject: string; topicId: string }>('/topics/:subject/:topicId')
   const subjectSlug = params?.subject ?? ''
   const topicId = params?.topicId ?? ''
-  const [, navigate] = useLocation()
+  const [location, navigate] = useLocation()
   const search = useSearch()
 
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -99,17 +100,32 @@ export function TopicDetailPage() {
     return q ? `?${q}` : ''
   }, [search])
 
+  /** Build href with current location as `from` param for back button navigation. */
+  const withFrom = (path: string) => {
+    const sep = path.includes('?') ? '&' : '?'
+    return `${path}${sep}from=${encodeURIComponent(location)}`
+  }
+
   const backHref = useMemo(() => {
     const q = search.startsWith('?') ? search.slice(1) : search
     const from = new URLSearchParams(q).get('from')
     if (from === 'home') return '/'
     if (from === 'progress') return '/progress'
+    if (from) return from
     return `/topics/${expectedSlug}`
   }, [search, expectedSlug])
 
+  const [hasCheckedSlug, setHasCheckedSlug] = useState(false)
+
+  useEffect(() => {
+    if (!topic || !topicId || hasCheckedSlug) return
+    setHasCheckedSlug(true)
+  }, [topic, topicId, hasCheckedSlug, setHasCheckedSlug])
+
   useEffect(() => {
     if (!topic || !topicId) return
-    if (subjectSlug !== expectedSlug) {
+    const isWrongSlug = subjectSlug !== expectedSlug
+    if (isWrongSlug) {
       navigate(`/topics/${expectedSlug}/${topicId}${querySuffix}`, { replace: true })
     }
   }, [topic, subjectSlug, expectedSlug, topicId, navigate, querySuffix])
@@ -208,12 +224,7 @@ export function TopicDetailPage() {
   return (
     <main className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" asChild className="-ml-2">
-          <Link href={backHref}>
-            <ArrowLeft aria-hidden />
-            Kembali
-          </Link>
-        </Button>
+        <BackButton defaultHref={backHref} className="-ml-2" />
         <h1
           ref={headingRef}
           tabIndex={-1}
@@ -371,7 +382,7 @@ export function TopicDetailPage() {
                     <span className="text-foreground min-w-0">→ {u.title}</span>
                     <div className="flex shrink-0 gap-2">
                       <Button size="sm" variant="outline" asChild>
-                        <Link href={`/topics/${slug}/${u.id}${querySuffix}`}>Lihat</Link>
+                        <Link href={withFrom(`/topics/${slug}/${u.id}${querySuffix}`)}>Lihat</Link>
                       </Button>
                       <Button size="sm" asChild>
                         <Link href={`/session/${u.id}${querySuffix}`}>

@@ -1,8 +1,8 @@
 import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'wouter'
-import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { BackButton } from '@/components/ui/back-button'
 import { SubjectCard } from '@/components/topics/subject-card'
 import { useTopicBrowserData } from '@/lib/hooks/use-topic-browser'
 
@@ -43,12 +43,7 @@ export function TopicsPage() {
     <div className="flex flex-col gap-6">
       {/* Header row */}
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" asChild className="-ml-2">
-          <Link href="/">
-            <ArrowLeft aria-hidden />
-            Kembali
-          </Link>
-        </Button>
+        <BackButton defaultHref="/" className="-ml-2" />
         <h1
           ref={headingRef}
           tabIndex={-1}

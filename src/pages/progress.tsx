@@ -1,7 +1,8 @@
 import { useMemo, useState, useEffect } from 'react'
 import { Link } from 'wouter'
-import { AlertCircle, ArrowLeft, ArrowRight, Download } from 'lucide-react'
+import { AlertCircle, ArrowRight, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { BackButton } from '@/components/ui/back-button'
 import { Progress } from '@/components/ui/progress'
 import { SectionLabel } from '@/components/ui/section-label'
 import { StatDisplay } from '@/components/ui/stat-display'
@@ -69,12 +70,7 @@ export function ProgressDashboardPage() {
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-8 py-8">
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/">
-            <ArrowLeft aria-hidden />
-            Kembali
-          </Link>
-        </Button>
+        <BackButton className="-ml-2" />
         <h1 className="text-foreground text-xl font-semibold">Dashboard progres</h1>
       </div>
 

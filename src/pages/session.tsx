@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo, useLayoutEffect } from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useParams, useLocation, useSearch } from 'wouter'
 import { ArrowRight, X, CheckCircle2, XCircle, Shuffle } from 'lucide-react'
@@ -540,12 +540,20 @@ export function SessionPage() {
   }, [currentIndex, questions.length])
 
   const handleQuit = useCallback(() => {
-    navigate('/')
+    if (window.history.length > 1) {
+      window.history.back()
+    } else {
+      navigate('/')
+    }
   }, [navigate])
 
   const exitSession = useCallback(() => {
     setQuitDialogOpen(false)
-    navigate('/')
+    if (window.history.length > 1) {
+      window.history.back()
+    } else {
+      navigate('/')
+    }
   }, [navigate])
 
   const shouldConfirmQuit =

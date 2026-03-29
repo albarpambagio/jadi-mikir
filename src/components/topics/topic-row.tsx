@@ -1,4 +1,4 @@
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import { ArrowRight } from 'lucide-react'
 import { toSlug } from '@/lib/hooks/use-topic-browser'
 import { Badge } from '@/components/ui/badge'
@@ -63,6 +63,7 @@ function CtaButton({ topic }: { topic: TopicWithStatus }) {
 }
 
 export function TopicRow({ topic }: TopicRowProps) {
+  const [location] = useLocation()
   const pct = topic.masteryProgress?.current ?? 0
   const showBar =
     topic.status === 'mastered' ||
@@ -79,7 +80,7 @@ export function TopicRow({ topic }: TopicRowProps) {
           <div className="flex min-w-0 flex-col gap-1">
             <div className="flex flex-wrap items-center gap-2">
               <Link
-                href={`/topics/${toSlug(topic.subject)}/${topic.id}`}
+                href={`/topics/${toSlug(topic.subject)}/${topic.id}?from=${encodeURIComponent(location)}`}
                 className="text-foreground hover:text-primary text-sm leading-snug font-medium underline-offset-2 hover:underline"
               >
                 {topic.title}

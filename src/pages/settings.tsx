@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'wouter'
-import { ArrowLeft, ArrowRight, Download, Upload, Trash2, AlertTriangle } from 'lucide-react'
+import { ArrowRight, Download, Upload, Trash2, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { BackButton } from '@/components/ui/back-button'
 import { SectionLabel } from '@/components/ui/section-label'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -171,12 +172,7 @@ export function SettingsPage() {
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-8 py-8">
       <div className="flex items-center gap-3">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/">
-            <ArrowLeft aria-hidden />
-            Kembali
-          </Link>
-        </Button>
+        <BackButton className="-ml-2" />
         <h1 className="text-foreground text-xl font-semibold">Pengaturan</h1>
       </div>
 
