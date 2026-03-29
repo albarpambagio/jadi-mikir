@@ -221,47 +221,53 @@ export function SessionCompleteView({
         </div>
       </section>
 
+      {weakArea && !weakAreaDismissed && (
+        <section className="flex flex-col gap-4">
+          <SectionLabel>Area lemah</SectionLabel>
+          <Card className="border-border bg-surface-raised p-4">
+            <p className="text-foreground text-sm leading-relaxed">
+              You missed {weakArea.missed}/{weakArea.total} questions on:{' '}
+              <span className="font-medium">{humanizeTag(weakArea.tagLabel)}</span>
+            </p>
+            <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+              <Button type="button" size="sm" onClick={onPracticeWeakArea}>
+                Practice this area now
+              </Button>
+              <Button type="button" size="sm" variant="outline" onClick={onDismissWeakArea}>
+                Remind me next session
+              </Button>
+            </div>
+          </Card>
+        </section>
+      )}
+
       <section className="flex flex-col gap-2">
-        <SectionLabel>Next due</SectionLabel>
+        <SectionLabel>Jadwal berikutnya</SectionLabel>
         {nextReviewSummary ? (
           <>
             <p className="text-foreground text-sm leading-relaxed">
-              Next review: <span className="font-medium">{nextReviewSummary}</span>
+              Review berikutnya:{' '}
+              <span className="font-medium">{nextReviewSummary}</span>
             </p>
             {dueTopicsLine && (
-              <p className="text-muted-foreground text-sm leading-relaxed">{dueTopicsLine}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Topik: {dueTopicsLine}
+              </p>
             )}
           </>
         ) : (
           <p className="text-muted-foreground text-sm leading-relaxed">
-            Finish a few more sessions and we'll set up your review schedule automatically.
+            Selesaikan beberapa sesi lagi — jadwal review akan terbentuk otomatis.
           </p>
         )}
       </section>
-
-      {weakArea && !weakAreaDismissed && (
-        <Card className="border-border bg-surface-raised p-4">
-          <p className="text-foreground text-sm leading-relaxed">
-            You missed {weakArea.missed}/{weakArea.total} questions on:{' '}
-            <span className="font-medium">{humanizeTag(weakArea.tagLabel)}</span>
-          </p>
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-            <Button type="button" size="sm" onClick={onPracticeWeakArea}>
-              Practice this area now
-            </Button>
-            <Button type="button" size="sm" variant="outline" onClick={onDismissWeakArea}>
-              Remind me next session
-            </Button>
-          </div>
-        </Card>
-      )}
 
       <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-between">
         <Button type="button" variant="outline" onClick={onDone}>
           Back to home
         </Button>
         <Button type="button" onClick={onAnotherSession}>
-          Another session
+          Tinjau lebih lanjut
           <ArrowRight />
         </Button>
       </div>

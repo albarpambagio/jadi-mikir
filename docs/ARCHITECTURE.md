@@ -87,7 +87,7 @@ graph TB
 2. **Routing** → wouter determines which route component to render
 3. **State** →
    - TanStack Query handles async data (caching, invalidation)
-   - TanStack Store handles client state (learner progress, UI state)
+   - TanStack Store handles client state (`learnerStore`: `LearnerState` — XP, streak, `streakGoalDays`, topics, FSRS cards, review logs; persisted to localStorage)
 4. **Engines** → Pure business logic (FSRS scheduling, XP, mastery, recommendations)
 5. **Rendering** → React updates UI based on state changes
 

@@ -17,6 +17,7 @@ const defaultState: LearnerState = {
   id: '',
   xp: 0,
   streak: 0,
+  streakGoalDays: 30,
   lastPracticeDate: null,
   topics: {},
   cards: {},

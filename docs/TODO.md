@@ -11,16 +11,8 @@ Screens already in production that need to be updated to match the revised wiref
 
 1. [x] **S2 — Session screen** — ✅ done
 2. [x] **S3 — Answer feedback** — ✅ done
-
-3. [ ] **S6 — Progress dashboard** (`src/pages/progress.tsx`)
-   - Move overdue-cards alert to the TOP of the screen (above summary stats)
-   - Alert uses AlertCircle icon + [Tinjau Sekarang →] CTA
-
-4. [ ] **S11 — Session complete** (`src/components/session/session-complete-view.tsx`)
-   - Reorder sections: stat cards → streak → topic progress → **weak areas** → next due + CTAs
-   - Rename "Another Session →" → "Tinjau lebih lanjut →"
-   - Streak goal (30) now reads from learner's configured streak-goal setting (add to store)
-   - Next due: show day only ("Besok") — remove specific time
+3. [x] **S6 — Progress dashboard** — ✅ done
+4. [x] **S11 — Session complete** — ✅ done
 
 5. [ ] **S17 — Subject browser** (`src/pages/topics.tsx`)
    - Move subject-switch warning inline to each inactive card (below the CTA)
@@ -56,6 +48,7 @@ Screens already in production that need to be updated to match the revised wiref
 - [ ] Content creator tooling — admin UI for authoring questions (move up if content bottleneck persists)
 
 ## Completed
+- **S6 + S11 wireframe rebuild** (2026-03-29) — Progress: overdue alert at top (*Kartu perlu ditinjau*) with `AlertCircle` + *Tinjau Sekarang* CTA, duplicate review CTA removed from retention block — `src/pages/progress.tsx`. Session complete: section order weak areas → *Jadwal berikutnya*, Indonesian next-review day via `formatNextReviewDateId`, topic line *kartu*, CTA *Tinjau lebih lanjut*, `streakGoalDays` on `LearnerState` (default 30) — `session-complete-view.tsx`, `session.tsx`, `types`, `learnerStore`, `session-complete-aggregates.ts`
 - **S2 + S3 session screen rebuild** (2026-03-29) — wireframe v2 alignment: removed back button (quit-only exit), difficulty label shows "Easy · 2/5", quit dialog Indonesian copy, modal feedback panel replaced with inline banner + left-border choice accents + inline explanation + Indonesian choice labels, response time hidden from UI — `src/pages/session.tsx`
 - **Home + progress dashboard UX audit** (2026-03-28) — 1 Critical + 3 High + 2 Medium fixes: `learnerStore` localStorage persistence, "Start new topic" → `/topics`, EmptyState duplicate CTA removed, XP unit redundancy, motivational message for returning users, TopicCard 0% neutral track; report: [docs/ux-audit-dashboard-2026-03-28.md](ux-audit-dashboard-2026-03-28.md)
 - **Topic browser** (wireframes 17, 18) — `src/pages/topics.tsx`, `src/pages/topic-list.tsx`, `src/components/topics/` (subject-card, topic-row), `src/lib/hooks/use-topic-browser.ts`; routes `/topics` and `/topics/:subject`; UX audit + 3 fixes applied

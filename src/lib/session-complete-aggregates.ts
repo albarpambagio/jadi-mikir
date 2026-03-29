@@ -57,6 +57,20 @@ export function formatNextReviewDate(d: Date, now: Date = new Date()): string {
   return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })
 }
 
+/** Indonesian day-only next review line for session complete (wireframe S11). */
+export function formatNextReviewDateId(d: Date, now: Date = new Date()): string {
+  const dayStart = (x: Date) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime()
+  const diffDays = Math.round((dayStart(d) - dayStart(now)) / 86400000)
+  const rtf = new Intl.RelativeTimeFormat('id', { numeric: 'auto' })
+  if (diffDays === 0) return 'Hari ini'
+  if (diffDays === 1) return 'Besok'
+  if (diffDays === -1) return 'Kemarin'
+  if (diffDays >= -7 && diffDays <= 7) {
+    return rtf.format(diffDays, 'day')
+  }
+  return d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' })
+}
+
 export interface DueTopicLine {
   topicId: string
   title: string

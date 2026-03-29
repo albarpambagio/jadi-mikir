@@ -75,6 +75,8 @@ export interface LearnerState {
   id: string
   xp: number
   streak: number
+  /** Monthly streak goal (days); shown on session complete; default 30; Settings TBD. */
+  streakGoalDays: number
   lastPracticeDate: string | null
   topics: Record<string, TopicMastery>
   cards: Record<string, CardState>

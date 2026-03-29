@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react'
 import { Link } from 'wouter'
-import { ArrowLeft, Download } from 'lucide-react'
+import { AlertCircle, ArrowLeft, ArrowRight, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { SectionLabel } from '@/components/ui/section-label'
@@ -77,6 +77,38 @@ export function ProgressDashboardPage() {
         </Button>
         <h1 className="text-foreground text-xl font-semibold">Progress dashboard</h1>
       </div>
+
+      {totalDue > 0 && (
+        <section className="flex flex-col gap-4">
+          <SectionLabel>Kartu perlu ditinjau</SectionLabel>
+          <div className="border-border bg-surface-raised flex flex-col gap-4 rounded-lg border p-4">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="flex min-w-0 flex-1 gap-3">
+                <AlertCircle
+                  className="text-primary mt-0.5 size-5 shrink-0"
+                  aria-hidden
+                />
+                <div className="flex min-w-0 flex-col gap-1">
+                  <p className="text-foreground text-sm font-medium">
+                    {totalDue === 1
+                      ? '1 kartu sudah jatuh tempo'
+                      : `${totalDue.toLocaleString()} kartu sudah jatuh tempo`}
+                  </p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    Tinjau sekarang untuk menjaga retensi memorimu.
+                  </p>
+                </div>
+              </div>
+              <Button size="sm" className="shrink-0" asChild>
+                <Link href="/session">
+                  Tinjau Sekarang
+                  <ArrowRight aria-hidden />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="flex flex-col gap-4">
         <SectionLabel>Summary</SectionLabel>
@@ -184,11 +216,7 @@ export function ProgressDashboardPage() {
               Cards currently overdue:{' '}
               <span className="text-foreground font-medium tabular-nums">{totalDue}</span>
             </span>
-            {totalDue > 0 ? (
-              <Button size="sm" asChild>
-                <Link href="/session">Review now</Link>
-              </Button>
-            ) : hasData ? (
+            {totalDue === 0 && hasData ? (
               <Button size="sm" variant="outline" asChild>
                 <Link href="/">Back to home</Link>
               </Button>

@@ -20,7 +20,7 @@ import { getMasteryProgress } from '@/lib/engines/mastery'
 import {
   buildDueTopicsLine,
   findWeakTag,
-  formatNextReviewDate,
+  formatNextReviewDateId,
   formatSessionDuration,
   getEarliestDueDate,
   type TopicRollup,
@@ -246,8 +246,6 @@ function FeedbackBanner({ isCorrect, xpAwarded }: FeedbackBannerProps) {
 // ---------------------------------------------------------------------------
 // QuitSessionDialog — confirm before leaving with progress at risk
 // ---------------------------------------------------------------------------
-
-const STREAK_GOAL_DAYS = 30
 
 interface QuitSessionDialogProps {
   open: boolean
@@ -581,11 +579,11 @@ export function SessionPage() {
       questions.map((q) => q.id),
       learnerState.cards,
     )
-    const nextReviewSummary = earliest ? formatNextReviewDate(earliest) : null
+    const nextReviewSummary = earliest ? formatNextReviewDateId(earliest) : null
     const dueLines = buildDueTopicsLine(questions, learnerState.cards, topicTitle)
     const dueTopicsLine =
       dueLines.length > 0
-        ? dueLines.map((d) => `${d.title} (${d.dueCount} due)`).join(' · ')
+        ? dueLines.map((d) => `${d.title} (${d.dueCount} kartu)`).join(' · ')
         : null
     const weak = findWeakTag(tagRollup)
     const primaryTopicTitle =
@@ -604,7 +602,7 @@ export function SessionPage() {
         timeLabel={timeLabel}
         streakBefore={sessionStreakStartRef.current}
         streakAfter={sessionEndMeta.streakAfter}
-        streakGoalDays={STREAK_GOAL_DAYS}
+        streakGoalDays={learnerState.streakGoalDays ?? 30}
         topicRows={topicRows}
         nextReviewSummary={nextReviewSummary}
         dueTopicsLine={dueTopicsLine}
