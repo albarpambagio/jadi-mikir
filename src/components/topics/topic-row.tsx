@@ -1,5 +1,6 @@
 import { Link } from 'wouter'
 import { ArrowRight } from 'lucide-react'
+import { toSlug } from '@/lib/hooks/use-topic-browser'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
@@ -77,7 +78,12 @@ export function TopicRow({ topic }: TopicRowProps) {
           <StatusIcon status={topic.status} />
           <div className="flex min-w-0 flex-col gap-1">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-foreground text-sm leading-snug font-medium">{topic.title}</span>
+              <Link
+                href={`/topics/${toSlug(topic.subject)}/${topic.id}`}
+                className="text-foreground hover:text-primary text-sm leading-snug font-medium underline-offset-2 hover:underline"
+              >
+                {topic.title}
+              </Link>
               {topic.dueCount > 0 && (
                 <Badge variant="tag-primary">{topic.dueCount} jatuh</Badge>
               )}

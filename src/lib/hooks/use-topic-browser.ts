@@ -80,6 +80,7 @@ export function useTopicBrowserData(): {
   subjects: SubjectGroup[]
   isLoading: boolean
   getTopicsBySubject: (subject: string) => CategorizedTopics
+  findTopicWithStatus: (topicId: string) => TopicWithStatus | null
 } {
   const { data: topics, isLoading } = useTopicsQuery()
   const [learnerState, setLearnerState] = useState(() => learnerStore.get())
@@ -206,5 +207,10 @@ export function useTopicBrowserData(): {
     }
   }, [enrichedTopics, topicById, learnerState.topics])
 
-  return { subjects, isLoading, getTopicsBySubject }
+  const findTopicWithStatus = useMemo(() => {
+    return (topicId: string): TopicWithStatus | null =>
+      enrichedTopics.find((t) => t.id === topicId) ?? null
+  }, [enrichedTopics])
+
+  return { subjects, isLoading, getTopicsBySubject, findTopicWithStatus }
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { useParams, useLocation } from 'wouter'
+import { useParams, useLocation, useSearch } from 'wouter'
 import { ArrowRight, X, CheckCircle2, XCircle, Shuffle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
@@ -26,6 +26,7 @@ import {
   type TopicRollup,
   type TagRollup,
 } from '@/lib/session-complete-aggregates'
+import { primaryTag } from '@/lib/topic-detail-aggregates'
 import { SessionCompleteView } from '@/components/session/session-complete-view'
 import { Skeleton } from '@/components/ui/skeleton'
 import { learnerStore, learnerActions } from '@/store/learnerStore'
@@ -363,15 +364,26 @@ export function SessionPage() {
   const params = useParams<{ topicId?: string }>()
   const topicId = params.topicId
   const [, navigate] = useLocation()
+  const search = useSearch()
+
+  const tagFilter = useMemo(() => {
+    const q = search.startsWith('?') ? search.slice(1) : search
+    return new URLSearchParams(q).get('tag')
+  }, [search])
 
   // One hook call per data source at page level (WORKFLOW rule 8)
   const { data: rawQuestions = [], isLoading, isError } = useQuestionsQuery(topicId)
   const sessionCap = getSessionQuestionCap()
-  const questions = useMemo(
-    () =>
-      sessionCap == null ? rawQuestions : rawQuestions.slice(0, sessionCap),
-    [rawQuestions, sessionCap],
-  )
+  const questions = useMemo(() => {
+    let list = sessionCap == null ? rawQuestions : rawQuestions.slice(0, sessionCap)
+    if (tagFilter) {
+      const filtered = list.filter(
+        (q) => q.tags.includes(tagFilter) || primaryTag(q) === tagFilter,
+      )
+      if (filtered.length > 0) list = filtered
+    }
+    return list
+  }, [rawQuestions, sessionCap, tagFilter])
   const { data: topic } = useTopicQuery(topicId ?? '')
   const { data: allTopics = [] } = useTopicsQuery()
 

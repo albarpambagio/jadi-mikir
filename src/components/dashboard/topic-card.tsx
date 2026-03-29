@@ -1,5 +1,6 @@
 import { Link } from 'wouter'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, BookOpen } from 'lucide-react'
+import { toSlug } from '@/lib/hooks/use-topic-browser'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
@@ -39,7 +40,13 @@ export function TopicCard({ topic }: TopicCardProps) {
   return (
     <div className="border-border bg-surface-raised flex flex-col gap-3 rounded-lg border p-4">
       <div className="flex flex-col gap-0.5">
-        <span className="text-foreground text-sm font-medium leading-snug">{topic.title}</span>
+        <div className="flex items-start gap-2">
+          <BookOpen
+            className="text-muted-foreground mt-0.5 size-4 shrink-0"
+            aria-hidden
+          />
+          <span className="text-foreground min-w-0 text-sm leading-snug font-medium">{topic.title}</span>
+        </div>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
           <span className={`text-xs font-medium ${badgeClass}`}>{levelName}</span>
           {dueCount > 0 && (
@@ -55,12 +62,17 @@ export function TopicCard({ topic }: TopicCardProps) {
         </div>
         <MasteryBar value={overallPct} className="h-1.5" />
       </div>
-      <Button variant="outline" size="sm" asChild className="mt-auto self-start">
-        <Link href={`/session/${topic.id}`}>
-          {ctaLabel}
-          <ArrowRight aria-hidden />
-        </Link>
-      </Button>
+      <div className="mt-auto flex flex-wrap gap-2">
+        <Button variant="outline" size="sm" asChild>
+          <Link href={`/topics/${toSlug(topic.subject)}/${topic.id}?from=home`}>Detail topik</Link>
+        </Button>
+        <Button variant="outline" size="sm" asChild>
+          <Link href={`/session/${topic.id}`}>
+            {ctaLabel}
+            <ArrowRight aria-hidden />
+          </Link>
+        </Button>
+      </div>
     </div>
   )
 }

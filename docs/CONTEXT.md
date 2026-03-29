@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-S17–S18 subject browser and topic list wireframe rebuilds complete. Next: Topic detail (screen 12).
+Topic detail (screen 12) shipped. Next: Mastery gate (screen 16).
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -9,10 +9,10 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 ## What's Complete
 - **Business logic engines** (`src/lib/engines/`): FSRS, mastery, XP, session, interleaving, remediation, diagnostic, FIRe, recommendations, exportImport — 10 engines (dashboard.ts removed; stats computed in hook)
 - **Storage**: IndexedDB (`src/lib/storage/indexedDB.ts`) + hybrid adapter (`src/lib/storage/hybrid.ts`)
-- **State**: `src/store/learnerStore.ts` — learner progress, session state, streaks, `streakGoalDays` (default 30; Settings UI TBD)
+- **State**: `src/store/learnerStore.ts` — learner progress, session state, streaks, `streakGoalDays` (default 30; Settings UI TBD), `resetTopic(topicId, questionIds)` for topic detail reset
 - **Design tokens**: `src/index.css` — Nature theme, light + dark mode, full token set
-- **UI primitives** (`src/components/ui/`): button, card, badge, input, dialog, tabs, progress, tooltip, avatar, scroll-area, separator — all themed to VISUAL-SPEC
-- **Session screen** (`src/pages/session.tsx`): answering + inline feedback phases (wireframe v2), quit-only exit with confirm dialog (no back button), `StepCounter` progress, difficulty dots with Indonesian labels (e.g. *Mudah · 2/5*), stem label *Soal*, CTAs *Konfirmasi jawaban* / *Keluar sesi*, inline feedback banner + left-border choice accents + Indonesian row labels, choice randomization, XP award (+50 per correct), `updateStreak()` on finish; routes `/session` and `/session/:topicId`
+- **UI primitives** (`src/components/ui/`): button, card, badge, input, dialog, tabs, table, progress, tooltip, avatar, scroll-area, separator — all themed to VISUAL-SPEC
+- **Session screen** (`src/pages/session.tsx`): answering + inline feedback phases (wireframe v2), quit-only exit with confirm dialog (no back button), `StepCounter` progress, difficulty dots with Indonesian labels (e.g. *Mudah · 2/5*), stem label *Soal*, CTAs *Konfirmasi jawaban* / *Keluar sesi*, inline feedback banner + left-border choice accents + Indonesian row labels, choice randomization, XP award (+50 per correct), `updateStreak()` on finish; optional `?tag=` query filters questions by tag (subtopic practice from topic detail); routes `/session` and `/session/:topicId`
 - **Session complete UI** (`src/components/session/session-complete-view.tsx` + `src/lib/session-complete-aggregates.ts`): wireframe 11 v2 — learner-facing copy in Indonesian (performance bands, stats *Pertanyaan* / *Akurasi* / *XP* / *Waktu*, `formatSessionDurationId` for time); streak bar from `streakGoalDays` in store (*Tujuan: N/30 hari*), topic progress, **Area lemah** then **Jadwal berikutnya** (Indonesian day-only via `formatNextReviewDateId`), *Tinjau lebih lanjut* / *Kembali ke beranda*; multi-topic headline *Hasilmu*; `<main>` + heading focus + `document.title`; skeleton in `session.tsx`
 - **Layout shell**: `src/components/layout/layout.tsx`
 - **Routing**: wouter 3.x — committed router
@@ -21,6 +21,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Home dashboard** (`src/pages/home.tsx`, `src/components/dashboard/`): wireframe 01 — greeting, 4-stat bar (streak/XP/topics/due), today's session card, continue-learning topic grid (up to 6), empty state (with "browse all topics" link); routes `/`
 - **Progress dashboard** (`src/pages/progress.tsx`): wireframe 06 v2 — page chrome and stats in Indonesian (*Dashboard progres*, *Ringkasan*, *Penguasaan per topik*, *Kesehatan retensi*, etc.), top overdue alert (*Kartu perlu ditinjau*, `AlertCircle`, *Tinjau Sekarang*) when `totalDue > 0`, summary stats, mastery-by-topic + `MasteryBar`, retention health (overdue count line), export; routes `/progress`
 - **Topic browser** (`src/pages/topics.tsx`, `src/pages/topic-list.tsx`, `src/components/topics/`, `src/lib/hooks/use-topic-browser.ts`): wireframes 17, 18 v2 — *Subjek saat ini* summary, inactive cards with inline switch warning, CTAs *Lihat Daftar Topik* / *Ganti ke subjek ini*; topic rows *Prasyarat:* / *Butuh:* with prerequisite titles, progress bar only for in-progress topics with non-zero % or mastered topics; back to subject list via header *Semua Topik* only (no duplicate footer CTA); Indonesian copy throughout; routes `/topics` and `/topics/:subject`
+- **Topic detail** (`src/pages/topic-detail.tsx`, `src/lib/topic-detail-aggregates.ts`): wireframe 12 — ringkasan mastery, kartu FSRS per soal, tabel subtopik (tag), topik yang dibuka setelah ini, CTAs, reset dengan konfirmasi; route `/topics/:subject/:topicId`; judul topik di daftar mengarah ke detail; kartu beranda *Detail topik* + sesi
 
 ## Active Constraints
 - **Self-improvement logs**: Non-obvious corrections, errors, and feature wishes go to `.learnings/` per `.agents/skills/self-improvement/SKILL.md` and `AGENTS.md`; promote stable learnings to `docs/` or `AGENTS.md`
@@ -34,11 +35,12 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Learning lab**: **Opt-in research studies** may eventually send minimal de-identified events/aggregates for A/B and impact evaluation; **not shipped yet**—no default telemetry. See [docs/strategy/product-strategy.md](strategy/product-strategy.md) (Evaluation & experimentation)
 
 ## Next Steps (in order)
-1. [ ] Topic detail (wireframe 12)
-2. [ ] Mastery gate (wireframe 16)
-4. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
+1. [ ] Mastery gate (wireframe 16)
+2. [ ] Onboarding (wireframes 7–10)
+3. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
 
 ## Recent Updates
+- **Topic detail S12** (2026-03-29): Route `/topics/:subject/:topicId`, aggregates `topic-detail-aggregates.ts`, `resetTopic`, session `?tag=` filter, navigation from topic list + home topic cards — [`docs/audits/topic-detail-s12-2026-03-29.md`](audits/topic-detail-s12-2026-03-29.md).
 - **S17 + S18 wireframe rebuild** (2026-03-29): Aligned subject browser and topic list to `wireframes_1.md` v2 — [`docs/audits/s17-s18-wireframe-2026-03-29.md`](audits/s17-s18-wireframe-2026-03-29.md).
 - **S6–S11 UX audit + Indonesian copy pass** (2026-03-30): Scoped audit [`docs/audits/ux-audit-s6-s11-2026-03-30.md`](audits/ux-audit-s6-s11-2026-03-30.md); copy inventory [`docs/ux-copy-rebuilds-s2-s11-2026-03-30.md`](ux-copy-rebuilds-s2-s11-2026-03-30.md). Session, progress dashboard, and session complete aligned to Indonesian learner-facing strings (`formatSessionDurationId`, bands, weak area, footers).
 - **S6 + S11 wireframe rebuild** (2026-03-29): Progress dashboard overdue card moved above Summary; session complete reordered (weak areas before schedule), Indonesian *Jadwal berikutnya* / *Review berikutnya* / *Besok* etc. via `formatNextReviewDateId`, `streakGoalDays` on `LearnerState`, secondary CTA *Tinjau lebih lanjut*.

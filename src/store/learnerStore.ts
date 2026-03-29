@@ -10,6 +10,8 @@ export interface LearnerActions {
   addReviewLog: (log: ReviewLog) => void
   updateTopicMastery: (topicId: string, mastery: Partial<TopicMastery>) => void
   initializeTopicMastery: (topicId: string, totalQuestions: number) => void
+  /** Remove topic mastery, all cards for question IDs, and review logs for those questions. */
+  resetTopic: (topicId: string, questionIds: string[]) => void
   setState: (state: Partial<LearnerState>) => void
 }
 
@@ -128,6 +130,32 @@ export const learnerActions: LearnerActions = {
         },
       },
     }))
+  },
+
+  resetTopic: (topicId, questionIds) => {
+    const qset = new Set(questionIds)
+    learnerStore.setState((state) => {
+      const topics = { ...state.topics }
+      delete topics[topicId]
+
+      const cards = { ...state.cards }
+      const dropKeys = new Set<string>()
+      for (const key of Object.keys(cards)) {
+        for (const qid of questionIds) {
+          if (key === `${qid}_card` || key.startsWith(`${qid}_`)) {
+            dropKeys.add(key)
+            break
+          }
+        }
+      }
+      for (const k of dropKeys) {
+        delete cards[k]
+      }
+
+      const reviewLogs = state.reviewLogs.filter((log) => !qset.has(log.questionId))
+
+      return { ...state, topics, cards, reviewLogs }
+    })
   },
 
   setState: (newState) => {

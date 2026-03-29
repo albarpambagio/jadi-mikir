@@ -5,6 +5,7 @@ import { ProgressDashboardPage } from '@/pages/progress'
 import { SessionPage } from '@/pages/session'
 import { TopicsPage } from '@/pages/topics'
 import { TopicListPage } from '@/pages/topic-list'
+import { TopicDetailPage } from '@/pages/topic-detail'
 
 export function AppRouter() {
   return (
@@ -14,6 +15,7 @@ export function AppRouter() {
           <Route path="/" component={DashboardPage} />
           <Route path="/progress" component={ProgressDashboardPage} />
           <Route path="/topics" component={TopicsPage} />
+          <Route path="/topics/:subject/:topicId" component={TopicDetailPage} />
           <Route path="/topics/:subject" component={TopicListPage} />
           <Route path="/session/:topicId" component={SessionPage} />
           <Route path="/session" component={SessionPage} />

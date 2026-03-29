@@ -18,7 +18,7 @@ Screens already in production that need to be updated to match the revised wiref
 6. [x] **S18 — Topic list** (`src/pages/topic-list.tsx`, `src/components/topics/topic-row.tsx`) — ✅ done
 
 ### Screens (build in this order)
-1. [ ] **Topic detail** — topic info, start session, mastery status
+1. [x] **Topic detail** — topic info, start session, mastery status — ✅ done (`src/pages/topic-detail.tsx`, `src/lib/topic-detail-aggregates.ts`, route `/topics/:subject/:topicId`)
    - Wireframe: `docs/archives/wireframes_1.md` Screen 12
 2. [ ] **Mastery gate** — gate UI shown when advancing between levels
    - Wireframe: `docs/archives/wireframes_1.md` Screen 16
@@ -41,6 +41,7 @@ Screens already in production that need to be updated to match the revised wiref
 - [ ] Content creator tooling — admin UI for authoring questions (move up if content bottleneck persists)
 
 ## Completed
+- **Topic detail (S12)** (2026-03-29) — `/topics/:subject/:topicId`: ringkasan penguasaan + status, baris kartu FSRS (jatuh tempo / mendatang / selesai review), tabel subtopik dari tag soal + akurasi dari review log, blok *Membuka topik baru* (prerequisite reverse), *Mulai sesi* / *Latih subtopik lemah* (`?tag=`), *Reset topik* + dialog konfirmasi; `learnerActions.resetTopic`; `useTopicBrowserData.findTopicWithStatus`; link judul topik dari daftar + *Detail topik* di kartu beranda — `src/pages/topic-detail.tsx`, `src/lib/topic-detail-aggregates.ts`; UX notes: [`docs/audits/topic-detail-s12-2026-03-29.md`](audits/topic-detail-s12-2026-03-29.md)
 - **S17 + S18 wireframe rebuild** (2026-03-29) — Subject browser: *Subjek saat ini*, Indonesian chrome, inactive-card switch warning (`AlertTriangle`), CTAs *Lihat Daftar Topik* / *Ganti ke subjek ini*; topic list: *Prasyarat* / *Butuh* with names, no empty 0% progress strip, Indonesian group labels; return to `/topics` via header back only (footer duplicate removed) — `topics.tsx`, `subject-card.tsx`, `topic-list.tsx`, `topic-row.tsx`; UX sweep: [`docs/audits/s17-s18-wireframe-2026-03-29.md`](audits/s17-s18-wireframe-2026-03-29.md)
 - **S6 + S11 wireframe rebuild** (2026-03-29) — Progress: overdue alert at top (*Kartu perlu ditinjau*) with `AlertCircle` + *Tinjau Sekarang* CTA, duplicate review CTA removed from retention block — `src/pages/progress.tsx`. Session complete: section order weak areas → *Jadwal berikutnya*, Indonesian next-review day via `formatNextReviewDateId`, topic line *kartu*, CTA *Tinjau lebih lanjut*, `streakGoalDays` on `LearnerState` (default 30) — `session-complete-view.tsx`, `session.tsx`, `types`, `learnerStore`, `session-complete-aggregates.ts`
 - **S2 + S3 session screen rebuild** (2026-03-29) — wireframe v2 alignment: removed back button (quit-only exit), difficulty label shows "Easy · 2/5", quit dialog Indonesian copy, modal feedback panel replaced with inline banner + left-border choice accents + inline explanation + Indonesian choice labels, response time hidden from UI — `src/pages/session.tsx`

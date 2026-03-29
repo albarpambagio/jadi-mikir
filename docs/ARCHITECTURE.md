@@ -14,10 +14,15 @@
 ```
 src/
 ├── main.tsx              # Entry point
-├── router.tsx            # Route definitions  (/  /session  /session/:topicId)
+├── router.tsx            # Route definitions  (/  /topics  /topics/:subject  /topics/:subject/:topicId  /session  /session/:topicId)
 ├── index.css             # Design tokens + Tailwind v4
 ├── pages/
-│   └── session.tsx      # Session screen — answering + feedback phases
+│   ├── home.tsx          # Dashboard / home
+│   ├── progress.tsx      # Progress dashboard
+│   ├── session.tsx       # Session — answering + feedback; optional ?tag= subtopic filter
+│   ├── topic-detail.tsx  # Topic detail (wireframe 12)
+│   ├── topic-list.tsx
+│   └── topics.tsx
 ├── components/
 │   ├── ui/              # shadcn/ui primitives + factory.ai pattern components (incl. skeleton)
 │   │                    #   (step-counter, stat-display, section-label,
@@ -33,6 +38,7 @@ src/
 │   ├── hooks/           # Custom React hooks (use-dashboard-stats, useLocalStorage, etc.)
 │   ├── storage/         # IndexedDB + hybrid storage adapter
 │   ├── session-complete-aggregates.ts  # Pure helpers for session end (duration, due dates, weak tags)
+│   ├── topic-detail-aggregates.ts    # Topic detail: card buckets, subtopic rows, unlock list
 │   ├── content.ts       # TanStack Query hooks for /content/*.json
 │   ├── validation.ts    # Zod content validation
 │   ├── logger.ts        # Dev logging
