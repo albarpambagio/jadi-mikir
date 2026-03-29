@@ -7,9 +7,10 @@ import type { SubjectGroup } from '@/lib/hooks/use-topic-browser'
 
 interface SubjectCardProps {
   group: SubjectGroup
+  hasActiveSubject: boolean
 }
 
-export function SubjectCard({ group }: SubjectCardProps) {
+export function SubjectCard({ group, hasActiveSubject }: SubjectCardProps) {
   const progressPct =
     group.totalTopics > 0
       ? Math.round((group.startedCount / group.totalTopics) * 100)
@@ -56,7 +57,9 @@ export function SubjectCard({ group }: SubjectCardProps) {
         </div>
       ) : (
         <div className="flex flex-col gap-1.5">
-          <p className="text-muted-foreground text-xs">Belum dimulai</p>
+          <p className="text-muted-foreground text-xs">
+            {hasActiveSubject ? 'Belum dimulai' : 'Siap dipelajari'}
+          </p>
           {group.topicTitles.length > 0 && (
             <p className="text-muted-foreground text-xs leading-relaxed">
               {group.topicTitles.join(' · ')}
@@ -74,12 +77,16 @@ export function SubjectCard({ group }: SubjectCardProps) {
           className="self-start"
         >
           <Link href={`/topics/${group.slug}`}>
-            {group.isActive ? 'Lihat Daftar Topik' : 'Ganti ke subjek ini'}
+            {group.isActive
+              ? 'Lihat Daftar Topik'
+              : hasActiveSubject
+                ? 'Ganti ke subjek ini'
+                : 'Mulai subjek ini'}
             <ArrowRight aria-hidden />
           </Link>
         </Button>
 
-        {!group.isActive && (
+        {!group.isActive && hasActiveSubject && (
           <p className="text-muted-foreground flex gap-2 text-xs leading-relaxed">
             <AlertTriangle
               className="text-warning mt-0.5 size-4 shrink-0"

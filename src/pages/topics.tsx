@@ -38,6 +38,7 @@ export function TopicsPage() {
   }, [])
 
   const currentSubject = subjects.find((s) => s.isActive)?.subject
+  const hasActiveSubject = subjects.some((s) => s.isActive)
 
   return (
     <div className="flex flex-col gap-6">
@@ -69,7 +70,7 @@ export function TopicsPage() {
           {/* Subject grid */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {subjects.map((group) => (
-              <SubjectCard key={group.subject} group={group} />
+              <SubjectCard key={group.subject} group={group} hasActiveSubject={hasActiveSubject} />
             ))}
           </div>
 
