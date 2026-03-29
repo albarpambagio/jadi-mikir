@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useParams, useLocation } from 'wouter'
 import { ArrowRight, X, CheckCircle2, XCircle, Shuffle } from 'lucide-react'
@@ -21,7 +21,7 @@ import {
   buildDueTopicsLine,
   findWeakTag,
   formatNextReviewDateId,
-  formatSessionDuration,
+  formatSessionDurationId,
   getEarliestDueDate,
   type TopicRollup,
   type TagRollup,
@@ -35,6 +35,22 @@ import {
   type RandomizedQuestion,
 } from '@/lib/hooks/useChoiceRandomization'
 import type { Question } from '@/types'
+
+/**
+ * Local QA: in dev, sessions use at most 3 questions unless overridden.
+ * Set `VITE_SESSION_QUESTION_LIMIT` in `.env.local` (number ≥1), or `0` to disable the cap.
+ * Production builds ignore the dev default and use the full queue unless the env is set.
+ */
+function getSessionQuestionCap(): number | null {
+  const v = import.meta.env.VITE_SESSION_QUESTION_LIMIT
+  if (v !== undefined && v !== '') {
+    const n = Number(v)
+    if (!Number.isFinite(n)) return import.meta.env.DEV ? 3 : null
+    if (n <= 0) return null
+    return Math.floor(n)
+  }
+  return import.meta.env.DEV ? 3 : null
+}
 
 // ---------------------------------------------------------------------------
 // Internal types
@@ -52,9 +68,9 @@ interface SessionStats {
 // ---------------------------------------------------------------------------
 
 const DIFFICULTY_CONFIG: Record<Question['difficulty'], { label: string; filled: number }> = {
-  easy: { label: 'Easy', filled: 2 },
-  medium: { label: 'Medium', filled: 3 },
-  hard: { label: 'Hard', filled: 5 },
+  easy: { label: 'Mudah', filled: 2 },
+  medium: { label: 'Sedang', filled: 3 },
+  hard: { label: 'Sulit', filled: 5 },
 }
 
 function DifficultyLabel({ difficulty }: { difficulty: Question['difficulty'] }) {
@@ -102,7 +118,7 @@ function QuestionArea({ randomized, phase, selectedChoiceId, onSelectChoice }: Q
 
       {/* Question stem — tinted background, distinct from answer cards */}
       <div className="flex flex-col gap-2">
-        <SectionLabel>Question</SectionLabel>
+        <SectionLabel>Soal</SectionLabel>
         <div className="border-border bg-muted/20 rounded-lg border p-6">
           <p className="text-foreground text-base leading-relaxed">{randomized.stem}</p>
         </div>
@@ -308,7 +324,7 @@ function SessionCompleteSummarySkeleton() {
     <div
       className="mx-auto flex max-w-2xl flex-col gap-8 py-8"
       aria-busy="true"
-      aria-label="Loading session summary"
+      aria-label="Memuat ringkasan sesi…"
     >
       <div className="border-border flex flex-col gap-2 border-b pb-6">
         <Skeleton className="h-4 w-32" />
@@ -349,7 +365,13 @@ export function SessionPage() {
   const [, navigate] = useLocation()
 
   // One hook call per data source at page level (WORKFLOW rule 8)
-  const { data: questions = [], isLoading, isError } = useQuestionsQuery(topicId)
+  const { data: rawQuestions = [], isLoading, isError } = useQuestionsQuery(topicId)
+  const sessionCap = getSessionQuestionCap()
+  const questions = useMemo(
+    () =>
+      sessionCap == null ? rawQuestions : rawQuestions.slice(0, sessionCap),
+    [rawQuestions, sessionCap],
+  )
   const { data: topic } = useTopicQuery(topicId ?? '')
   const { data: allTopics = [] } = useTopicsQuery()
 
@@ -521,7 +543,7 @@ export function SessionPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <p className="text-muted-foreground text-sm">Loading questions…</p>
+        <p className="text-muted-foreground text-sm">Memuat soal…</p>
       </div>
     )
   }
@@ -542,9 +564,9 @@ export function SessionPage() {
   if (questions.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-24">
-        <p className="text-muted-foreground text-sm">No questions found for this session.</p>
+        <p className="text-muted-foreground text-sm">Tidak ada soal untuk sesi ini.</p>
         <Button variant="outline" onClick={handleQuit}>
-          Go back
+          Kembali
         </Button>
       </div>
     )
@@ -558,7 +580,7 @@ export function SessionPage() {
   if (phase === 'complete' && sessionEndMeta) {
     const accuracyPercent =
       questions.length > 0 ? Math.round((stats.correct / questions.length) * 100) : 0
-    const timeLabel = formatSessionDuration(sessionEndMeta.durationMs)
+    const timeLabel = formatSessionDurationId(sessionEndMeta.durationMs)
     const topicOrder = [...new Set(questions.map((q) => q.topicId))]
     const topicRows = topicOrder.map((tid) => {
       const r = topicRollup[tid] ?? { correct: 0, attempted: 0 }
@@ -589,7 +611,7 @@ export function SessionPage() {
     const primaryTopicTitle =
       topic?.title ??
       (questions[0] ? topicTitle(questions[0].topicId) : null) ??
-      'Review session'
+      'Sesi tinjauan'
 
     return (
       <SessionCompleteView
@@ -634,7 +656,7 @@ export function SessionPage() {
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between gap-4">
             <span className="text-foreground min-w-0 truncate text-sm font-medium">
-              {topic?.title ?? 'Review session'}
+              {topic?.title ?? 'Sesi tinjauan'}
             </span>
 
             <div className="flex shrink-0 items-center gap-4">
@@ -673,7 +695,7 @@ export function SessionPage() {
         {phase === 'answering' && (
           <div ref={confirmActionsRef} className="flex justify-end">
             <Button onClick={handleConfirm} disabled={!selectedChoiceId}>
-              Confirm answer
+              Konfirmasi jawaban
               <ArrowRight />
             </Button>
           </div>
@@ -713,7 +735,7 @@ export function SessionPage() {
           <div className="border-border flex flex-col gap-2 border-t pt-4">
             <div className="text-muted-foreground flex items-center gap-1.5">
               <Shuffle className="size-3.5 shrink-0" />
-              <span className="text-xs font-medium">Topics in this session</span>
+              <span className="text-xs font-medium">Topik dalam sesi ini</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {sessionTags.map((tag) => (

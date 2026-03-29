@@ -12,33 +12,33 @@ const DOC_TITLE_PREFIX = 'JadiMikir — '
 const PERFORMANCE_BANDS = [
   {
     min: 90,
-    label: 'Perfect score!',
+    label: 'Sempurna!',
     color: 'text-success',
-    message: 'Flawless. This topic is firmly in your memory.',
+    message: 'Tanpa cela. Topik ini sudah melekat di ingatanmu.',
     messageMulti:
-      'Flawless work across multiple topics in this session. Keep the momentum going.',
+      'Tanpa cela di beberapa topik dalam sesi ini. Pertahankan ritmemu.',
   },
   {
     min: 70,
-    label: 'Well done!',
+    label: 'Bagus!',
     color: 'text-primary',
-    message: 'Strong session. A few more like this and it sticks for good.',
+    message: 'Sesi yang kuat. Beberapa lagi seperti ini dan akan menguat.',
     messageMulti:
-      'Strong session across these topics. A few more like this and it sticks for good.',
+      'Sesi yang kuat di topik-topik ini. Beberapa lagi seperti ini dan akan menguat.',
   },
   {
     min: 40,
-    label: 'Good effort',
+    label: 'Usaha bagus',
     color: 'text-foreground',
-    message: "You're making progress. Consistency will get you there.",
-    messageMulti: "You're making progress. Consistency will get you there.",
+    message: 'Kamu berkembang. Konsistensi akan membawamu ke sana.',
+    messageMulti: 'Kamu berkembang. Konsistensi akan membawamu ke sana.',
   },
   {
     min: 0,
-    label: 'Keep at it',
+    label: 'Terus berlatih',
     color: 'text-foreground',
-    message: 'Tough one. Each attempt builds the pattern — come back tomorrow.',
-    messageMulti: 'Tough one. Each attempt builds the pattern — come back tomorrow.',
+    message: 'Sulit, tapi setiap percobaan membangun pola — kembali besok.',
+    messageMulti: 'Sulit, tapi setiap percobaan membangun pola — kembali besok.',
   },
 ] as const
 
@@ -80,7 +80,7 @@ export interface SessionCompleteViewProps {
 }
 
 function humanizeTag(tag: string): string {
-  if (tag === 'General') return tag
+  if (tag === 'General') return 'Umum'
   return tag
     .split(/[-_]/)
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -115,9 +115,9 @@ export function SessionCompleteView({
 
   const streakLabel = streakIncreased
     ? streakBefore === 0
-      ? 'You started your streak today'
-      : `Streak: ${streakBefore} day${streakBefore === 1 ? '' : 's'} → ${streakAfter} day${streakAfter === 1 ? '' : 's'}`
-    : `Streak: ${streakAfter} day${streakAfter === 1 ? '' : 's'}`
+      ? 'Kamu memulai streak hari ini'
+      : `Streak: ${streakBefore} hari → ${streakAfter} hari`
+    : `Streak: ${streakAfter} hari`
 
   const bandBorderClass =
     accuracyPercent >= 90
@@ -135,14 +135,14 @@ export function SessionCompleteView({
   useEffect(() => {
     const prev = document.title
     document.title = isMultiTopicSession
-      ? `${DOC_TITLE_PREFIX}Session complete`
+      ? `${DOC_TITLE_PREFIX}Sesi selesai`
       : `${DOC_TITLE_PREFIX}${primaryTopicTitle}`
     return () => {
       document.title = prev
     }
   }, [isMultiTopicSession, primaryTopicTitle])
 
-  const primaryHeadingText = isMultiTopicSession ? 'Your results' : primaryTopicTitle
+  const primaryHeadingText = isMultiTopicSession ? 'Hasilmu' : primaryTopicTitle
 
   return (
     <main
@@ -151,7 +151,7 @@ export function SessionCompleteView({
       className="mx-auto flex max-w-2xl flex-col gap-8 py-8"
     >
       <div className={cn('border-border flex flex-col gap-2 border-b pb-6', bandBorderClass)}>
-        <p className="text-muted-foreground text-sm font-medium">Session complete</p>
+        <p className="text-muted-foreground text-sm font-medium">Sesi selesai</p>
         <h1
           ref={headingRef}
           id="session-complete-heading"
@@ -166,16 +166,16 @@ export function SessionCompleteView({
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <div className="border-border bg-surface-raised rounded-lg border p-4">
-          <StatDisplay value={totalQuestions} label="Questions" size="sm" />
+          <StatDisplay value={totalQuestions} label="Pertanyaan" size="sm" />
         </div>
         <div className="border-border bg-surface-raised rounded-lg border p-4">
-          <StatDisplay value={accuracyPercent} unit="%" label="Accuracy" size="sm" />
+          <StatDisplay value={accuracyPercent} unit="%" label="Akurasi" size="sm" />
         </div>
         <div className="border-border bg-surface-raised rounded-lg border p-4">
-          <StatDisplay value={xpEarned} unit="xp" label="XP earned" size="sm" />
+          <StatDisplay value={xpEarned} unit="xp" label="XP" size="sm" />
         </div>
         <div className="border-border bg-surface-raised rounded-lg border p-4">
-          <StatDisplay value={timeLabel} label="Time spent" size="sm" />
+          <StatDisplay value={timeLabel} label="Waktu" size="sm" />
         </div>
       </div>
 
@@ -187,7 +187,7 @@ export function SessionCompleteView({
         <div className="flex flex-col gap-1">
           <div className="text-muted-foreground flex justify-between text-xs font-medium">
             <span>
-              {streakAfter}/{streakGoalDays} day goal
+              Tujuan: {streakAfter}/{streakGoalDays} hari
             </span>
           </div>
           <Progress value={streakProgress} className="h-2" />
@@ -195,7 +195,7 @@ export function SessionCompleteView({
       </div>
 
       <section className="flex flex-col gap-4">
-        <SectionLabel>Topic progress this session</SectionLabel>
+        <SectionLabel>Progres topik sesi ini</SectionLabel>
         <div className="flex flex-col gap-4">
           {topicRows.map((row) => {
             const sessionPct =
@@ -206,10 +206,10 @@ export function SessionCompleteView({
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <span className="text-foreground text-sm font-medium">{row.title}</span>
                   <span className="text-muted-foreground font-mono text-xs tabular-nums">
-                    {row.correct}/{row.attempted} this session
+                    {row.correct}/{row.attempted} benar di sesi ini
                     {row.overallMasteryPercent !== null && (
                       <span className="text-muted-foreground ml-2 font-sans tabular-nums">
-                        · Overall {row.overallMasteryPercent}%
+                        · Keseluruhan {row.overallMasteryPercent}%
                       </span>
                     )}
                   </span>
@@ -226,15 +226,15 @@ export function SessionCompleteView({
           <SectionLabel>Area lemah</SectionLabel>
           <Card className="border-border bg-surface-raised p-4">
             <p className="text-foreground text-sm leading-relaxed">
-              You missed {weakArea.missed}/{weakArea.total} questions on:{' '}
+              Kamu melewatkan {weakArea.missed}/{weakArea.total} soal pada:{' '}
               <span className="font-medium">{humanizeTag(weakArea.tagLabel)}</span>
             </p>
             <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
               <Button type="button" size="sm" onClick={onPracticeWeakArea}>
-                Practice this area now
+                Latihan area ini sekarang
               </Button>
               <Button type="button" size="sm" variant="outline" onClick={onDismissWeakArea}>
-                Remind me next session
+                Ingatkan di sesi berikutnya
               </Button>
             </div>
           </Card>
@@ -264,7 +264,7 @@ export function SessionCompleteView({
 
       <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-between">
         <Button type="button" variant="outline" onClick={onDone}>
-          Back to home
+          Kembali ke beranda
         </Button>
         <Button type="button" onClick={onAnotherSession}>
           Tinjau lebih lanjut

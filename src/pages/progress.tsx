@@ -72,10 +72,10 @@ export function ProgressDashboardPage() {
         <Button variant="ghost" size="sm" asChild>
           <Link href="/">
             <ArrowLeft aria-hidden />
-            Back
+            Kembali
           </Link>
         </Button>
-        <h1 className="text-foreground text-xl font-semibold">Progress dashboard</h1>
+        <h1 className="text-foreground text-xl font-semibold">Dashboard progres</h1>
       </div>
 
       {totalDue > 0 && (
@@ -111,50 +111,45 @@ export function ProgressDashboardPage() {
       )}
 
       <section className="flex flex-col gap-4">
-        <SectionLabel>Summary</SectionLabel>
+        <SectionLabel>Ringkasan</SectionLabel>
         {!hasData ? (
           <div className="border-border bg-surface-raised flex flex-wrap items-center justify-between gap-4 rounded-lg border p-4">
             <p className="text-muted-foreground text-sm">
-              Complete your first session to see stats here.
+              Selesaikan sesi pertama untuk melihat statistik di sini.
             </p>
             <Button size="sm" asChild>
-              <Link href="/session">Start session</Link>
+              <Link href="/session">Mulai sesi</Link>
             </Button>
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div className="border-border bg-surface-raised rounded-lg border p-4">
-              <StatDisplay value={totalQuestions.toLocaleString()} label="Questions" size="sm" />
+              <StatDisplay value={totalQuestions.toLocaleString()} label="Pertanyaan" size="sm" />
             </div>
             <div className="border-border bg-surface-raised rounded-lg border p-4">
               <StatDisplay
                 value={accuracyDisplay}
                 unit={hasData ? '%' : undefined}
-                label="Accuracy"
+                label="Akurasi"
                 size="sm"
               />
             </div>
             <div className="border-border bg-surface-raised rounded-lg border p-4">
-              <StatDisplay value={totalXP.toLocaleString()} label="XP earned" size="sm" />
+              <StatDisplay value={totalXP.toLocaleString()} label="XP diperoleh" size="sm" />
             </div>
             <div className="border-border bg-surface-raised rounded-lg border p-4">
-              <StatDisplay
-                value={streak}
-                unit={streak === 1 ? 'day' : 'days'}
-                label="Streak"
-                size="sm"
-              />
+              <StatDisplay value={streak} unit="hari" label="Streak" size="sm" />
             </div>
           </div>
         )}
       </section>
 
       <section className="flex flex-col gap-4">
-        <SectionLabel>Mastery by topic</SectionLabel>
+        <SectionLabel>Penguasaan per topik</SectionLabel>
         {isLoading ? (
-          <p className="text-muted-foreground text-sm">Loading topics…</p>
+          <p className="text-muted-foreground text-sm">Memuat topik…</p>
         ) : getSortedTopics.length === 0 ? (
-          <p className="text-muted-foreground text-sm">No topics started yet.</p>
+          <p className="text-muted-foreground text-sm">Belum ada topik yang dimulai.</p>
         ) : (
           <div className="border-border bg-surface-raised divide-border divide-y rounded-lg border">
             {getSortedTopics.map((topic) => {
@@ -184,7 +179,7 @@ export function ProgressDashboardPage() {
                       )}
                       {topic.dueCount > 0 && (
                         <span className="text-muted-foreground text-xs tabular-nums">
-                          · {topic.dueCount} due
+                          · {topic.dueCount} jatuh tempo
                         </span>
                       )}
                     </div>
@@ -198,12 +193,12 @@ export function ProgressDashboardPage() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <SectionLabel>Retention health</SectionLabel>
+        <SectionLabel>Kesehatan retensi</SectionLabel>
         <div className="border-border bg-surface-raised flex flex-col gap-4 rounded-lg border p-4">
           <div className="flex flex-col gap-2">
             <div className="flex items-baseline justify-between gap-2">
               <span className="text-foreground text-sm font-medium">
-                Cards retained at 30 days
+                Kartu yang diingat setelah 30 hari
               </span>
               <span className="text-muted-foreground font-mono text-xs tabular-nums">
                 {retainedPercent}%
@@ -213,12 +208,12 @@ export function ProgressDashboardPage() {
           </div>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <span className="text-muted-foreground text-sm">
-              Cards currently overdue:{' '}
+              Kartu terlambat saat ini:{' '}
               <span className="text-foreground font-medium tabular-nums">{totalDue}</span>
             </span>
             {totalDue === 0 && hasData ? (
               <Button size="sm" variant="outline" asChild>
-                <Link href="/">Back to home</Link>
+                <Link href="/">Kembali ke beranda</Link>
               </Button>
             ) : null}
           </div>
@@ -228,7 +223,7 @@ export function ProgressDashboardPage() {
       <div className="pt-2">
         <Button variant="outline" onClick={downloadExport}>
           <Download aria-hidden />
-          Export my data
+          Ekspor data saya
         </Button>
       </div>
     </div>

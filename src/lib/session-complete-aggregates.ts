@@ -23,6 +23,14 @@ export function formatSessionDuration(ms: number): string {
   return `${minutes} min`
 }
 
+/** Indonesian duration label for session complete and learner-facing summaries. */
+export function formatSessionDurationId(ms: number): string {
+  if (!Number.isFinite(ms) || ms < 0) return '—'
+  const minutes = Math.round(ms / 60000)
+  if (minutes < 1) return '< 1 mnt'
+  return `${minutes} mnt`
+}
+
 /** Card keys follow `${questionId}_card` in session / FSRS helpers. */
 export function cardIdForQuestion(questionId: string): string {
   return `${questionId}_card`
