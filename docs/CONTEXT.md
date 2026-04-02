@@ -1,7 +1,7 @@
 # CONTEXT.md — Current State
 
 ## Current Focus
-Remediation drill (screen 5) shipped. Next: Product strategy rethink — persona validation, content workstream, assumption testing before building further (see `docs/strategy/iterations/jadimikir-pm-analysis.md`).
+P1 Problem Definition complete (`docs/strategy/iterations/problem-definitions/p01-problem-definition.md`). **Sprint Zero pending** — persona decision, content seed spec, JTBD interviews, competitive teardown, baseline instrumentation spec must be completed before P1 engineering begins. Remediation drill (screen 5) and all core engines are already shipped.
 
 ## Design / Figma
 Figma: [link to file or key screen]. Use for layout and hierarchy when implementing or reviewing UI.
@@ -38,7 +38,7 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - **Learning lab**: **Opt-in research studies** may eventually send minimal de-identified events/aggregates for A/B and impact evaluation; **not shipped yet**—no default telemetry. See [docs/strategy/product-strategy.md](strategy/product-strategy.md) (Evaluation & experimentation)
 
 ## Next Steps (in order)
-1. [ ] **Product strategy rethink** — address PM analysis gaps before building further (persona validation, problem statements, content workstream, hypothesis-driven success criteria); see [`docs/strategy/iterations/jadimikir-pm-analysis.md`](strategy/iterations/jadimikir-pm-analysis.md) and [`docs/TODO.md`](TODO.md) Future section
+1. [ ] **Sprint Zero — Sprint Zero** — 5 tasks before P1 engineering: persona decision workshop, content seed spec (≥10 Q/topic), baseline instrumentation spec, JTBD interviews (3–5), competitive teardown (3 products); full spec: [`docs/strategy/iterations/problem-definitions/p01-problem-definition.md`](strategy/iterations/problem-definitions/p01-problem-definition.md)
 2. [ ] **Educational tooltips** — contextual tooltips explaining FSRS, mastery gates, streaks, XP with smart triggering (first-time → hints → action prompts); design spec: [`docs/superpowers/specs/2026-03-29-educational-tooltips-design.md`](superpowers/specs/2026-03-29-educational-tooltips-design.md)
 3. [ ] **Dependency UX** (prerequisites, blocked/ready, path copy on topic detail and related flows) in Phase 2; **full skill tree / graph screen** (wireframe 04) deferred until content volume justifies it (50+ questions minimum) — see [product-strategy.md](strategy/product-strategy.md) (Pillar 5 phase split)
 4. [x] **Remediation drill** (screen 5) — ✅ done
@@ -71,4 +71,5 @@ Figma: [link to file or key screen]. Use for layout and hierarchy when implement
 - Removed dead dependencies: `@base-ui/react`, `framer-motion`
 - Router committed to wouter 3.x; TanStack Router removed from spec
 - Analytics simplified: deleted `src/lib/analytics.ts` and `src/lib/engines/dashboard.ts` (unused, partially broken); `getMotivationalMessage` preserved in `use-dashboard-stats.ts`; emoji strings removed from `recommendations.ts` — **future opt-in study pipeline** is separate and described in product strategy (not implemented in app yet)
+- P1 Problem Definition document (`strategy/iterations/problem-definitions/p01-problem-definition.md`): 8 problems ranked Critical/High/Medium, 3 Mermaid diagrams (workflow, risk-to-root-cause, North Star alignment), falsifiable success criteria, Sprint Zero prerequisites, and go/no-go milestones
 - Product strategy v2.0: product-led positioning, content/FSRS density, measurement model, learning lab, IndexedDB-aligned risks; educator persona deferred

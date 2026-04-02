@@ -31,17 +31,12 @@ Screens already in production that need to be updated to match the revised wiref
    - Wireframe: `docs/archives/wireframes_1.md` Screen 5
 
 ### Future
-- [ ] **Product strategy rethink** — address PM analysis gaps before building further (see [`docs/strategy/iterations/jadimikir-pm-analysis.md`](strategy/iterations/jadimikir-pm-analysis.md)):
-  - [ ] Decide primary persona (high-agency vs casual learner) — 1h workshop
-  - [ ] Write problem statements for each core feature idea
-  - [ ] Start parallel content workstream (1 deep track, 150+ questions) to unblock FSRS validation
-  - [ ] Rewrite phase success criteria as falsifiable hypotheses (not delivery milestones)
-  - [ ] Add minimal on-device instrumentation (session logs to IndexedDB, weekly aggregates, visible in Settings > Debug)
-  - [ ] Run 5 JTBD user interviews with Indonesian exam candidates
-  - [ ] Conduct competitive teardown sessions (watch users use Anki/Quizlet)
-  - [ ] Validate privacy pitch for Indonesian market (local-first as trust signal vs cloud sync preference)
-  - [ ] Resolve UGC architecture decision (identity layer pre-mortem)
-  - [ ] Assumption mapping exercise — plot confidence × impact, research the top-left quadrant
+- [ ] **Sprint Zero** — 5 learning tasks before P1 engineering begins (see [`docs/strategy/iterations/problem-definitions/p01-problem-definition.md`](strategy/iterations/problem-definitions/p01-problem-definition.md)):
+  - [ ] **P1.3 — Persona decision workshop** — pick one primary user (high-agency or casual); 1h decision, all P1 UX flows from this
+  - [ ] **P1.1 — Content seed spec** — minimum questions per topic (≥10), target subject choice, authoring path (manual JSON OK for P1)
+  - [ ] **P1.4 — Baseline instrumentation spec** — on-device event definitions for mastery, return rate, FSRS calibration (local-only, no upload)
+  - [ ] **P1.5 — JTBD interviews (3–5)** — validate or falsify local-first thesis, confirm adaptive practice resonance with primary persona
+  - [ ] **Competitive teardown (3 products)** — identify observable gaps we can exploit (Quizlet, Anki, Khan Academy, or local alternatives)
 - [ ] **Remediation & session consolidation** — fix navigation loop, update mastery after drill, extract shared components, align UX (see [`docs/remediation-session-consolidation-plan.md`](remediation-session-consolidation-plan.md))
 - [ ] **Educational tooltips** — contextual tooltips explaining FSRS, mastery gates, streaks, XP with smart triggering (first-time → hints → action prompts); see [`docs/superpowers/specs/2026-03-29-educational-tooltips-design.md`](superpowers/specs/2026-03-29-educational-tooltips-design.md)
 - [ ] **Learning lab / opt-in study pipeline** — consent UX, minimal de-identified events, experiment assignment (per [docs/strategy/product-strategy.md](strategy/product-strategy.md); infrastructure TBD)
